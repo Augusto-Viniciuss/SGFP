@@ -1,0 +1,80 @@
+Requisitos
+    1. Adicionar um novo funcionário
+    2. Modificar ou editar um registro de funionário
+    3. Excluir um registro de funcionário
+        Mensagem de confirmação de exclusão deve ser mostrada.
+    4. Exibir registro de funcionário
+        Exibi todos os funcionários.
+    5. Exibir lista de funcionários por tipo
+        Exibi todos os funcionários de um tipo por exemplo do tipo diretor.
+    6. Conceder aumento de salário
+        Percentuais de aumento
+            Operador: 5%
+            Gerente: 10%
+            Diretor: 20%
+            Presidente: 30%
+    7. Calcular folha salarial
+        Paramêtros
+            Mês para o cálculo
+        Calcular o pagamento total de funcionários para um determinado mês que será solicitado do usuário.
+        Regra para hora extra: a hora equivale ao dobro da hora normal.
+        Deverá ser contabilizado os descontos relativos ao imposto de renda e previdência social.
+    8. Imprimir uma folha de salário do funcionário
+        Paramêtros
+            Código do funcionário
+            Nome Completo
+        Deve Constar 
+            Salário base
+            Descontos
+            Salário liquido
+    9. Imprimir a folha salárial da empresa
+        Opções de escolha
+            Folha anual 
+            Folha Mensal
+    10. Buscar funcionário
+        Paramêtros
+            Nome: fazer busca parcial
+            Data de ingresso: (dia, mês e ano) fazer por intervalo de tempo
+            Endereço: fazer busca parcial
+            CPF: Busca certeira
+    11. Todos os dados devem ser salvos em arquivo
+        Criar funções para salvamento e recuperação dos dados em arquivos
+    12. Interface
+        Console - Obrigatória
+        Gráfica - Tentaremos ;-;
+
+Classes
+    Funcionário
+        Atributos
+            - Código de funcionário (int)
+            - Nome (string)
+            - CPF (string) Interessante
+            - Endereço (string)
+            - Telefone (string)
+            - Data de ingresso (dia, mês e ano) (Data)
+            - Designação (Operador ou Gerente ou Diretor ou Presidente) (string)
+            - Salário (double)
+    Gerente
+        Atributos
+            - Nome da área de supervisão (string)
+    Diretor
+        Atributos
+            - Nome da área de supervisão (string) 
+             -Área de formação (string)
+    Presidente
+        Atributos
+            - Área de formação (string) 
+            - Qual formação acadêmica máxima (Especialista ou Mestre ou Doutor ou ...) (string)
+
+    Data
+        TEREMOS
+
+    Arquivo
+        Métodos
+            Salvar
+            Recuperar
+            Excluir
+
+!!! Não esquecer !!!
+Tratar as exceções
+    Certeza que ele vai fazer uns teste pra colocar o aplicativo pra chorar ;-;
