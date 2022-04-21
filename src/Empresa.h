@@ -10,8 +10,8 @@ class Empresa {
         std::string nome;
         std::string CNPJ;
         Data dataFundacao;
-        int qtdFuncionarios;
-        vector<Funcionario> funcionarios;
+        int qtdFuncionario;
+        std::vector<Funcionario> *funcionarios;
         double folhaSalarial[2];
     
     public:
