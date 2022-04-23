@@ -21,6 +21,10 @@ void Empresa::setDataFundacao(Data data) {
     this->dataFundacao = data;
 }
 
+void Empresa::setFolhaSalarial(int mes, double valor) {
+    this->folhaSalarial[mes] = valor;
+}
+
 std::string Empresa::getNome() {
     return this->nome;
 }
@@ -37,24 +41,19 @@ int Empresa::getQtdFuncionarios() {
     return this->qtdFuncionarios;
 }
 
+double Empresa::getFolhaSalarial(int mes) {
+    return this->folhaSalarial[mes];
+}
+
 void Empresa::addFuncionario(Funcionario funcionario) {
     this->funcionarios.push_back(funcionario);
     this->qtdFuncionario += 1;
 }
 
 void Empresa::modificarFuncionario(int codigo) {
-    bool funcionarioExiste = false;
-    int index;
-
-    for (int i = 0; i < this->qtdFuncionario; i++) {
-        if (funcionarios[i]->getNumeroCodigo() == codigo) {
-            index = i;
-            funcionarioExiste = true;
-            break;
-        }
-    }
-
-    if (funcionarioExiste) {
+    Funcionario *funcionario = buscarFuncionario(codigo);
+    
+    if (funcionario != nullptr) {
         std::cin << "O que deseja modificar: " << std::endl <<
                 1 - "Numero de codigo\n" << std::endl <<
                 2 - "Data de ingresso\n" << std::endl <<
@@ -67,71 +66,56 @@ void Empresa::modificarFuncionario(int codigo) {
         int tipoModificacao;
         std::cin >> tipoModificacao;
 
-    switch (tipoModificacao) {
-        case 1:
-            funcionarios[index].setNumeroCodigo();
-            break;
-        case 2:
-            funcionarios[index].setDataIngresso();
-            break;
-        case 3:
-            funcionarios[index].setNome();
-            break;
-        case 4:
-            funcionarios[index].setEndereco();
-            break;
-        case 5:
-            funcionarios[index].setTelefone()
-            break;
-        case 6:
-            funcionarios[index].setDesignacao();
-            break;
-        case 7:
-            funcionarios[index].setSalario();
-            break;
-        }
+        switch (tipoModificacao) {
+            case 1:
+                funcionario.setNumeroCodigo();
+                break;
+            case 2:
+                funcionario.setDataIngresso();
+                break;
+            case 3:
+                funcionario.setNome();
+                break;
+            case 4:
+                funcionario.setEndereco();
+                break;
+            case 5:
+                funcionario.setTelefone()
+                break;
+            case 6:
+                funcionario.setDesignacao();
+                break;
+            case 7:
+                funcionario.setSalario();
+                break;
+            }
     } else {
         std::cout << "Funcionario nao esta cadastrado." << std::endl;
     }
 }
 
 void Empresa::excluirFuncionario(int codigo) {
-    bool funcionarioExiste = false
+    Funcionario *funcionario = buscarFuncionario(codigo);
     
-    for (int i = 0; i < this->qtdFuncionario; i++) {
-        if (this->funcionarios[i]->getNumeroCodigo() == codigo) {
-            funcionarios.erase(i);
-            funcionarioExiste = true;
-            std::cout << "Funcionario excluido dos registros." << std::endl;
-            break;
-        }
-    }
-
-    if (!funcionarioExiste) {
+    if (funcionarioExiste == nullptr) {
         std::cout << "Funcionario nao esta cadastrado." << std::endl;
+    } else {
+        delete funcionario;
+        std::cout << "Funcionario excluido dos registros." 
     }
 }
 
 void Empresa::exibirFuncionario(int codigo) {
-    bool funcionarioExiste = false;
-    int index;
+    Funcionario *funcionario = buscarFuncionario(codigo);
 
-    for (int i = 0; i < this->qtdFuncionario; i++) {
-        if (funcionarios[i]->getNumeroCodigo() == codigo) {
-            index = i;
-            funcionarioExiste = true;
-            break;
-        }
-    }
-
-    if (funcionarioExiste) {
-        std::cout << "Registro do funcionario de codigo: " << funcionarios[index]->getNumeroCodigo() << std::endl <<
-                    "Nome: " << funcionarios[index]->getNome() << std::endl <<
-                    "Data de ingressao: " << funcionarios[index]->getDataIngressao() << std::endl <<
-                    "Endereco: " << funcionarios[index]->getEndereco() << std::endl <<
-                    "Telefone: " << funcionarios[index]->getTelefone() << std::endl <<
-                    "Designacao: " << funcionarios[index]->getDesignacao() << std::endl <<
-                    "Salario: " << funcionarios[index]->getSalario() << std::endl;
+    if (funcionario != nullptr) {
+        std::cout << "Registro do funcionario de codigo: " << funcionario->getNumeroCodigo() << std::endl <<
+                    "Nome: " << funcionario->getNome() << std::endl <<
+                    "Data de ingressao: " << funcionario->getDataIngressao() << std::endl <<
+                    "Endereco: " << funcionario->getEndereco() << std::endl <<
+                    "Telefone: " << funcionario->getTelefone() << std::endl <<
+                    "Designacao: " << funcionario->getDesignacao() << std::endl <<
+                    "Salario: " << funcionario->getSalario() << std::endl;
     } else {
         std::cout << "Funcionario nao esta cadastrado." << std::endl;
     }
@@ -155,4 +139,45 @@ void Empresa::concederAumentoSalarial() {
     for (int i = 0; i < this->qtdFuncionario; i++) {
         funcionarios[i]->setSalario((funcionarios->getTaxaAumento() * funcionarios->getSalario()) + funcionarios[i]->getSalario());
     }
+}
+
+void Empresa::calcularFolhaSalarial() {
+    int mes;
+
+    std::cout << "Para qual mes deseja calcular a folha salarial da empresa:" << std::endl
+                "1 - Janeiro" << std::endl
+                "2 - Fevereiro" << std::endl
+                "3 - Marco" << std::endl
+                "4 - Abril" << std::endl
+                "5 - Maio" << std::endl
+                "6 - Junho" << std::endl
+                "7 - Julho" << std::endl
+                "8 - Agosto" << std::endl
+                "9 - Setembro" << std::endl
+                "10 - Outubro" << std::endl
+                "11 -Novembro" << std::endl
+                "12 - Dezembro" << std::endl << std::endl;
+
+    std::cin >> mes;
+
+    if (getFolhaSalarial() != -1) {
+        std::cout << "A folha salarial desse mes ja foi calculada anteriormente" << std::endl;
+    } else {
+        double valorTotal = 0;
+
+        for (int i = 0; i < this->qtdFuncionario; i++) {
+            valorTotal += this->funcionarios[i]->calcularSalarioMensal();;
+        }
+
+        setFolhaSalarial(mes, valorTotal);
+        std::cout << "A folha salarial foi calculada com sucesso" << std::endl;
+    }
+}
+
+void Empresa::imprimirFolhaSalarialFuncionario() {
+
+}
+
+void Empresa::imprimirFolhaSalarialEmpresa() {
+    std::cout << "Deseja calcular"
 }
