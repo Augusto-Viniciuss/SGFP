@@ -1,5 +1,8 @@
 #include "Empresa.h"
+#include "Endereco.h"
 #include <string>
+
+Empresa::Empresa(){}
 
 Empresa::Empresa(std::string nome, std::string CNPJ, Data data) {
     setNome(nome);
@@ -58,29 +61,74 @@ void Empresa::modificarFuncionario(int codigo, int opcao) {
     Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO);
     
     if (funcionario != nullptr) {
-        switch (opcao) {
-            case 1:
-                funcionario->setCodigo();
-                break;
-            case 2:
-                funcionario->setDataIngresso();
-                break;
-            case 3:
-                funcionario->setNome();
-                break;
-            case 4:
-                funcionario->setEndereco();
-                break;
-            case 5:
-                funcionario->setTelefone();
-                break;
-            case 6:
-                funcionario->setDesignacao();
-                break;
-            case 7:
-                funcionario->setSalario();
-                break;
-            }
+        if (opcao == 1) {
+            int codigo;
+
+            std::cout << "Digite o numero de codigo de funcionario novo: ";
+            std::cin >> codigo;
+            funcionario->setCodigoFuncionario(codigo);
+        } else if (opcao == 2) {
+            int dia, mes, ano;
+
+            std::cout << "Digite a data de ingressao nova: " << std::endl;
+            std::cout << "Dia: ";
+            std::cin >> dia;
+            std::cout << "Mes: ";
+            std::cin >> mes;
+            std::cout << "Ano: ";
+            std::cin >> ano;
+
+            Data data = Data(dia, mes, ano);
+
+            funcionario->setDataIngresso(data);
+        } else if (opcao == 3) {
+            std::string nome;
+
+            std::cout << "Digite o nome novo: ";
+            std::cin >> nome;
+            funcionario->setNomeFuncionario(nome);
+        } else if (opcao == 4) {
+            std::string numeroEComplemento, rua, bairro, cidade, estado, CEP;
+
+            std::cout << "Digite a rua nova: ";
+            getline(std::cin, rua);
+            std::cout << "Digite numero e complemento (OPCIONAL) novo: ";
+            getline(std::cin, numeroEComplemento);
+            std::cout << "Digite o bairro novo: ";
+            getline(std::cin, bairro);
+            std::cout << "Digite a cidade nova: ";
+            getline(std::cin, cidade);
+            std::cout << "Digite o estado novo: ";
+            getline(std::cin, estado);
+            std::cout << "Digite o CEP novo: ";
+            getline(std::cin, CEP);
+
+            Endereco endereco;
+            endereco.setEndereco(numeroEComplemento, rua, bairro, cidade, estado, CEP);
+
+            funcionario->setEndereco(endereco);
+        } else if (opcao == 5) {
+            std::string telefone;
+
+            std::cout << "Digite o telefone novo: ";
+            std::cin >> telefone;
+
+            funcionario->setTelefone(telefone);
+        } else if (opcao == 6) {
+            std::string designacao;
+
+            std::cout << "Digite a nova designacao novo: ";
+            std::cin >> designacao;
+
+            funcionario->setDesignacao(designacao);
+        } else if (opcao == 7) {
+            double salario;
+            
+            std::cout << "Digite o novo salario: ";
+            std::cin >> salario;
+            
+            funcionario->setSalario(salario);
+        }
     } else {
         std::cout << "Funcionario nao esta cadastrado." << std::endl;
     }
@@ -101,13 +149,16 @@ void Empresa::exibirFuncionario(int codigo) {
     Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO);
 
     if (funcionario != nullptr) {
-        std::cout << "Registro do funcionario de codigo: " << funcionario->getCodigo() << std::endl <<
-                    "Nome: " << funcionario->getNome() << std::endl <<
-                    "Data de ingressao: " << funcionario->getDataIngressao().mostraData() << std::endl <<
-                    "Endereco: " << funcionario->getEndereco() << std::endl <<
-                    "Telefone: " << funcionario->getTelefone() << std::endl <<
-                    "Designacao: " << funcionario->getDesignacao() << std::endl <<
-                    "Salario: " << funcionario->getSalario() << std::endl;
+        std::cout << "Registro do funcionario de codigo: " << funcionario->getCodigo() << std::endl;
+        std::cout << "Nome: " << funcionario->getNomeFuncionario() << std::endl;
+        std::cout << "Data de ingressao: "; 
+        funcionario->getDataIngresso().exibeData(); 
+        std::cout << std::endl;
+        std::cout << "Endereco: ";
+        funcionario->getEndereco().exibeEndereco(); 
+        std::cout << std::endl;std::cout << "Telefone: " << funcionario->getTelefone() << std::endl;
+        std::cout << "Designacao: " << funcionario->getDesignacao() << std::endl;
+        std::cout << "Salario: " << funcionario->getSalario() << std::endl;
     } else {
         std::cout << "Funcionario nao esta cadastrado." << std::endl;
     }
@@ -116,13 +167,17 @@ void Empresa::exibirFuncionario(int codigo) {
 void Empresa::exibirFuncionariosPorTipo(std::string tipo) {
     for (int i = 0; i < this->qtdFuncionarios; i++) {
         if (funcionarios[i]->getDesignacao().find(tipo) != std::string::npos) {
-            std::cout << "Registro do funcionario de codigo: " << funcionarios[i]->getCodigo() << std::endl <<
-                    "Nome: " << funcionarios[i]->getNome() << std::endl <<
-                    "Data de ingressao: " << funcionarios[i]->getDataIngressao().mostraData() << std::endl <<
-                    "Endereco: " << funcionarios[i]->getEndereco() << std::endl <<
-                    "Telefone: " << funcionarios[i]->getTelefone() << std::endl <<
-                    "Designacao: " << funcionarios[i]->getDesignacao() << std::endl <<
-                    "Salario: " << funcionarios[i]->getSalario() << std::endl << std::endl;
+            std::cout << "Registro do funcionario de codigo: " << funcionarios[i]->getCodigo() << std::endl;
+            std::cout << "Nome: " << funcionarios[i]->getNomeFuncionario() << std::endl;
+            std::cout << "Data de ingressao: "; 
+            funcionarios[i]->getDataIngresso().exibeData(); 
+            std::cout << std::endl;
+            std::cout << "Endereco: ";
+            funcionarios[i]->getEndereco().exibeEndereco(); 
+            std::cout << std::endl;
+            std::cout << "Telefone: " << funcionarios[i]->getTelefone() << std::endl;
+            std::cout << "Designacao: " << funcionarios[i]->getDesignacao() << std::endl;
+            std::cout << "Salario: " << funcionarios[i]->getSalario() << std::endl << std::endl;
         }
     }
 }
@@ -180,7 +235,7 @@ Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao) {
             if (this->funcionarios[i]->getNome().find(informacao) != std::string::npos) return funcionarios[i];
             break;
         case 2:
-            if (this->funcionarios[i]->getEndereco().find(informacao) != std::string::npos) return funcionarios[i];
+            if (this->funcionarios[i]->getEndereco().comparaEndereco(informacao) != std::string::npos) return funcionarios[i];
             break;
         case 3:
             if (this->funcionarios[i]->getDataDeInsercao().comparaDatas(informacao)) return funcionarios[i];

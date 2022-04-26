@@ -1,4 +1,4 @@
-#include "endereco.h"
+#include "Endereco.h"
 
 Endereco::Endereco(){
 
@@ -36,3 +36,16 @@ std::string Endereco::getEstado(){
 std::string Endereco::getCEP(){
     return CEP;
 }
+
+bool Endereco::validaCEP(std::string CEP, std::string rua){
+    /*
+    Ainda vou implementar, mas a ideia é:
+    True -> CEP condiz com a rua
+    False -> CEP não condiz com a rua
+    */
+}
+
+void Endereco::exibeEndereco() {
+    std::cout << getRua() << ", " << getNumeroEComplemento() << ", " << getBairro() << ", " << getCidade() << ", " << getEstado() << ", " << getCEP() << std::endl;
+}
+

@@ -8,7 +8,8 @@
 
 class Empresa {
     public:
-        /* CONSTRUTOR s*/
+        /* CONSTRUTOR*/
+        Empresa();
         Empresa(std::string nome, std::string CNPJ, Data dataFundacao);
 
         /* SET */

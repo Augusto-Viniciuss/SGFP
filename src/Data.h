@@ -18,7 +18,7 @@ class Data
 
 		int getQuantidadeDiaMes(int) const;
 
-		void mostraData() const;
+		void exibeData() const;
 
 	private:
 		int dia;

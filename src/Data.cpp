@@ -79,7 +79,7 @@ int Data::getAno() const
 	return this->ano;
 }
 
-void Data::mostraData() const
+void Data::exibeData() const
 {
 
 	std::cout << getDia() << "/0" << getMes() << "/" << getAno() << std::endl;
