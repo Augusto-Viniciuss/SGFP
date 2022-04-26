@@ -1,23 +1,23 @@
 #ifndef DATA_H
 #define DATA_H
 
-class Data 
-{
+class Data {
 	public:
 		Data();
 		Data(int, int, int);
 		
-		void setDia(int);
+		/* GET */
 		int getDia() const;
-		
-		void setMes(int);
 		int getMes() const;
-
-		void setAno(int);
 		int getAno() const;
-
+		
+		/* SET */
+		void setMes(int);
+		void setDia(int);
+		void setAno(int);
+		
+		/* ESPECIFICAÇÕES */ 
 		int getQuantidadeDiaMes(int) const;
-
 		void exibeData() const;
 
 	private:
