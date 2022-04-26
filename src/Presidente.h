@@ -1,16 +1,16 @@
-#ifndef DIRETOR_H
-#define DIRETOR_H
+#ifndef PRESIDENTE_H
+#define PRESIDENTE_H
 
 #include "funcionario.h"
 #include <string>
 
-class Diretor : public Funcionario{
+class Presidente : public Funcionario{
     public:
-        Diretor();
+        Presidente();
         double calcularSalarioMensal();
     private:
-        std::string areaSupervisao;
         std::string areaFormacao;
+        std::string formacaoMax;
 };
 
 #endif
