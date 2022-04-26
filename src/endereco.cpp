@@ -36,3 +36,11 @@ std::string Endereco::GetEstado(){
 std::string Endereco::GetCEP(){
     return CEP;
 }
+
+bool Endereco::ValidaCEP(std::string CEP, std::string rua){
+    /*
+    Ainda vou implementar, mas a ideia é:
+    True -> CEP condiz com a rua
+    False -> CEP não condiz com a rua
+    */
+}
