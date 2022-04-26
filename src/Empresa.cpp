@@ -6,7 +6,7 @@ Empresa::Empresa(std::string nome, std::string CNPJ, Data data) {
     setCNPJ(CNPJ);
     setDataFundacao(data);
     this->qtdFuncionarios = 0;
-    this->folhaSalarial = {-1, -1};
+    this->folhaSalarial[12] = {-1};
 }
 
 void Empresa::setNome(std::string nome) {
@@ -42,51 +42,43 @@ int Empresa::getQtdFuncionarios() {
 }
 
 double Empresa::getFolhaSalarial(int mes) {
-    return this->folhaSalarial[mes];
+    if (folhaSalarial[mes -1] == -1) {
+        calcularFolhaSalarial(mes - 1);
+    }
+
+    return this->folhaSalarial[mes - 1];
 }
 
-void Empresa::addFuncionario(Funcionario funcionario) {
+void Empresa::addFuncionario(Funcionario *funcionario) {
     this->funcionarios.push_back(funcionario);
-    this->qtdFuncionario += 1;
+    this->qtdFuncionarios += 1;
 }
 
-void Empresa::modificarFuncionario(int codigo) {
-    Funcionario *funcionario = buscarFuncionario(codigo);
+void Empresa::modificarFuncionario(int codigo, int opcao) {
+    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO);
     
     if (funcionario != nullptr) {
-        std::cin << "O que deseja modificar: " << std::endl <<
-                1 - "Numero de codigo\n" << std::endl <<
-                2 - "Data de ingresso\n" << std::endl <<
-                3 - "Nome" << std::endl <<
-                4 - "Endereco" << std::endl <<
-                5 - "Telefone" << std::endl <<
-                6 - "Designacao" << std::endl <<
-                7 - "Salario" << std::endl;
-
-        int tipoModificacao;
-        std::cin >> tipoModificacao;
-
-        switch (tipoModificacao) {
+        switch (opcao) {
             case 1:
-                funcionario.setNumeroCodigo();
+                funcionario->setCodigo();
                 break;
             case 2:
-                funcionario.setDataIngresso();
+                funcionario->setDataIngresso();
                 break;
             case 3:
-                funcionario.setNome();
+                funcionario->setNome();
                 break;
             case 4:
-                funcionario.setEndereco();
+                funcionario->setEndereco();
                 break;
             case 5:
-                funcionario.setTelefone()
+                funcionario->setTelefone();
                 break;
             case 6:
-                funcionario.setDesignacao();
+                funcionario->setDesignacao();
                 break;
             case 7:
-                funcionario.setSalario();
+                funcionario->setSalario();
                 break;
             }
     } else {
@@ -95,23 +87,23 @@ void Empresa::modificarFuncionario(int codigo) {
 }
 
 void Empresa::excluirFuncionario(int codigo) {
-    Funcionario *funcionario = buscarFuncionario(codigo);
+    Funcionario *funcionario = buscarFuncionario(codigo, 4);
     
-    if (funcionarioExiste == nullptr) {
+    if (funcionario == nullptr) {
         std::cout << "Funcionario nao esta cadastrado." << std::endl;
     } else {
         delete funcionario;
-        std::cout << "Funcionario excluido dos registros." 
+        std::cout << "Funcionario excluido dos registros." << std::endl;
     }
 }
 
 void Empresa::exibirFuncionario(int codigo) {
-    Funcionario *funcionario = buscarFuncionario(codigo);
+    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO);
 
     if (funcionario != nullptr) {
-        std::cout << "Registro do funcionario de codigo: " << funcionario->getNumeroCodigo() << std::endl <<
+        std::cout << "Registro do funcionario de codigo: " << funcionario->getCodigo() << std::endl <<
                     "Nome: " << funcionario->getNome() << std::endl <<
-                    "Data de ingressao: " << funcionario->getDataIngressao() << std::endl <<
+                    "Data de ingressao: " << funcionario->getDataIngressao().mostraData() << std::endl <<
                     "Endereco: " << funcionario->getEndereco() << std::endl <<
                     "Telefone: " << funcionario->getTelefone() << std::endl <<
                     "Designacao: " << funcionario->getDesignacao() << std::endl <<
@@ -122,11 +114,11 @@ void Empresa::exibirFuncionario(int codigo) {
 }
 
 void Empresa::exibirFuncionariosPorTipo(std::string tipo) {
-    for (int i = 0; i < this->qtdFuncionario; i++) {
+    for (int i = 0; i < this->qtdFuncionarios; i++) {
         if (funcionarios[i]->getDesignacao().find(tipo) != std::string::npos) {
-            std::cout << "Registro do funcionario de codigo: " << funcionarios[i]->getNumeroCodigo() << std::endl <<
+            std::cout << "Registro do funcionario de codigo: " << funcionarios[i]->getCodigo() << std::endl <<
                     "Nome: " << funcionarios[i]->getNome() << std::endl <<
-                    "Data de ingressao: " << funcionarios[i]->getDataIngressao() << std::endl <<
+                    "Data de ingressao: " << funcionarios[i]->getDataIngressao().mostraData() << std::endl <<
                     "Endereco: " << funcionarios[i]->getEndereco() << std::endl <<
                     "Telefone: " << funcionarios[i]->getTelefone() << std::endl <<
                     "Designacao: " << funcionarios[i]->getDesignacao() << std::endl <<
@@ -136,37 +128,19 @@ void Empresa::exibirFuncionariosPorTipo(std::string tipo) {
 }
 
 void Empresa::concederAumentoSalarial() {
-    for (int i = 0; i < this->qtdFuncionario; i++) {
-        funcionarios[i]->setSalario((funcionarios->getTaxaAumento() * funcionarios->getSalario()) + funcionarios[i]->getSalario());
+    for (int i = 0; i < this->qtdFuncionarios; i++) {
+        funcionarios[i]->setSalario((funcionarios[i]->getTaxaAumento() * funcionarios[i]->getSalario()) + funcionarios[i]->getSalario());
     }
 }
 
-void Empresa::calcularFolhaSalarial() {
-    int mes;
-
-    std::cout << "Para qual mes deseja calcular a folha salarial da empresa:" << std::endl
-                "1 - Janeiro" << std::endl
-                "2 - Fevereiro" << std::endl
-                "3 - Marco" << std::endl
-                "4 - Abril" << std::endl
-                "5 - Maio" << std::endl
-                "6 - Junho" << std::endl
-                "7 - Julho" << std::endl
-                "8 - Agosto" << std::endl
-                "9 - Setembro" << std::endl
-                "10 - Outubro" << std::endl
-                "11 -Novembro" << std::endl
-                "12 - Dezembro" << std::endl << std::endl;
-
-    std::cin >> mes;
-
-    if (getFolhaSalarial() != -1) {
+void Empresa::calcularFolhaSalarial(int mes) {
+    if (getFolhaSalarial(mes - 1) != -1) {
         std::cout << "A folha salarial desse mes ja foi calculada anteriormente" << std::endl;
     } else {
         double valorTotal = 0;
 
-        for (int i = 0; i < this->qtdFuncionario; i++) {
-            valorTotal += this->funcionarios[i]->calcularSalarioMensal();;
+        for (int i = 0; i < this->qtdFuncionarios; i++) {
+            valorTotal += this->funcionarios[i]->calcularSalarioMensal();
         }
 
         setFolhaSalarial(mes, valorTotal);
@@ -174,10 +148,46 @@ void Empresa::calcularFolhaSalarial() {
     }
 }
 
-void Empresa::imprimirFolhaSalarialFuncionario() {
+template<typename info>
+void Empresa::imprimirFolhaSalarialFuncionario(const info informacao) {
+    Funcionario *funcionario;
+    funcionario = buscarFuncionario(informacao);
 
+    std::cout << "Folha Salarial do Funcionario: " << funcionario->getNome() << " ///// Codigo: " << funcionario->getCodigo() << std::endl;
+    std::cout << "Salario base: " << funcionario->getSalario();
+    std::cout << "Descontos: " << funcionario->getDescontosSalario();
+    std::cout << "Salario liquido: " << (funcionario->getSalario() - funcionario->getDescontosSalario()) << std::endl << std::endl;
 }
 
-void Empresa::imprimirFolhaSalarialEmpresa() {
-    std::cout << "Deseja calcular"
+void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
+    if (opcao == 1) {
+        double valorTotal = 0;
+
+        for (int i = 0; i < this->qtdFuncionarios; i++) {
+            
+        }
+
+        std::cout << getNome() << " ///// " << getCNPJ() << std::endl;
+        std::cout << "A folha salarial para o mes solicitado eh: " << valorTotal << std::endl;
+    }
+}
+
+template<typename info>
+Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao) {
+    for (int i = 0; i < this->qtdFuncionarios; i++) {
+        switch (opcao) {
+        case 1:
+            if (this->funcionarios[i]->getNome().find(informacao) != std::string::npos) return funcionarios[i];
+            break;
+        case 2:
+            if (this->funcionarios[i]->getEndereco().find(informacao) != std::string::npos) return funcionarios[i];
+            break;
+        case 3:
+            if (this->funcionarios[i]->getDataDeInsercao().comparaDatas(informacao)) return funcionarios[i];
+            break;
+        case 4:
+            if (this->funcionarios[i]->getCodigo() == informacao) return funcionarios[i];
+            break;
+        }
+    }
 }

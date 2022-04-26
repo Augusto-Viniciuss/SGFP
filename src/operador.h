@@ -6,7 +6,7 @@
 class Operador : public Funcionario{
     public:
         Operador();
-        double CalcularSalarioMensal();
+        double calcularSalarioMensal();
 };
 
 #endif

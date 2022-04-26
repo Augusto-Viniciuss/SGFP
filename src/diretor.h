@@ -7,7 +7,7 @@
 class Diretor : public Funcionario{
     public:
         Diretor();
-        double CalcularSalarioMensal();
+        double calcularSalarioMensal();
     private:
         std::string areaSupervisao;
         std::string areaFormacao;

@@ -7,7 +7,7 @@
 class Gerente : public Funcionario{
     public:
         Gerente();
-        double CalcularSalarioMensal();
+        double calcularSalarioMensal();
     private:
         std::string areaSupervisao;
 };

@@ -1,6 +1,7 @@
 #include "Data.h"
 #include <iostream>
 
+Data::Data(){}
 
 Data::Data(int dia, int mes, int ano)
 {

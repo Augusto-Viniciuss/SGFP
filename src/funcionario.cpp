@@ -7,51 +7,51 @@ Funcionario::Funcionario(std::string designacao, double taxa){
     this->taxaAumento = taxa;
 }
 
-int Funcionario::GetHorasTrabalhadas(){
+int Funcionario::getHorasTrabalhadas(){
     return horasTrabalhadas;
 }
 
-int Funcionario::GetDiasTrabalhados(){
+int Funcionario::getDiasTrabalhados(){
     return diasTrabalhados;
 }
 
-int Funcionario::GetCodigo(){
+int Funcionario::getCodigo(){
     return codigoFuncionario;
 }
 
-int Funcionario::GetIdade(){
+int Funcionario::getIdade(){
     return idade;
 }
 
-double Funcionario::GetSalario(){
+double Funcionario::getSalario(){
     return salario;
 }
 
-double Funcionario::GetTaxaAumento(){
+double Funcionario::getTaxaAumento(){
     return taxaAumento;
 }
 
-Endereco Funcionario::GetEndereco(){
+Endereco Funcionario::getEndereco(){
     return endereco;
 }
 
-std::string Funcionario::GetTelefone(){
+std::string Funcionario::getTelefone(){
     return telefone;
 }
 
-std::string Funcionario::GetDesignacao(){
+std::string Funcionario::getDesignacao(){
     return designacao;
 }
 
-void Funcionario::SetHorasTrabalhadas(int horas){
+void Funcionario::setHorasTrabalhadas(int horas){
     horasTrabalhadas = horas;
 }
 
-void Funcionario::SetDiasTrabalhados(int dias){
+void Funcionario::setDiasTrabalhados(int dias){
     diasTrabalhados = dias;
 }
 
-int Funcionario::GerarAleatorio(int intervaloMax){
+int Funcionario::gerarAleatorio(int intervaloMax){
     srand(time(NULL));
 
     return (rand() % (intervaloMax+1));

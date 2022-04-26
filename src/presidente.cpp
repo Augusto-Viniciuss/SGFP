@@ -4,10 +4,10 @@ Presidente::Presidente():Funcionario("Presidente", 0.30){
     /* ... */
 }
 
-double Presidente::CalcularSalarioMensal(){
+double Presidente::calcularSalarioMensal(){
     //editar para cada função ter sua hora mínima
-    SetHorasTrabalhadas(GerarAleatorio(260));
-    SetDiasTrabalhados(GerarAleatorio(20));
+    setHorasTrabalhadas(gerarAleatorio(260));
+    setDiasTrabalhados(gerarAleatorio(20));
 
-    return GetSalario() * GetHorasTrabalhadas();
+    return getSalario() * getHorasTrabalhadas();
 }

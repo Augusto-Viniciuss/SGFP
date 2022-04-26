@@ -7,7 +7,7 @@
 class Presidente : public Funcionario{
     public:
         Presidente();
-        double CalcularSalarioMensal();
+        double calcularSalarioMensal();
     private:
         std::string areaFormacao;
         std::string formacaoMax;

@@ -1,10 +1,10 @@
 #ifndef DATA_H
 #define DATA_H
 
-
-class Data
+class Data 
 {
 	public:
+		Data();
 		Data(int, int, int);
 		
 		void setDia(int);
@@ -25,6 +25,5 @@ class Data
 		int mes;
 		int ano;
 };
-
 
 #endif

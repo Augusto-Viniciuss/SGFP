@@ -4,7 +4,7 @@ Endereco::Endereco(){
 
 }
 
-void Endereco::SetEndereco(std::string numeroEComplemento, std::string rua, std::string bairro, std::string cidade, std::string estado, std::string CEP){
+void Endereco::setEndereco(std::string numeroEComplemento, std::string rua, std::string bairro, std::string cidade, std::string estado, std::string CEP){
     this->numeroEComplemento = numeroEComplemento;
     this->rua = rua;
     this->bairro = bairro;
@@ -13,26 +13,26 @@ void Endereco::SetEndereco(std::string numeroEComplemento, std::string rua, std:
     this->CEP = CEP;
 }
 
-std::string Endereco::GetNumeroEComplemento(){
+std::string Endereco::getNumeroEComplemento(){
     return numeroEComplemento;
 }
         
-std::string Endereco::GetRua(){
+std::string Endereco::getRua(){
     return rua;
 }
 
-std::string Endereco::GetBairro(){
+std::string Endereco::getBairro(){
     return bairro;
 }
 
-std::string Endereco::GetCidade(){
+std::string Endereco::getCidade(){
     return cidade;
 }
 
-std::string Endereco::GetEstado(){
+std::string Endereco::getEstado(){
     return estado;
 }
 
-std::string Endereco::GetCEP(){
+std::string Endereco::getCEP(){
     return CEP;
 }

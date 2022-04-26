@@ -9,26 +9,26 @@
 class Funcionario /*: public Empresa */{
     public:
         Funcionario(std::string designacao, double taxa);
-        virtual double CalcularSalarioMensal()=0;
+        virtual double calcularSalarioMensal()=0;
 
         /* Get */
-        int GetHorasTrabalhadas();
-        int GetDiasTrabalhados();
-        int GetCodigo();
-        int GetIdade();
-        double GetSalario();
-        double GetTaxaAumento();
-        Endereco GetEndereco();
-        std::string GetTelefone();
-        std::string GetDesignacao();
+        int getHorasTrabalhadas();
+        int getDiasTrabalhados();
+        int getCodigo();
+        int getIdade();
+        double getSalario();
+        double getTaxaAumento();
+        Endereco getEndereco();
+        std::string getTelefone();
+        std::string getDesignacao();
 
         /* Set */
-        void SetHorasTrabalhadas(int horas);
-        void SetDiasTrabalhados(int dias);
+        void setHorasTrabalhadas(int horas);
+        void setDiasTrabalhados(int dias);
 
     private:
         int horasTrabalhadas;
-        int diasTrabalhados;
+        ///int diasTrabalhados;
         int codigoFuncionario;
         int idade;
         double salario;
@@ -41,7 +41,8 @@ class Funcionario /*: public Empresa */{
         //Data dataIngresso;
 
     protected:
-        int GerarAleatorio(int intervaloMax);
+        int gerarAleatorio(int intervaloMax);
+        const double HORA_EXTRA = 5.51;
 };
 
 #endif

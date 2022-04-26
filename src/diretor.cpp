@@ -4,10 +4,10 @@ Diretor::Diretor():Funcionario("Diretor", 0.20){
     /* ... */
 }
 
-double Diretor::CalcularSalarioMensal(){
+double Diretor::calcularSalarioMensal(){
     //editar para cada função ter sua hora mínima
-    SetHorasTrabalhadas(GerarAleatorio(260));
-    SetDiasTrabalhados(GerarAleatorio(20));
+    setHorasTrabalhadas(gerarAleatorio(260));
+    setDiasTrabalhados(gerarAleatorio(20));
 
-    return GetSalario() * GetHorasTrabalhadas();
+    return getSalario() * getHorasTrabalhadas();
 }
