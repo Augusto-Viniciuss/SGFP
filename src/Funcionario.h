@@ -7,7 +7,10 @@
 
 class Funcionario{
     public:
+        /* CONSTRUTOR */
         Funcionario(std::string designacao, double taxa);
+        
+        /* ESPECIFICAÇÕES */
         virtual double calcularSalarioMensal() = 0;
 
         /* Get */
