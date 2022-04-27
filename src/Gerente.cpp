@@ -1,4 +1,4 @@
-#include "gerente.h"
+#include "Gerente.h"
 
 Gerente::Gerente():Funcionario("Gerente", 0.10){
     /* ... */

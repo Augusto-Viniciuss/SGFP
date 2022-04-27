@@ -1,7 +1,7 @@
 #ifndef PRESIDENTE_H
 #define PRESIDENTE_H
 
-#include "funcionario.h"
+#include "Funcionario.h"
 #include <string>
 
 class Presidente : public Funcionario{

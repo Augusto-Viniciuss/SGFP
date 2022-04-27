@@ -1,4 +1,4 @@
-#include "funcionario.h"
+#include "Funcionario.h"
 #include <cstdlib>
 #include <ctime>
 

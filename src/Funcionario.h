@@ -1,7 +1,7 @@
 #ifndef FUNCIONARIO_H
 #define FUNCIONARIO_H
 
-#include "endereco.h"
+#include "Endereco.h"
 #include <string>
 #include "Data.h"
 
