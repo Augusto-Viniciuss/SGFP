@@ -21,6 +21,9 @@ class Data {
 		int getQuantidadeDiaMes(int) const;
 		void exibeData() const;
 
+		/* Função comparaDatas */
+
+		bool comparaDatas(const Data &, const Data &);
 	private:
 		int dia;
 		int mes;

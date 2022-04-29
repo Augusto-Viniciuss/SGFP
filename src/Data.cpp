@@ -51,3 +51,14 @@ void Data::exibeData() const {
 	std::cout << getDia() << "/0" << getMes() << "/" << getAno() << std::endl;
 }
 
+
+bool Data::comparaDatas(const Data &data1, const Data &data2){
+
+	if(data1.getDia() == data2.getDia() && data1.getAno() == data2.getAno() && data1.getMes() == data2.getMes()){
+		return true;
+	}
+	else{
+		return false;
+	}
+	
+}
