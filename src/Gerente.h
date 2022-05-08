@@ -1,7 +1,7 @@
 #ifndef GERENTE_H
 #define GERENTE_H
 
-#include "funcionario.h"
+#include "Funcionario.h"
 #include <string>
 
 class Gerente : public Funcionario{

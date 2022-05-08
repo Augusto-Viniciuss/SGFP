@@ -1,7 +1,7 @@
 #ifndef OPERADOR_H
 #define OPERADOR_H
 
-#include "funcionario.h"
+#include "Funcionario.h"
 
 class Operador : public Funcionario{
     public:

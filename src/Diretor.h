@@ -1,7 +1,7 @@
 #ifndef DIRETOR_H
 #define DIRETOR_H
 
-#include "funcionario.h"
+#include "Funcionario.h"
 #include <string>
 
 class Diretor : public Funcionario{
