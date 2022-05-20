@@ -42,7 +42,10 @@ class Empresa {
         std::string CNPJ;
         Data dataFundacao;
         int qtdFuncionarios;
-        std::vector<Funcionario*> funcionarios;
+        std::vector<Funcionario*> Operadores;
+        std::vector<Funcionario*> Gerente;
+        std::vector<Funcionario*> Diretor;
+        std::vector<Funcionario*> Presidente;
         double folhaSalarial[12];
         const int BUSCAR_POR_CODIGO = 4;
 };
