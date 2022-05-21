@@ -10,7 +10,7 @@
 class Interface {
     public:
         int menu();
-        Funcionario* cadastraFuncionario();
+        Funcionario* lerAtributosFuncionario();
         int lerCodigoParaModificarFuncionario();
         int lerOpcaoParaModificarFuncionario();
         template<typename atributo> atributo novoAtributoParaModificarFuncionario();
