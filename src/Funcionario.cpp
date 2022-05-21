@@ -1,8 +1,13 @@
 #include "Funcionario.h"
+#include "TelefoneException.h"
 #include <cstdlib>
 #include <ctime>
 
-Funcionario::Funcionario(std::string designacao, double taxa)/*:Empresa(nome, CNPJ, data)*/{
+Funcionario::Funcionario(){
+    /* ... */
+}
+
+Funcionario::Funcionario(int designacao, double taxa)/*:Empresa(nome, CNPJ, data)*/{
     this->designacao = designacao;
     this->taxaAumento = taxa;
 }
@@ -37,7 +42,22 @@ std::string Funcionario::getTelefone(){
 }
 
 std::string Funcionario::getDesignacao(){
-    return this->designacao;
+    switch(this->designacao){
+        case 1:
+            return "Presidente";
+            break;
+        case 2:
+            return "Diretor";
+            break;
+        case 3:
+            return "Gerente";
+            break;
+        case 4:
+            return "Operador";
+            break;
+        default:
+            break;
+    }
 }
 
 std::string Funcionario::getNomeFuncionario(){
@@ -58,7 +78,7 @@ void Funcionario::setSalario(double salario){
     this->salario = salario;
 }
 
-void Funcionario::setDesignacao(std::string designacao){
+void Funcionario::setDesignacao(int designacao){
     this->designacao = designacao;
 }
 
@@ -67,7 +87,31 @@ void Funcionario::setEndereco(Endereco endereco){
 }
 
 void Funcionario::setTelefone(std::string telefone){
-    this->telefone = telefone;
+    if(telefone.size() == 11){
+        for(int i = 0; i < 11; i++){
+            if(telefone[i] < '0' || telefone[i] > 9){
+                throw TelefoneException("Numero invalido digitado");
+            }
+        }
+        int j = 0;
+        for(int i = 0; i < 16; i++){
+            if(i == 0){
+                this->telefone[i] = '(';
+                continue;
+            }
+            if(i == 3){
+                this->telefone[i] = ')';
+                continue;
+            }
+            if(i == 9){
+                this->telefone[i] = '-';
+                continue;
+            }
+            this->telefone[i] = telefone[j++];
+        }
+    }else{
+        throw TelefoneException("Quantidade insuficiente de caracteres");
+    }
 }
 
 void Funcionario::setNomeFuncionario(std::string nome){
