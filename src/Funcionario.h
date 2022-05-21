@@ -8,7 +8,11 @@
 class Funcionario{
     public:
         /* CONSTRUTOR */
-        Funcionario(std::string designacao, double taxa);
+        Funcionario();
+        Funcionario(int designacao, double taxa);
+
+        /* DESTRUTOR */
+        virtual ~Funcionario();
         
         /* ESPECIFICAÇÕES */
         virtual double calcularSalarioMensal() = 0;
@@ -28,7 +32,7 @@ class Funcionario{
         /* Set */
         void setHorasTrabalhadas(int horas);
         void setSalario(double salario);
-        void setDesignacao(std::string designacao);
+        void setDesignacao(int designacao);
         void setEndereco(Endereco endereco);
         void setTelefone(std::string telefone);
         void setNomeFuncionario(std::string nome);
@@ -39,13 +43,13 @@ class Funcionario{
         int horasTrabalhadas;
         int codigoFuncionario;
         int idade;
+        int designacao; /*1 = Presidente; 2 = Diretor; 3 = Gerente; 4 = Operador*/
         double salario;
         double taxaAumento;
-        std::string nomeFuncionario;
-        std::string CPF;
+        char nomeFuncionario[100];
+        char CPF[15]; /*Enviar como XXXXXXXXXXX e será armazenado como XXX.XXX.XXX-XX */
         Endereco endereco;
-        std::string telefone;
-        std::string designacao;
+        char telefone[16]; /*Enviar como XXXXXXXXXXX e será armazenado como (XX)XXXXX-XXXX */
         Data dataIngresso;
 
     protected:
