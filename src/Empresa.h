@@ -14,7 +14,7 @@ class Empresa {
     public:
         /* CONSTRUTOR*/
         Empresa();
-        Empresa(std::string nome, std::string CNPJ, Data dataFundacao);
+        Empresa(std::string nome, std::string CNPJ, int *dataEmInt);
 
         /* SET */
         void setNome(std::string nome);
@@ -32,14 +32,15 @@ class Empresa {
         /* ESPECIFICAÇÕES */
         void addFuncionario(Funcionario *funcionario, int tipoFuncionario);
         template<typename atributo>void modificarFuncionario(int codigo, int opcao, atributo valor);
-        void excluirFuncionario(int codigo, int tipoFuncionario);
-        void exibirFuncionario(int codigo, int tipoFuncionario);
+        void excluirFuncionario(int codigo);
+        void exibirFuncionario(int codigo);
+        void exibirTodosFuncionarios();
         void exibirFuncionariosPorTipo(int tipoFuncionario);
         void concederAumentoSalarial();
         void calcularFolhaSalarial(int mes);
-        template<typename info> void imprimirFolhaSalarialFuncionario(const info informacao, int tipoInformacao, int tipoFuncionario);
+        template<typename info> void imprimirFolhaSalarialFuncionario(const info informacao, int tipoInformacao);
         void imprimirFolhaSalarialEmpresa(int opcao);
-        template<typename info> Funcionario* buscarFuncionario(const info informacao, int opcao, int tipoFuncionario);
+        template<typename info> Funcionario* buscarFuncionario(const info informacao, int opcao);
 
     private:
         std::string nome;
@@ -59,6 +60,7 @@ class Empresa {
         const int BUSCAR_POR_ENDERECO = 6;
         const int BUSCAR_POR_DATA = 7;
         const int BUSCAR_POR_CODIGO = 8;
+        const int QTD_DE_TIPOS = 4;
 };
 
 #endif

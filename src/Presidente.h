@@ -4,7 +4,7 @@
 #include "Funcionario.h"
 #include <string>
 
-class Presidente : public Funcionario{
+class Presidente : public Funcionario {
     public:
         Presidente();
         double calcularSalarioMensal();

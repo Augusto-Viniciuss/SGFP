@@ -44,18 +44,16 @@ std::string Funcionario::getTelefone(){
 std::string Funcionario::getDesignacao(){
     switch(this->designacao){
         case 1:
-            return "Presidente";
-            break;
-        case 2:
-            return "Diretor";
-            break;
-        case 3:
-            return "Gerente";
-            break;
-        case 4:
             return "Operador";
             break;
-        default:
+        case 2:
+            return "Gerente";
+            break;
+        case 3:
+            return "Diretor";
+            break;
+        case 4:
+            return "Presidente";
             break;
     }
 }
