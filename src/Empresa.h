@@ -3,9 +3,12 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Funcionario.h"
 #include "Data.h"
+#include "Endereco.h"
 #include "FuncionarioJaCadastradoExcept.h"
+#include "FuncionarioNaoEstaCadastradoExcept.h"
 
 class Empresa {
     public:
@@ -16,27 +19,27 @@ class Empresa {
         /* SET */
         void setNome(std::string nome);
         void setCNPJ(std::string CNPJ);
-        void setDataFundacao(Data data);
+        void setDataFundacao(int *dataEmInt);
         void setFolhaSalarial(int mes, double valor);
         
         /* GET */
         std::string getNome();
         std::string getCNPJ();
         Data getDataFundacao();
-        int getQtdFuncionarios(int tipo);
+        int getQtdFuncionarios(int tipoFuncionario);
         double getFolhaSalarial(int mes);
         
         /* ESPECIFICAÇÕES */
-        void addFuncionario(Funcionario *funcionario, int tipo);
+        void addFuncionario(Funcionario *funcionario, int tipoFuncionario);
         template<typename atributo>void modificarFuncionario(int codigo, int opcao, atributo valor);
-        void excluirFuncionario(int codigo, int tipo);
-        void exibirFuncionario(int codigo, int tipo);
-        void exibirFuncionariosPorTipo(int tipo);
+        void excluirFuncionario(int codigo, int tipoFuncionario);
+        void exibirFuncionario(int codigo, int tipoFuncionario);
+        void exibirFuncionariosPorTipo(int tipoFuncionario);
         void concederAumentoSalarial();
         void calcularFolhaSalarial(int mes);
         template<typename info> void imprimirFolhaSalarialFuncionario(const info informacao, int tipoInformacao, int tipoFuncionario);
         void imprimirFolhaSalarialEmpresa(int opcao);
-        template<typename info> Funcionario* buscarFuncionario(const info informacao, int opcao, int tipo);
+        template<typename info> Funcionario* buscarFuncionario(const info informacao, int opcao, int tipoFuncionario);
 
     private:
         std::string nome;

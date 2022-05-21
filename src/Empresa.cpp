@@ -1,13 +1,11 @@
 #include "Empresa.h"
-#include "Endereco.h"
-#include <string>
 
 Empresa::Empresa(){}
 
-Empresa::Empresa(std::string nome, std::string CNPJ, Data data) {
+Empresa::Empresa(std::string nome, std::string CNPJ, int *dataEmInt) {
     setNome(nome);
     setCNPJ(CNPJ);
-    setDataFundacao(data);
+    setDataFundacao(dataEmInt);
     this->qtdFuncionarios[4] = {0};
     this->folhaSalarial[12] = {-1};
 }
@@ -20,8 +18,14 @@ void Empresa::setCNPJ(std::string CNPJ) {
     this->CNPJ = CNPJ;
 }
 
-void Empresa::setDataFundacao(Data data) {
-    this->dataFundacao = data;
+void Empresa::setDataFundacao(int *dataEmInt) {
+    Data dataObjeto;
+
+    dataObjeto.setAno(dataEmInt[2]);
+    dataObjeto.setMes(dataEmInt[1]);
+    dataObjeto.setDia(dataEmInt[0]);
+
+    this->dataFundacao = dataObjeto;
 }
 
 void Empresa::setFolhaSalarial(int mes, double valor) {
@@ -52,29 +56,29 @@ double Empresa::getFolhaSalarial(int mes) {
     return this->folhaSalarial[mes - 1];
 }
 
-void Empresa::addFuncionario(Funcionario *funcionario, int tipo) {
-    Funcionario *func = buscarFuncionario(funcionario->getNomeFuncionario(), BUSCAR_POR_NOME, tipo);
+void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
+    Funcionario *func = buscarFuncionario(funcionario->getNomeFuncionario(), BUSCAR_POR_NOME, tipoFuncionario);
 
     if(!(func != nullptr)) {
         throw FuncionarioJaCadastradoExcept();
     }
 
-    switch (tipo) {
+    switch (tipoFuncionario) {
     case 0:
         operadores.push_back(funcionario);
-        qtdFuncionarios[tipo] += 1;
+        qtdFuncionarios[tipoFuncionario] += 1;
         break;
     case 1:
         gerentes.push_back(funcionario);
-        qtdFuncionarios[tipo] += 1;
+        qtdFuncionarios[tipoFuncionario] += 1;
         break; 
     case 2:
         diretores.push_back(funcionario);
-        qtdFuncionarios[tipo] += 1;
+        qtdFuncionarios[tipoFuncionario] += 1;
         break;
     case 3:
         presidente = funcionario;
-        qtdFuncionarios[tipo] += 1;
+        qtdFuncionarios[tipoFuncionario] += 1;
         break;
     }
 }
@@ -100,23 +104,23 @@ void Empresa::modificarFuncionario(int codigo, int opcao, atributo valor) {
             funcionario->setSalario(valor);
         }
     } else {
-        std::cout << "Funcionario nao esta cadastrado." << std::endl;
+        throw FuncionarioNaoEstaCadastradoExcept();
     }
 }
 
-void Empresa::excluirFuncionario(int codigo, int tipo) {
-    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO, tipo);
+void Empresa::excluirFuncionario(int codigo, int tipoFuncionario) {
+    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO, tipoFuncionario);
     
     if (funcionario == nullptr) {
-        std::cout << "Funcionario nao esta cadastrado." << std::endl;
+        throw FuncionarioNaoEstaCadastradoExcept();
     } else {
         delete funcionario;
         std::cout << "Funcionario excluido dos registros." << std::endl;
     }
 }
 
-void Empresa::exibirFuncionario(int codigo, int tipo) {
-    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO, tipo);
+void Empresa::exibirFuncionario(int codigo, int tipoFuncionario) {
+    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO, tipoFuncionario);
 
     if (funcionario != nullptr) {
         std::cout << "Registro do funcionario de codigo: " << funcionario->getCodigo() << std::endl;
@@ -130,13 +134,13 @@ void Empresa::exibirFuncionario(int codigo, int tipo) {
         std::cout << "Designacao: " << funcionario->getDesignacao() << std::endl;
         std::cout << "Salario: " << funcionario->getSalario() << std::endl;
     } else {
-        std::cout << "Funcionario nao esta cadastrado." << std::endl;
+        throw FuncionarioNaoEstaCadastradoExcept();
     }
 }
 
-void Empresa::exibirFuncionariosPorTipo(int tipo) {
-    for (int i = 0; i < this->qtdFuncionarios[tipo]; i++) {
-        if(tipo == OPERADOR) {
+void Empresa::exibirFuncionariosPorTipo(int tipoFuncionario) {
+    for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
+        if(tipoFuncionario == OPERADOR) {
             std::cout << "Registro do funcionario de codigo: " << this->operadores[i]->getCodigo() << std::endl;
             std::cout << "Nome: " << operadores[i]->getNomeFuncionario() << std::endl;
             std::cout << "Data de ingressao: "; 
@@ -148,7 +152,7 @@ void Empresa::exibirFuncionariosPorTipo(int tipo) {
             std::cout << "Telefone: " << operadores[i]->getTelefone() << std::endl;
             std::cout << "Designacao: " << operadores[i]->getDesignacao() << std::endl;
             std::cout << "Salario: " << operadores[i]->getSalario() << std::endl << std::endl;
-        } else if(tipo == GERENTE) {
+        } else if(tipoFuncionario == GERENTE) {
             std::cout << "Registro do funcionario de codigo: " << gerentes[i]->getCodigo() << std::endl;
             std::cout << "Nome: " << gerentes[i]->getNomeFuncionario() << std::endl;
             std::cout << "Data de ingressao: "; 
@@ -160,7 +164,7 @@ void Empresa::exibirFuncionariosPorTipo(int tipo) {
             std::cout << "Telefone: " << gerentes[i]->getTelefone() << std::endl;
             std::cout << "Designacao: " << gerentes[i]->getDesignacao() << std::endl;
             std::cout << "Salario: " << gerentes[i]->getSalario() << std::endl << std::endl;
-        } else if (tipo == DIRETOR) {
+        } else if (tipoFuncionario == DIRETOR) {
             std::cout << "Registro do funcionario de codigo: " << diretores[i]->getCodigo() << std::endl;
             std::cout << "Nome: " << diretores[i]->getNomeFuncionario() << std::endl;
             std::cout << "Data de ingressao: "; 
@@ -172,7 +176,7 @@ void Empresa::exibirFuncionariosPorTipo(int tipo) {
             std::cout << "Telefone: " << diretores[i]->getTelefone() << std::endl;
             std::cout << "Designacao: " << diretores[i]->getDesignacao() << std::endl;
             std::cout << "Salario: " << diretores[i]->getSalario() << std::endl << std::endl;
-        } else if(tipo == PRESIDENTE) {
+        } else if(tipoFuncionario == PRESIDENTE) {
             std::cout << "Registro do funcionario de codigo: " << presidente->getCodigo() << std::endl;
             std::cout << "Nome: " << presidente->getNomeFuncionario() << std::endl;
             std::cout << "Data de ingressao: "; 
@@ -213,7 +217,7 @@ void Empresa::concederAumentoSalarial() {
 
 void Empresa::calcularFolhaSalarial(int mes) {
     if (getFolhaSalarial(mes - 1) != -1) {
-        std::cout << "A folha salarial desse mes ja foi calculada anteriormente" << std::endl;
+        std::cout << "A folha salarial desse mes ja foi calculada anteriormente." << std::endl;
     } else {
         double valorTotal = 0;
 
@@ -237,7 +241,7 @@ void Empresa::calcularFolhaSalarial(int mes) {
         }
 
         setFolhaSalarial(mes, valorTotal);
-        std::cout << "A folha salarial foi calculada com sucesso" << std::endl;
+        std::cout << "A folha salarial foi para o mes solicitado foi calculada com sucesso." << std::endl;
     }
 }
 
@@ -296,9 +300,9 @@ void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
 }
 
 template<typename info>
-Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao, int tipo) {
-    for (int i = 0; i < this->qtdFuncionarios[tipo]; i++) {
-        if(tipo == OPERADOR) {
+Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao, int tipoFuncionario) {
+    for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
+        if(tipoFuncionario == OPERADOR) {
             switch (opcao) {
             case 5:
                 if (this->operadores->getNome().find(informacao) != std::string::npos) return operadores;
@@ -313,7 +317,7 @@ Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao, int ti
                 if (this->operadores->getCodigo() == informacao) return operadores;
                 break;
             }
-        } else if(tipo == GERENTE) {
+        } else if(tipoFuncionario == GERENTE) {
             switch (opcao) {
             case 5:
                 if (this->gerentes->getNome().find(informacao) != std::string::npos) return gerentes;
@@ -328,7 +332,7 @@ Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao, int ti
                 if (this->gerentes->getCodigo() == informacao) return gerentes;
                 break;
             }
-        } else if(tipo == DIRETOR) {
+        } else if(tipoFuncionario == DIRETOR) {
             switch (opcao) {
             case 5:
                 if (this->diretores->getNome().find(informacao) != std::string::npos) return diretores;
@@ -343,7 +347,7 @@ Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao, int ti
                 if (this->diretores->getCodigo() == informacao) return diretores;
                 break;
             }
-        } else if(tipo == PRESIDENTE) {
+        } else if(tipoFuncionario == PRESIDENTE) {
             switch (opcao) {
             case 5:
                 if (this->presidente->getNome().find(informacao) != std::string::npos) return presidente;
