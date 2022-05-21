@@ -27,7 +27,7 @@ int Interface::menu() {
     return opcao;
 }
 
-Funcionario* Interface::cadastraFuncionario() {
+Funcionario* Interface::lerAtributosFuncionario() {
     Funcionario *funcionario;
     int codigo, idade, designacao;
     std::string nome, CPF, telefone, endereco;
