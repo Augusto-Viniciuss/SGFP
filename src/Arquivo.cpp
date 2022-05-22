@@ -100,7 +100,12 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 
 		arquivoFuncionarios[i].close();
 	}
-	
+
+	cout << "Digite a data de modificacao seguida por dia, mes e ano";
+	int dia, mes, ano;
+	cin >> dia >> mes >> ano;
+	historico.setDataModificacao(dia, mes, ano);
+	historico.setModificacao("Data de criacao");
 }
 
 
@@ -157,6 +162,13 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		// Escreve os dados no arquivo correspondente ao tipo de funcionário
   	    	arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast <const char *> (&dadosFuncionario), sizeof(*funcionario));
 
+		int dia, mes, ano;
+		cout << "Digite o dia, mes, ano da criacao\n";
+
+		cin >> dia >> mes >> ano;
+
+		historico.setDataModificacao(dia, mes, ano);
+		historico.setModificacao("O usuario foi cadastrado");
 
 	}
 
@@ -256,6 +268,13 @@ void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario){
 		// Coloca um funcionario zerado naquela posição
 		arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast <const char * > (funcionarios),  sizeof(*funcionarios) );
 		
+		cout << "Digite o dia, mes e ano da modificacao\n";
+		int dia, mes,  ano;
+		
+		cin >> dia >> mes >> ano;
+		historico.setDataModificacao(dia, mes, ano);
+		historico.setModificacao("O usuario foi excluido");
+
 			
 	}
 

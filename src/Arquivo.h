@@ -8,6 +8,8 @@
 #include "Operador.h"
 #include "Presidente.h"
 #include "Diretor.h"
+#include "HistoricoArquivo.h"
+
 
 #define QUANTIA_ARQUIVOS 4
 
@@ -35,7 +37,8 @@ class Arquivo{
 	private:
 		std::fstream arquivoFuncionarios[QUANTIA_ARQUIVOS];
 		std::string nomeArquivos[QUANTIA_ARQUIVOS];
-	
+		// Histórico do arquivo
+		HistoricoArquivo historico;
 		
 
 
