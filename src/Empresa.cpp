@@ -129,7 +129,7 @@ void Empresa::exibirFuncionario(int codigo) {
         std::cout << "Endereco: ";
         funcionario->getEndereco().exibeEndereco(); 
         std::cout << std::endl;std::cout << "Telefone: " << funcionario->getTelefone() << std::endl;
-        std::cout << "Designacao: " << funcionario->getDesignacao() << std::endl;
+        std::cout << "Designacao: " << funcionario->getDesignacaoStr() << std::endl;
         std::cout << "Salario: " << funcionario->getSalario() << std::endl;
     } else {
         throw FuncionarioNaoEstaCadastradoExcept();
@@ -149,7 +149,7 @@ void Empresa::exibirTodosFuncionarios() {
                 operadores[i]->getEndereco().exibeEndereco(); 
                 std::cout << std::endl;
                 std::cout << "Telefone: " << operadores[i]->getTelefone() << std::endl;
-                std::cout << "Designacao: " << operadores[i]->getDesignacao() << std::endl;
+                std::cout << "Designacao: " << operadores[i]->getDesignacaoStr() << std::endl;
                 std::cout << "Salario: " << operadores[i]->getSalario() << std::endl << std::endl;
             } else if(tipoFuncionario == GERENTE) {
                 std::cout << "Registro do funcionario de codigo: " << gerentes[i]->getCodigo() << std::endl;
@@ -161,7 +161,7 @@ void Empresa::exibirTodosFuncionarios() {
                 gerentes[i]->getEndereco().exibeEndereco(); 
                 std::cout << std::endl;
                 std::cout << "Telefone: " << gerentes[i]->getTelefone() << std::endl;
-                std::cout << "Designacao: " << gerentes[i]->getDesignacao() << std::endl;
+                std::cout << "Designacao: " << gerentes[i]->getDesignacaoStr() << std::endl;
                 std::cout << "Salario: " << gerentes[i]->getSalario() << std::endl << std::endl;
             } else if (tipoFuncionario == DIRETOR) {
                 std::cout << "Registro do funcionario de codigo: " << diretores[i]->getCodigo() << std::endl;
@@ -173,7 +173,7 @@ void Empresa::exibirTodosFuncionarios() {
                 diretores[i]->getEndereco().exibeEndereco(); 
                 std::cout << std::endl;
                 std::cout << "Telefone: " << diretores[i]->getTelefone() << std::endl;
-                std::cout << "Designacao: " << diretores[i]->getDesignacao() << std::endl;
+                std::cout << "Designacao: " << diretores[i]->getDesignacaoStr() << std::endl;
                 std::cout << "Salario: " << diretores[i]->getSalario() << std::endl << std::endl;
             } else if(tipoFuncionario == PRESIDENTE) {
                 std::cout << "Registro do funcionario de codigo: " << presidente->getCodigo() << std::endl;
@@ -185,8 +185,9 @@ void Empresa::exibirTodosFuncionarios() {
                 presidente->getEndereco().exibeEndereco(); 
                 std::cout << std::endl;
                 std::cout << "Telefone: " << presidente->getTelefone() << std::endl;
-                std::cout << "Designacao: " << presidente->getDesignacao() << std::endl;
-                std::cout << "Salario: " << presidente->getSalario() << std::endl << std::endl;
+                std::cout << "Designacao: " << presidente->getDesignacaoStr() << std::endl;
+                std::cout << "Area de formacao: " << dynamic_cast<Presidente*>(presidente->getAreaFormacao()) << std::endl;
+                std::cout << "Salario: " << presidente->calcularSalarioMensal() << std::endl << std::endl;
             }
         }
     }
