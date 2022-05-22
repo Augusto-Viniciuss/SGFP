@@ -5,11 +5,11 @@
 #include <string>
 #include "Data.h"
 
-class Funcionario{
+class Funcionario {
     public:
         /* CONSTRUTOR */
         Funcionario();
-        Funcionario(int designacao, double taxa);
+        Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao);
 
         /* DESTRUTOR */
         virtual ~Funcionario();
@@ -26,7 +26,8 @@ class Funcionario{
         Endereco getEndereco();
         std::string getNomeFuncionario();
         std::string getTelefone();
-        std::string getDesignacao();
+        std::string getDesignacaoStr();
+        int getDesignacaoInt();
         Data getDataIngresso();
 
         /* Set */
@@ -40,6 +41,7 @@ class Funcionario{
         void setDataIngresso(Data data);
         void setDataIngresso(std::string data);
         void setCodigoFuncionario(int codigo);
+        void setTaxaAumento();
 
     private:
         int horasTrabalhadas;
