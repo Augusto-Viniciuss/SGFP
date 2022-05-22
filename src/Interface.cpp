@@ -50,7 +50,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
     std::cout << "Digite a data de ingresso na empresa, na ordem dia, mes e ano separados por espacos:" << std::endl;
     std::cin >> data[0] >> data[1] >> data[2];
     std::cout << "Qual a designacao do funcionario:" << std::endl;
-    std::cout << "Digite 1 para operador" << std::endl << "Digite 2 para gerente" << std::endl << "Digite 3 para diretor" << "Digite 4 para presidente" << std::endl;
+    std::cout << "Digite 1 para operador" << std::endl << "Digite 2 para gerente" << std::endl << std::endl << "Digite 3 para diretor" << std::endl << "Digite 4 para presidente" << std::endl;
     std::cin >> designacao;
     std::cin.ignore();
 
