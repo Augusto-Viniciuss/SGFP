@@ -7,6 +7,10 @@ Funcionario::Funcionario(){
     /* ... */
 }
 
+Funcionario::~Funcionario(){
+    /* ... */
+}
+
 Funcionario::Funcionario(int designacao, double taxa)/*:Empresa(nome, CNPJ, data)*/{
     this->designacao = designacao;
     this->taxaAumento = taxa;
@@ -84,6 +88,70 @@ void Funcionario::setEndereco(Endereco endereco){
     this->endereco = endereco;
 }
 
+void Funcionario::setEndereco(std::string endereco){
+    Endereco aux;
+    std::string numero, complemento, rua, bairro, cidade, estado, CEP;
+    int j = 0;
+    for(int i = 0; i < endereco.size(); i++){
+        if(endereco[j] == ','){
+            j++;
+            break;
+        }
+        numero[i] = endereco[j++];
+    }
+
+    for(int i = 0; i < endereco.size(); i++){
+        if(endereco[j] == ','){
+            j++;
+            break;
+        }
+        complemento[i] = endereco[j++];
+    }
+
+    for(int i = 0; i < endereco.size(); i++){
+        if(endereco[j] == ','){
+            j++;
+            break;
+        }
+        rua[i] = endereco[j++];
+    }
+
+    for(int i = 0; i < endereco.size(); i++){
+        if(endereco[j] == ','){
+            j++;
+            break;
+        }
+        bairro[i] = endereco[j++];
+    }
+
+    for(int i = 0; i < endereco.size(); i++){
+        if(endereco[j] == ','){
+            j++;
+            break;
+        }
+        cidade[i] = endereco[j++];
+    }
+
+    for(int i = 0; i < endereco.size(); i++){
+        if(endereco[j] == ','){
+            j++;
+            break;
+        }
+        estado[i] = endereco[j++];
+    }
+
+    for(int i = 0; i < endereco.size(); i++){
+        if(endereco[j] == ','){
+            j++;
+            break;
+        }
+        CEP[i] = endereco[j++];
+    }
+
+    aux.setEndereco(numero, complemento, rua, bairro, cidade, estado, CEP);
+    this->endereco = aux;
+}
+
 void Funcionario::setTelefone(std::string telefone){
     if(telefone.size() == 11){
         for(int i = 0; i < 11; i++){
@@ -92,7 +160,7 @@ void Funcionario::setTelefone(std::string telefone){
             }
         }
         int j = 0;
-        for(int i = 0; i < 16; i++){
+        for(int i = 0; i < 14; i++){
             if(i == 0){
                 this->telefone[i] = '(';
                 continue;
@@ -107,17 +175,63 @@ void Funcionario::setTelefone(std::string telefone){
             }
             this->telefone[i] = telefone[j++];
         }
+        this->telefone[14] = '\0';
+        
     }else{
         throw TelefoneException("Quantidade insuficiente de caracteres");
     }
 }
 
 void Funcionario::setNomeFuncionario(std::string nome){
-    this->nomeFuncionario = nome;
+    if(nome.size() > 99){
+        for(int i = 0; i < 98; i++){
+            this->nomeFuncionario[i] = nome[i];
+        }
+        this->nomeFuncionario[99] = '\0';
+    }else{
+        for(int i = 0; i < nome.size(); i++){
+            this->nomeFuncionario[i] = nome[i];
+        }
+        this->nomeFuncionario[nome.size()] = '\0';
+    }
 }
 
 void Funcionario::setDataIngresso(Data data){
     this->dataIngresso = data;
+}
+
+void Funcionario::setDataIngresso(std::string data){
+    Data *aux;
+    std::string dia, mes, ano;
+
+    int j = 0;
+    for(int i = 0; i < data.size(); i++){
+        if(data[j] == '/'){
+            j++;
+            break;
+        }
+        dia[i] = data[j++];
+    }
+
+    for(int i = 0; i < data.size(); i++){
+        if(data[j] == '/'){
+            j++;
+            break;
+        }
+        mes[i] = data[j++];
+    }
+
+    for(int i = 0; i < data.size(); i++){
+        if(data[j] == '/'){
+            j++;
+            break;
+        }
+        ano[i] = data[j++];
+    }
+
+    aux = new Data(std::stoi(dia), std::stoi(mes), std::stoi(ano));
+
+    this->dataIngresso = *aux;
 }
 
 void Funcionario::setCodigoFuncionario(int codigo){

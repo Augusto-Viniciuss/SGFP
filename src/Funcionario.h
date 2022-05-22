@@ -34,9 +34,11 @@ class Funcionario{
         void setSalario(double salario);
         void setDesignacao(int designacao);
         void setEndereco(Endereco endereco);
+        void setEndereco(std::string endereco); //numero,complemento,rua,bairro,cidade,estado,CEP
         void setTelefone(std::string telefone);
         void setNomeFuncionario(std::string nome);
         void setDataIngresso(Data data);
+        void setDataIngresso(std::string data);
         void setCodigoFuncionario(int codigo);
 
     private:
@@ -49,7 +51,7 @@ class Funcionario{
         char nomeFuncionario[100];
         char CPF[15]; /*Enviar como XXXXXXXXXXX e será armazenado como XXX.XXX.XXX-XX */
         Endereco endereco;
-        char telefone[16]; /*Enviar como XXXXXXXXXXX e será armazenado como (XX)XXXXX-XXXX */
+        char telefone[15]; /*Enviar como XXXXXXXXXXX e será armazenado como (XX)XXXXX-XXXX */
         Data dataIngresso;
 
     protected:
