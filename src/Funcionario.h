@@ -27,7 +27,8 @@ class Funcionario: public Pessoa{
         //Endereco getEndereco();
         //std::string getNomeFuncionario();
         //std::string getTelefone();
-        std::string getDesignacao();
+        std::string getDesignacaoStr();
+        int getDesignacaoInt();
 
         Data getDataIngresso();
 

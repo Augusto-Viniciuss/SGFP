@@ -4,7 +4,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include "Funcionario.h"
+#include "Operador.h"
+#include "Gerente.h"
+#include "Diretor.h"
+#include "Presidente.h"
 #include "Data.h"
 #include "Endereco.h"
 #include "FuncionarioJaCadastradoExcept.h"
@@ -31,7 +34,7 @@ class Empresa {
         
         /* ESPECIFICAÇÕES */
         void addFuncionario(Funcionario *funcionario, int tipoFuncionario);
-        template<typename atributo>void modificarFuncionario(int codigo, int opcao, atributo valor);
+        template<typename atributo> void modificarFuncionario(int codigo, int opcao, atributo valor);
         void excluirFuncionario(int codigo);
         void exibirFuncionario(int codigo);
         void exibirTodosFuncionarios();

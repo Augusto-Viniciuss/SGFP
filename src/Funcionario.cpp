@@ -71,6 +71,10 @@ std::string Funcionario::getDesignacaoStr(){
     }
 }
 
+int Funcionario::getDesignacaoInt() {
+    return this->designacao;
+}
+ 
 /*
 std::string Funcionario::getNomeFuncionario(){
     return this->nomeFuncionario;
