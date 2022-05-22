@@ -1,5 +1,5 @@
 #include "Funcionario.h"
-#include "TelefoneException.h"
+//#include "TelefoneException.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -9,11 +9,11 @@ Funcionario::Funcionario(){
 
 Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao) {
     setCodigoFuncionario(codigo);
-    setNomeFuncionario(nome);
+    //setNomeFuncionario(nome);
     setCPF(CPF);
     setIdade(idade);
     setEndereco(endereco);
-    setDataIngresso(data);
+    //setDataIngresso(data);
     setDesignacao(designacao);
     setTaxaAumento();
 }
@@ -27,9 +27,11 @@ int Funcionario::getCodigo(){
     return this->codigoFuncionario;
 }
 
+/*
 int Funcionario::getIdade(){
     return this->idade;
 }
+*/
 
 double Funcionario::getSalario(){
     return this->salario;
@@ -39,13 +41,17 @@ double Funcionario::getTaxaAumento(){
     return this->taxaAumento;
 }
 
+/*
 Endereco Funcionario::getEndereco(){
     return this->endereco;
 }
+*/
 
+/*
 std::string Funcionario::getTelefone(){
     return this->telefone;
 }
+*/
 
 
 std::string Funcionario::getDesignacaoStr(){
@@ -65,13 +71,11 @@ std::string Funcionario::getDesignacaoStr(){
     }
 }
 
-int Funcionario::getDesignacaoInt() {
-    return this->designacao;
-}
-
+/*
 std::string Funcionario::getNomeFuncionario(){
     return this->nomeFuncionario;
 }
+*/
 
 Data Funcionario::getDataIngresso(){
     return this->dataIngresso;
@@ -91,10 +95,13 @@ void Funcionario::setDesignacao(int designacao){
     this->designacao = designacao;
 }
 
+/*
 void Funcionario::setEndereco(Endereco endereco){
     this->endereco = endereco;
 }
+*/
 
+/*
 void Funcionario::setEndereco(std::string endereco){
     Endereco aux;
     std::string numero, complemento, rua, bairro, cidade, estado, CEP;
@@ -158,7 +165,9 @@ void Funcionario::setEndereco(std::string endereco){
     aux.setEndereco(numero, complemento, rua, bairro, cidade, estado, CEP);
     this->endereco = aux;
 }
+*/
 
+/*
 void Funcionario::setTelefone(std::string telefone){
     if(telefone.size() == 11){
         for(int i = 0; i < 11; i++){
@@ -188,7 +197,9 @@ void Funcionario::setTelefone(std::string telefone){
         throw TelefoneException("Quantidade insuficiente de caracteres");
     }
 }
+*/
 
+/*
 void Funcionario::setNomeFuncionario(std::string nome){
     if(nome.size() > 99){
         for(int i = 0; i < 98; i++){
@@ -202,6 +213,7 @@ void Funcionario::setNomeFuncionario(std::string nome){
         this->nomeFuncionario[nome.size()] = '\0';
     }
 }
+*/
 
 void Funcionario::setDataIngresso(Data data){
     this->dataIngresso = data;
