@@ -7,13 +7,15 @@ Funcionario::Funcionario(){
     /* ... */
 }
 
-Funcionario::~Funcionario(){
-    /* ... */
-}
-
-Funcionario::Funcionario(int designacao, double taxa)/*:Empresa(nome, CNPJ, data)*/{
-    this->designacao = designacao;
-    this->taxaAumento = taxa;
+Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao) {
+    setCodigoFuncionario(codigo);
+    //setNomeFuncionario(nome);
+    setCPF(CPF);
+    setIdade(idade);
+    setEndereco(endereco);
+    //setDataIngresso(data);
+    setDesignacao(designacao);
+    setTaxaAumento();
 }
 
 /* Inicio dos Get */
@@ -51,7 +53,8 @@ std::string Funcionario::getTelefone(){
 }
 */
 
-std::string Funcionario::getDesignacao(){
+
+std::string Funcionario::getDesignacaoStr(){
     switch(this->designacao){
         case 1:
             return "Operador";
@@ -252,6 +255,18 @@ void Funcionario::setDataIngresso(std::string data){
 
 void Funcionario::setCodigoFuncionario(int codigo){
     this->codigoFuncionario = codigo;
+}
+
+void Funcionario::setTaxaAumento() {
+    if(getDesignacaoInt() == 0) {
+        this->taxaAumento = 0.05;
+    } else if(getDesignacaoInt() == 1) {
+        this->taxaAumento = 0.10;
+    } else if(getDesignacaoInt() == 2) {
+        this->taxaAumento = 0.20;
+    } else if(getDesignacaoInt() == 3) {
+        this->taxaAumento = 0.30;
+    }
 }
 
 /* Fim dos Set */
