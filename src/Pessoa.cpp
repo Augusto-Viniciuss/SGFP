@@ -2,15 +2,23 @@
 #include "TelefoneException.h"
 
 Pessoa::Pessoa(){
- /* ... */
+    /* ... */
 }
 
 Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, Endereco endereco){
-
+    setNome(nome);
+    setTelefone(telefone);
+    setCPF(CPF);
+    setIdade(idade);
+    setEndereco(endereco);
 }
 
 Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, std::string endereco){
-
+    setNome(nome);
+    setTelefone(telefone);
+    setCPF(CPF);
+    setIdade(idade);
+    setEndereco(endereco);
 }
 
 Pessoa::~Pessoa(){
