@@ -1,6 +1,6 @@
 #include "Operador.h"
 
-Operador::Operador():Funcionario("Operador", 0.05){
+Operador::Operador():Funcionario(4, 0.05){
     /* ... */
 }
 

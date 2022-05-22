@@ -2,10 +2,11 @@
 #define FUNCIONARIO_H
 
 #include "Endereco.h"
+#include "Pessoa.h"
 #include <string>
 #include "Data.h"
 
-class Funcionario{
+class Funcionario: public Pessoa{
     public:
         /* CONSTRUTOR */
         Funcionario();
@@ -20,12 +21,12 @@ class Funcionario{
         /* Get */
         int getHorasTrabalhadas();
         int getCodigo();
-        int getIdade();
+        //int getIdade();
         double getSalario();
         double getTaxaAumento();
-        Endereco getEndereco();
-        std::string getNomeFuncionario();
-        std::string getTelefone();
+        //Endereco getEndereco();
+        //std::string getNomeFuncionario();
+        //std::string getTelefone();
         std::string getDesignacao();
         Data getDataIngresso();
 
@@ -33,10 +34,10 @@ class Funcionario{
         void setHorasTrabalhadas(int horas);
         void setSalario(double salario);
         void setDesignacao(int designacao);
-        void setEndereco(Endereco endereco);
-        void setEndereco(std::string endereco); //numero,complemento,rua,bairro,cidade,estado,CEP
-        void setTelefone(std::string telefone);
-        void setNomeFuncionario(std::string nome);
+        //void setEndereco(Endereco endereco);
+        //void setEndereco(std::string endereco); //numero,complemento,rua,bairro,cidade,estado,CEP
+        //void setTelefone(std::string telefone);
+        //void setNomeFuncionario(std::string nome);
         void setDataIngresso(Data data);
         void setDataIngresso(std::string data);
         void setCodigoFuncionario(int codigo);
@@ -44,14 +45,14 @@ class Funcionario{
     private:
         int horasTrabalhadas;
         int codigoFuncionario;
-        int idade;
+        //int idade;
         int designacao; /*1 = Presidente; 2 = Diretor; 3 = Gerente; 4 = Operador*/
         double salario;
         double taxaAumento;
-        char nomeFuncionario[100];
-        char CPF[15]; /*Enviar como XXXXXXXXXXX e será armazenado como XXX.XXX.XXX-XX */
-        Endereco endereco;
-        char telefone[15]; /*Enviar como XXXXXXXXXXX e será armazenado como (XX)XXXXX-XXXX */
+        //char nomeFuncionario[100];
+        //char CPF[15]; /*Enviar como XXXXXXXXXXX e será armazenado como XXX.XXX.XXX-XX */
+        //Endereco endereco;
+        //char telefone[15]; /*Enviar como XXXXXXXXXXX e será armazenado como (XX)XXXXX-XXXX */
         Data dataIngresso;
 
     protected:

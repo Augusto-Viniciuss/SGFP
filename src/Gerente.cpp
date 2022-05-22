@@ -1,6 +1,6 @@
 #include "Gerente.h"
 
-Gerente::Gerente():Funcionario("Gerente", 0.10){
+Gerente::Gerente():Funcionario(3, 0.10){
     /* ... */
 }
 

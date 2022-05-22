@@ -1,6 +1,6 @@
 #include "Diretor.h"
 
-Diretor::Diretor():Funcionario("Diretor", 0.20){
+Diretor::Diretor():Funcionario(2, 0.20){
     /* ... */
 }
 

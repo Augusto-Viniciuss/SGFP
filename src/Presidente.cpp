@@ -1,6 +1,6 @@
 #include "Presidente.h"
 
-Presidente::Presidente():Funcionario("Presidente", 0.30){
+Presidente::Presidente():Funcionario(1, 0.30){
     /* ... */
 }
 
