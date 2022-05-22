@@ -6,10 +6,11 @@
 class Endereco{
     public:
         Endereco();
-        void setEndereco(std::string numeroEComplemento, std::string rua, std::string bairro, std::string cidade, std::string estado, std::string CEP);
+        void setEndereco(std::string numero, std::string complemento, std::string rua, std::string bairro, std::string cidade, std::string estado, std::string CEP);
         
         /* Get */
-        std::string getNumeroEComplemento();
+        std::string getNumero();
+        std::string getComplemento();
         std::string getRua();
         std::string getBairro();
         std::string getCidade();
@@ -19,7 +20,7 @@ class Endereco{
         bool validaCEP(std::string CEP, std::string rua);
         void exibeEndereco();
     private:
-        std::string numeroEComplemento, rua, bairro, cidade, estado, CEP;
+        std::string numero, complemento, rua, bairro, cidade, estado, CEP;
 };
 
 #endif
