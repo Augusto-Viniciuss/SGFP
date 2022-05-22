@@ -104,41 +104,43 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 }
 
 
+
 void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFuncionario){
 
 
-	// Vamos primeiro posicionar o ponteiro para a localização que corresponde ao codigo do funcionario
-	// Tipo funcionário representa o funcionario pelo numero
-	// 0 é o presidente, 1 é o diretor, 2 é o gerente e 3 é o operador
-	// Sendo assim, posiciona-se o ponteiro no ponteiro para o arquivo correspondente
-	Presidente presidente;
-	Gerente gerente;
-	Diretor diretor;
-	Operador operador;
-	
-	Funcionario *funcionario;	
+	  // Vamos primeiro posicionar o ponteiro para a localização que corresponde ao codigo do funcionario
+          // Tipo funcionário representa o funcionario pelo numero
+          // 0 é o presidente, 1 é o diretor, 2 é o gerente e 3 é o operador
+          // Sendo assim, posiciona-se o ponteiro no ponteiro para o arquivo correspondente
+          Presidente presidente;
+          Gerente gerente;
+          Diretor diretor;
+          Operador operador;
+  
+          Funcionario *funcionario;
+  
+          switch(tipoFuncionario){
+  
+                  // Coloca-se na posição referente ao código
+                  // Ler o que está contido
+                  case 0:
+                          funcionario = &presidente;
+                          break;
+  
+                  case 1:
+                          funcionario = &gerente;
+                          break;
+  
+                  case 2:
+                          funcionario =  &diretor;
+                          break;
+  
+                  case 3:
+                          funcionario = &operador;
+                          break;
+  
+          }	// Vamos primeiro posicionar o ponteiro para a localização que corresponde ao codigo do funcionario
 
-	switch(tipoFuncionario){
-
-		// Coloca-se na posição referente ao código
-		// Ler o que está contido
-		case 0:
-			funcionario = &presidente;
-			break;
-
-		case 1:
-			funcionario = &gerente;
-			break;
-		
-		case 2:
-			funcionario =  &diretor;
-			break;
-		
-		case 3:
-			funcionario = &operador;
-			break;
-
-	}
 	// Abre o arquivo para saidas de dados e entrada
 	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out |std::ios::in |  std::ios::binary);
 	// Posiciona na posição para dar o get e pegar os dados
@@ -215,5 +217,49 @@ void Arquivo::mostraDadosArquivos(int tipoFuncionario){
 	}
 
 	arquivoFuncionarios[tipoFuncionario].close();
+}
+
+
+void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario){
+
+	// Cria os tipos filhos previamente	
+	Diretor diretores;
+	Gerente gerentes;
+	Operador operadores;
+
+	Funcionario *funcionarios;
+	// Abre o arquivo 
+	
+	if(tipoFuncionario == 0){
+		cout << "Não eh possivel excluir o presidente" << endl;
+	}
+	
+	// Verifica o tipo de funcionario e faz o ponteiro funcionarios apontar para aquele tipo
+	else{
+		switch(tipoFuncionario){
+			
+			case 1:
+				funcionarios = &diretores;
+				break;
+			case 2:
+				funcionarios = &gerentes;
+				break;
+			case 3:
+				funcionarios = &operadores;
+				break;
+		}
+
+		arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out | std::ios::in |std::ios::binary);
+		// Posiciona o arquivo no local referente ao codigoFuncionario
+		arquivoFuncionarios[tipoFuncionario].seekp((codigoFuncionario - 1) * sizeof(*funcionarios));
+
+		// Coloca um funcionario zerado naquela posição
+		arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast <const char * > (funcionarios),  sizeof(*funcionarios) );
+		
+			
+	}
+
+	arquivoFuncionarios[tipoFuncionario].close();
+
 }
 
