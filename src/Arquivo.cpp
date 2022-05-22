@@ -2,42 +2,44 @@
 #include <iostream>
 #include <string.h>
 
+using namespace std;
 
 
-Arquivo::Arquivo(const char *nomeArquivoPresidente, const char * nomeArquivoDiretor, const char * nomeArquivoGerente, const char *nomeArquivoOperador){
 
-	criaArquivo(nomeArquivoPresidente, nomeArquivoDiretor, nomeArquivoGerente, nomeArquivoOperador);
-	
+Arquivo::Arquivo(std::string nomeArquivoPresidente, std::string nomeArquivoDiretor, std::string nomeArquivoGerente, std::string nomeArquivoOperador){
+
+	// Cria os arquivos para cada setor
+	criaArquivo(nomeArquivoPresidente, nomeArquivoDiretor, nomeArquivoGerente, nomeArquivoOperador);	
+	// Salva o nome de cada arquivo no vetor de nomes de arquivos
+	nomeArquivos[0] = nomeArquivoPresidente;
+	nomeArquivos[1] = nomeArquivoDiretor;
+	nomeArquivos[2] = nomeArquivoGerente;
+	nomeArquivos[3] = nomeArquivoOperador;
 }
 
 
 
-void Arquivo::criaArquivo(const char *nomeArquivoPresidente, const char * nomeArquivoDiretor, const char * nomeArquivoGerente, const char *nomeArquivoOperador){
+void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArquivoDiretor, std::string nomeArquivoGerente, std::string nomeArquivoOperador){
 
-	char *nomeArquivo;
 	// Cria o arquivo para entrada e saida de dados em formato binario para cada usuário
 	for(int i = 0; i < 4; i++){
 
 		switch(i){
 			case 0:
-				strcpy(nomeArquivo, nomeArquivoPresidente);
-				arquivoFuncionarios[i].open(nomeArquivo, std::ios::out | std::ios::in | std::ios::binary);
+				arquivoFuncionarios[i].open(nomeArquivoPresidente, std::ios::out | std::ios::binary);
 				break;
 			case 1:
-				strcpy(nomeArquivo, nomeArquivoDiretor);
-				arquivoFuncionarios[i].open(nomeArquivo, std::ios::out | std::ios::in | std::ios::binary);
+				arquivoFuncionarios[i].open(nomeArquivoDiretor, std::ios::out | std::ios::binary);
 				break;
 			case 2:
-				strcpy(nomeArquivo, nomeArquivoGerente);
-				arquivoFuncionarios[i].open(nomeArquivo, std::ios::out | std::ios::in | std::ios::binary);
+				arquivoFuncionarios[i].open(nomeArquivoGerente, std::ios::out | std::ios::binary);
 				break;
 			case 3:
-				strcpy(nomeArquivo, nomeArquivoOperador);
-				arquivoFuncionarios[i].open(nomeArquivo, std::ios::out | std::ios::in | std::ios::binary);
+				arquivoFuncionarios[i].open(nomeArquivoOperador, std::ios::out | std::ios::binary);
 				break;
 		}
 		
-		
+		// Verifica se cada arquivo foi criado corretamente
 		if(!arquivoFuncionarios[i]){
 			
 			switch(i){
@@ -62,8 +64,6 @@ void Arquivo::criaArquivo(const char *nomeArquivoPresidente, const char * nomeAr
 
 	}
 	
-
-
 	// Agora, deve-se alocar inicialmente uma certa quantidade de dados em cada arquivo
 	Presidente presidentes;
 	Diretor diretores;
@@ -76,28 +76,31 @@ void Arquivo::criaArquivo(const char *nomeArquivoPresidente, const char * nomeAr
 		switch(i){
 
 			case 0:
-				for(int i = 0; i < 100; i++){
+
+				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&presidentes), sizeof(Presidente));
 				}
 				break;
 			case 1:
-				for(int i = 0; i < 100; i++){
+				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&diretores), sizeof(Diretor));
 				}
 				break;
 			case 2:
-				for(int i = 0; i < 100; i++){
+				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&gerentes), sizeof(Gerente));
 				}
 				break;
 			case 3:
-				for(int i = 0; i < 100; i++){
+				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&operadores), sizeof(Operador));
 				}
 				break;
 		}
-	}
 
+		arquivoFuncionarios[i].close();
+	}
+	
 }
 
 
@@ -133,8 +136,11 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		
 		case 3:
 			funcionario = &operador;
+			break;
 
 	}
+	// Abre o arquivo para saidas de dados e entrada
+	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out |std::ios::in |  std::ios::binary);
 	// Posiciona na posição para dar o get e pegar os dados
 	arquivoFuncionarios[tipoFuncionario].seekg((dadosFuncionario.getCodigo() - 1) * sizeof(*funcionario));
 	// Ler o que está contido no arquivo correspondente
@@ -147,7 +153,7 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		arquivoFuncionarios[tipoFuncionario].seekp((dadosFuncionario.getCodigo() - 1) * sizeof(*funcionario));
 
 		// Escreve os dados no arquivo correspondente ao tipo de funcionário
-      	arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast <const char *> (&dadosFuncionario), sizeof(*funcionario));
+  	    	arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast <const char *> (&dadosFuncionario), sizeof(*funcionario));
 
 
 	}
@@ -156,6 +162,8 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		std::cout << "O funcionario ja existe, deseja atualiza-lo?" << std::endl;
 	}
 	
+	// Fecha o arquivo após o tratamento
+	arquivoFuncionarios[tipoFuncionario].close();	
 		
 }
 
@@ -189,17 +197,23 @@ void Arquivo::mostraDadosArquivos(int tipoFuncionario){
 		
 		case 3:
 			funcionario = &operador;
-
+			break;
 	}
+
+	// Abre o arquivo para entrada de dados	
+	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
 	
+	// Posiciona no local para leitura de dados
 	arquivoFuncionarios[tipoFuncionario].seekg(0);
 
 	while(!arquivoFuncionarios[tipoFuncionario].eof())
 	{
 		arquivoFuncionarios[tipoFuncionario].read(reinterpret_cast < char * > (funcionario), sizeof(*funcionario));
 
-		std::cout << funcionario->getCodigo() << " " << funcionario->getNomeFuncionario() << " " << funcionario->CPF << std::endl;
+		std::cout << funcionario->getCodigo() << " " << funcionario->nome << " " << funcionario->CPF << std::endl;
 
 	}
+
+	arquivoFuncionarios[tipoFuncionario].close();
 }
 

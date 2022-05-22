@@ -9,6 +9,7 @@
 #include "Presidente.h"
 #include "Diretor.h"
 
+#define QUANTIA_ARQUIVOS 4
 
 #define TAMANHO_MAX 20
 
@@ -17,18 +18,21 @@ class Arquivo{
 	public:
 		
 		// O construtor irá inicializar o arquivo
-		Arquivo(const char *, const char *, const char *, const char *);
+		Arquivo(std::string, std::string, std::string, std::string);
 		// A função salvarDadosFuncionario recebe os dados do funcionario e adiciona ao arquivo de dados dele
 		void salvarDadosFuncionario(Funcionario &, int);
 		
-		void criaArquivo(const char *, const char *, const char *, const char *);
+		void criaArquivo(std::string, std::string, std::string, std::string);
 
 
 		void mostraDadosArquivos(int);
 	
 		
 	private:
-		std::fstream arquivoFuncionarios[4];
+		std::fstream arquivoFuncionarios[QUANTIA_ARQUIVOS];
+		std::string nomeArquivos[QUANTIA_ARQUIVOS];
+	
+		
 
 
 };
