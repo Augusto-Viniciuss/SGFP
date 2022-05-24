@@ -29,6 +29,9 @@ class Funcionario: public Pessoa{
         //std::string getTelefone();
         std::string getDesignacaoStr();
         int getDesignacaoInt();
+        virtual std::string getAreaSupervisao() = 0;
+        virtual std::string getAreaFormacao() = 0;
+        virtual std::string getFormacaoMax() = 0;
 
         Data getDataIngresso();
 
