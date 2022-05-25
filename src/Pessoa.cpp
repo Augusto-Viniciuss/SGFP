@@ -98,11 +98,20 @@ void Pessoa::setTelefone(std::string telefone){
 }
 
 void Pessoa::setCPF(std::string CPF){
+    int cpfaux[11];
+    
     if(CPF.size() == 11){
         int digito1,digito2,temp = 0;
 
+        for(int i = 0; i < 11; i++){
+            if(CPF[i] < '0' || CPF[i] > '9'){
+                throw CPFException("Caracter invalido digitado");
+            }
+            cpfaux[i] = static_cast<int>(CPF[i] - 48);
+        }
+
         for(char i = 0; i < 9; i++){
-            temp += (CPF[i] * (10 - i));
+            temp += (cpfaux[i] * (10 - i));
         }
 
         temp %= 11;
@@ -115,7 +124,7 @@ void Pessoa::setCPF(std::string CPF){
 
         temp = 0;
         for(char i = 0; i < 10; i++){
-            temp += (CPF[i] * (11 - i));
+            temp += (cpfaux[i] * (11 - i));
         }
 
         temp %= 11;
@@ -126,9 +135,9 @@ void Pessoa::setCPF(std::string CPF){
             digito2 = 11 - temp;
         }
 
-        if(digito1 == CPF[9] && digito2 == CPF[10]){
+        if(digito1 == cpfaux[9] && digito2 == cpfaux[10]){
             int j = 0;
-            for(int i = 0; i < 13; i++){
+            for(int i = 0; i < 14; i++){
                 if(i == 3 || i == 7){
                     this->CPF[i] = '.';
                     continue;
@@ -137,9 +146,9 @@ void Pessoa::setCPF(std::string CPF){
                     this->CPF[i] = '-';
                     continue;
                 }
-
-                this->CPF[i] = CPF[j++];
+                this->CPF[i] = (cpfaux[j++] + '0');
             }
+            this->CPF[14] = '\0';
         }else{
             throw CPFException("CPF invalido");
         }
