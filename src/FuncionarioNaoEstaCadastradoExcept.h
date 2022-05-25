@@ -2,7 +2,6 @@
 #define FUNCIONARIONAOESTACADASTRADOEXCEPT
 
 class FuncionarioNaoEstaCadastradoExcept {
-
 };
 
 #endif
