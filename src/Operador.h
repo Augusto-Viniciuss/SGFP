@@ -7,7 +7,11 @@ class Operador : public Funcionario{
     public:
         Operador();
         Operador(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao);
-        double calcularSalarioMensal();
+        
+        void calcularSalarioMensal(int mes);
+    
+    private:
+        const double HORA_EXTRA = 14.10;
 };
 
 #endif

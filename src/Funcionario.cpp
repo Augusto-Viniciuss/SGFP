@@ -16,6 +16,7 @@ Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idad
     //setDataIngresso(data);
     setDesignacao(designacao);
     setTaxaAumento();
+    this->folhaSalarial[12] = {-1};
 }
 
 /* Inicio dos Get */
@@ -33,8 +34,16 @@ int Funcionario::getIdade(){
 }
 */
 
-double Funcionario::getSalario(){
-    return this->salario;
+double Funcionario::getSalarioBase(){
+    return this->salarioBase;
+}
+
+double Funcionario::getSalarioLiquido() {
+    return this->salarioLiquido;
+}
+
+double Funcionario::getDescontosSalario() {
+    return this->descontosSalario;
 }
 
 double Funcionario::getTaxaAumento(){
@@ -52,7 +61,6 @@ std::string Funcionario::getTelefone(){
     return this->telefone;
 }
 */
-
 
 std::string Funcionario::getDesignacaoStr(){
     switch(this->designacao){
@@ -84,6 +92,10 @@ std::string Funcionario::getNomeFuncionario(){
 Data Funcionario::getDataIngresso(){
     return this->dataIngresso;
 }
+
+double Funcionario::getSalarioMensal(int mes) {
+    return this->folhaSalarial[mes - 1];
+}
 /* Fim dos Get */
 
 /* Inicio dos Set */
@@ -91,8 +103,43 @@ void Funcionario::setHorasTrabalhadas(int horas){
     horasTrabalhadas = horas;
 }
 
-void Funcionario::setSalario(double salario){
-    this->salario = salario;
+void Funcionario::setSalarioBase(double salario){
+    this->salarioBase = salario;
+    setSalarioLiquido();
+}
+
+void Funcionario::setSalarioLiquido() {
+    double salario, aux;
+
+    salario = aux = getSalarioBase();
+    
+    if (salario <= 1212.00) {
+        salario += salario * 0.075;
+    } else if (salario >= 1212.01 and salario <= 2427.35) {
+        salario += salario * 0.09;
+    } else if (salario >= 2427.36 and salario <= 3641.03) {
+        salario += salario * 0.12;
+    } else if (salario >= 3641.04 and salario <= 7087.22) {
+        salario += salario * 0.14;
+    }
+
+    if (salario >= 1903.99 and salario <= 2826.65) {
+        salario += salario * 0.075;
+    } else if (salario >= 2826.66 and salario <= 3751.05) {
+        salario += salario * 0.15;
+    } else if (salario >= 3751.06 and salario <= 4664.68) {
+        salario += salario * 0.2250;
+    } else if (salario > 4664.68) {
+        salario += salario * 0.2750;
+    }
+
+    setDescontosSalario(aux - salario);
+
+    this->salarioLiquido = salario;
+}
+
+void Funcionario::setDescontosSalario(double desconto) {    
+    this->descontosSalario = desconto;
 }
 
 void Funcionario::setDesignacao(int designacao){

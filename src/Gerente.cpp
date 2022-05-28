@@ -6,6 +6,7 @@ Gerente::Gerente() {
 
 Gerente::Gerente(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao, std::string areaSupervisao) : Funcionario(codigo, nome, CPF, idade, endereco, telefone, data, designacao) {
     setAreaSupervisao(areaSupervisao);
+    setSalarioBase(3454);
 }
 
 std::string Gerente::getAreaSupervisao() {
@@ -16,10 +17,16 @@ void Gerente::setAreaSupervisao(std::string areaSupervisao) {
     this->areaSupervisao = areaSupervisao;
 }
 
-double Gerente::calcularSalarioMensal(){
-   //editar para cada função ter sua hora mínima
+void Gerente::calcularSalarioMensal(int mes){
     setHorasTrabalhadas(gerarAleatorio(260));
-    ///setDiasTrabalhados(gerarAleatorio(20));
+    
+    double salarioLiquido;
 
-    return getSalario() + (HORA_EXTRA * getHorasTrabalhadas()); 
+    if (getHorasTrabalhadas() > 172) {
+        salarioLiquido = getSalarioLiquido() + ((getHorasTrabalhadas() - 172) * HORA_EXTRA);
+    } else {
+        salarioLiquido = getSalarioLiquido();
+    }
+   
+    this->folhaSalarial[mes - 1] = salarioLiquido;
 }

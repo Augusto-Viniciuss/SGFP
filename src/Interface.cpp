@@ -125,9 +125,9 @@ atributo Interface::novoAtributoParaModificarFuncionario() {
 
     std::cout << "Digite o novo valor para o atributo:" << std::endl;
     std::cin.ignore();
-    getline(std::cin, atributo);
+    getline(std::cin, atributoFuncionario);
 
-    return atributo;
+    return atributoFuncionario;
 }
 
 int Interface::lerCodigoParaExcluirFuncionario() {

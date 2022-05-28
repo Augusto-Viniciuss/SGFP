@@ -14,11 +14,13 @@ class Diretor : public Funcionario{
         
         void setAreaSupervisao(std::string areaSupervisao);
         void setAreaFormacao(std::string areaFormacao);
-
-        double calcularSalarioMensal();
+        
+        void calcularSalarioMensal(int mes);
+    
     private:
         std::string areaSupervisao;
         std::string areaFormacao;
+        const double HORA_EXTRA = 74.48;
 };
 
 #endif

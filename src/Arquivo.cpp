@@ -224,7 +224,7 @@ void Arquivo::mostraDadosArquivos(int tipoFuncionario){
 	{
 		arquivoFuncionarios[tipoFuncionario].read(reinterpret_cast < char * > (funcionario), sizeof(*funcionario));
 
-		std::cout << funcionario->getCodigo() << " " << funcionario->nome << " " << funcionario->CPF << std::endl;
+		std::cout << funcionario->getCodigo() << " " << funcionario->getNome() << " " << funcionario->getCPF() << std::endl;
 
 	}
 

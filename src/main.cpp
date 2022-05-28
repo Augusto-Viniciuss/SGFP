@@ -29,9 +29,9 @@ int main() {
             }
 
             if(opcaoMenu == 1) {
-                funcionario = interface.cadastraFuncionario();
+                funcionario = interface.lerAtributosFuncionario();
 
-                empresa.addFuncionario(funcionario, funcionario->getDesignacao(INT));
+                empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
             } else if (opcaoMenu == 2) {
                 atributo atributoFuncionario;
                 int opcao, codigo;
@@ -41,35 +41,35 @@ int main() {
                 atributoFuncionario = interface.novoAtributoParaModificarFuncionario();
 
                 empresa.modificarFuncionario(codigo, opcao, atributo);
-            } else if(opcao == 3) {
+            } else if(opcaoMenu == 3) {
                 int codigo;
 
                 codigo = interface.lerCodigoParaExcluirFuncionario();
 
                 empresa.excluirFuncionario(codigo);
-            } else if(opcao == 4) {
+            } else if(opcaoMenu == 4) {
                 int codigo;
 
                 codigo = interface.lerCodigoParaExibirFuncionario();
 
                 empresa.exibirFuncionario(codigo);
-            } else if(opcao == 5) {
+            } else if(opcaoMenu == 5) {
                 empresa.exibirTodosFuncionarios();
-            } else if(opcao == 6) {
+            } else if(opcaoMenu == 6) {
                 int tipo;
 
                 tipo = interface.lerTipoParaExibirFuncionarios();
 
                 empresa.exibirFuncionariosPorTipo(tipo);
-            } else if(opcao == 7) {
+            } else if(opcaoMenu == 7) {
                 empresa.concederAumentoSalarial();
-            } else if(opcao == 8) {
+            } else if(opcaoMenu == 8) {
                 int mes;
 
                 mes = interface.lerMesParaCalcularFolhaSalarialEmpresa();
 
-                empresa.calcularFolhaSalarial(mes)
-            } else if(opcao == 9) {
+                empresa.calcularFolhaSalarial(mes);
+            } else if(opcaoMenu == 9) {
                 atributo atributoFuncionario;
                 int tipoAtributo;
 
@@ -78,7 +78,7 @@ int main() {
 
 
                 empresa.imprimirFolhaSalarialFuncionario(atributoFuncionario, tipoAtributo);
-            } else if(opcao == 10) {
+            } else if(opcaoMenu == 10) {
                 int opcaoParaImprimir;
 
                 opcaoParaImprimir = interface.lerOpcaoParaImprimirFolhaSalarialEmpresa();
@@ -92,9 +92,9 @@ int main() {
             std::cin >> opcao;
 
             if (opcao) {
-                funcionario = interface.cadastraFuncionario();
+                funcionario = interface.lerAtributosFuncionario();
 
-                empresa.addFuncionario(funcionario, funcionario->getDesignacao(INT));
+                empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
             }
         } catch(FuncionarioNaoEstaCadastradoExcept &funcionarioNaoEstaCadastrado) {
             int opcao;
@@ -103,9 +103,9 @@ int main() {
             std::cin >> opcao;
 
             if(opcao) {
-                funcionario = interface.cadastraFuncionario();
+                funcionario = interface.lerAtributosFuncionario();
 
-                empresa.addFuncionario(funcionario, funcionario->getDesignacao(INT));
+                empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
             }
         }
     }

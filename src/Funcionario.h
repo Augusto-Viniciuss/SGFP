@@ -6,7 +6,7 @@
 #include <string>
 #include "Data.h"
 
-class Funcionario: public Pessoa{
+class Funcionario: public Pessoa {
     public:
         /* CONSTRUTOR */
         Funcionario();
@@ -16,28 +16,31 @@ class Funcionario: public Pessoa{
         virtual ~Funcionario();
         
         /* ESPECIFICAÇÕES */
-        virtual double calcularSalarioMensal() = 0;
+        virtual void calcularSalarioMensal(int mes) = 0;
 
         /* Get */
         int getHorasTrabalhadas();
         int getCodigo();
         //int getIdade();
-        double getSalario();
+        double getSalarioBase();
+        double getDescontosSalario();
+        double getSalarioLiquido();
         double getTaxaAumento();
         //Endereco getEndereco();
         //std::string getNomeFuncionario();
         //std::string getTelefone();
         std::string getDesignacaoStr();
         int getDesignacaoInt();
-        virtual std::string getAreaSupervisao() = 0;
-        virtual std::string getAreaFormacao() = 0;
-        virtual std::string getFormacaoMax() = 0;
+        double getSalarioMensal(int mes);
+        
 
         Data getDataIngresso();
 
         /* Set */
         void setHorasTrabalhadas(int horas);
-        void setSalario(double salario);
+        void setSalarioBase(double salario);
+        void setTaxaAumento();
+        void setSalarioLiquido();
         void setDesignacao(int designacao);
         //void setEndereco(Endereco endereco);
         //void setEndereco(std::string endereco); //numero,complemento,rua,bairro,cidade,estado,CEP
@@ -46,14 +49,19 @@ class Funcionario: public Pessoa{
         void setDataIngresso(Data data);
         void setDataIngresso(std::string data);
         void setCodigoFuncionario(int codigo);
-        void setTaxaAumento();
+        
+
+    protected:
+        void setDescontosSalario(double desconto);
+        int gerarAleatorio(int intervaloMax);
 
     private:
         int horasTrabalhadas;
         int codigoFuncionario;
         //int idade;
         int designacao; /*1 = Presidente; 2 = Diretor; 3 = Gerente; 4 = Operador*/
-        double salario;
+        double salarioBase, salarioLiquido;
+        double descontosSalario;
         double taxaAumento;
         //char nomeFuncionario[100];
         //char CPF[15]; /*Enviar como XXXXXXXXXXX e será armazenado como XXX.XXX.XXX-XX */
@@ -62,8 +70,8 @@ class Funcionario: public Pessoa{
         Data dataIngresso;
 
     protected:
-        int gerarAleatorio(int intervaloMax);
-        const double HORA_EXTRA = 5.51;
+        double folhaSalarial[12];
+        
 };
 
 #endif

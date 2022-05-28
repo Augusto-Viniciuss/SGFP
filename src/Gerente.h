@@ -10,12 +10,14 @@ class Gerente : public Funcionario{
         Gerente(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao, std::string areaSupervisao);
         
         std::string getAreaSupervisao();
-
+        
         void setAreaSupervisao(std::string areaSupervisao);
         
-        double calcularSalarioMensal();
+        void calcularSalarioMensal(int mes);
+
     private:
         std::string areaSupervisao;
+        const double HORA_EXTRA = 40.16;
 };
 
 #endif

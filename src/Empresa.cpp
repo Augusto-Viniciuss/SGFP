@@ -7,7 +7,6 @@ Empresa::Empresa(std::string nome, std::string CNPJ, int *dataEmInt) {
     setCNPJ(CNPJ);
     setDataFundacao(dataEmInt);
     this->qtdFuncionarios[4] = {0};
-    this->folhaSalarial[12] = {-1};
 }
 
 void Empresa::setNome(std::string nome) {
@@ -28,10 +27,6 @@ void Empresa::setDataFundacao(int *dataEmInt) {
     this->dataFundacao = dataObjeto;
 }
 
-void Empresa::setFolhaSalarial(int mes, double valor) {
-    this->folhaSalarial[mes] = valor;
-}
-
 std::string Empresa::getNome() {
     return this->nome;
 }
@@ -48,12 +43,8 @@ int Empresa::getQtdFuncionarios(int tipo) {
     return this->qtdFuncionarios[tipo];
 }
 
-double Empresa::getFolhaSalarial(int mes) {
-    return this->folhaSalarial[mes - 1];
-}
-
 void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
-    Funcionario *func = buscarFuncionario(funcionario->getNomeFuncionario(), BUSCAR_POR_NOME);
+    Funcionario *func = buscarFuncionario(funcionario->getNome(), BUSCAR_POR_NOME);
 
     if(!(func != nullptr)) {
         throw FuncionarioJaCadastradoExcept();
@@ -79,32 +70,19 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
     }
 }
 
-template<typename atributo>
-void Empresa::modificarFuncionario(int codigo, int opcao, atributo valor) {
-    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO);
+void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
+    Funcionario *funcionario = buscarFuncionario(codigo);
     
     if (funcionario != nullptr) {
         switch (opcao) {
-        case 1:
-            funcionario->setCodigoFuncionario(valor);
-            break;
-        case 2:
-            funcionario->setDataIngresso(valor);
-            break;
         case 3:
-            funcionario->setNomeFuncionario(valor);
+            funcionario->setNome(valor);
             break;
         case 4:
             funcionario->setEndereco(valor);
             break;
         case 5:
             funcionario->setTelefone(valor);
-            break;
-        case 6:
-            funcionario->setDesignacao(valor);
-            break;
-        case 7:
-            funcionario->setIdade(valor);
             break;
         case 8:
             funcionario->setCPF(valor);
@@ -115,8 +93,42 @@ void Empresa::modificarFuncionario(int codigo, int opcao, atributo valor) {
     }
 }
 
+void Empresa::modificarFuncionario(int codigo, int opcao, int *valor) {
+    Funcionario *funcionario = buscarFuncionario(codigo);
+    
+    if (funcionario != nullptr) {
+        switch (opcao) {
+        case 2:
+            funcionario->setDataIngresso(valor);
+            break;
+        }
+    } else {
+        throw FuncionarioNaoEstaCadastradoExcept();
+    }
+}
+
+void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
+    Funcionario *funcionario = buscarFuncionario(codigo);
+    
+    if (funcionario != nullptr) {
+        switch (opcao) {
+        case 1:
+            funcionario->setCodigoFuncionario(valor);
+            break;
+        case 6:
+            funcionario->setDesignacao(valor);
+            break;
+        case 7:
+            funcionario->setIdade(valor);
+            break;
+        }
+    } else {
+        throw FuncionarioNaoEstaCadastradoExcept();
+    }
+}
+
 void Empresa::excluirFuncionario(int codigo) {
-    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO);
+    Funcionario *funcionario = buscarFuncionario(codigo);
     
     if (funcionario == nullptr) {
         throw FuncionarioNaoEstaCadastradoExcept();
@@ -127,35 +139,37 @@ void Empresa::excluirFuncionario(int codigo) {
 }
 
 void Empresa::exibirFuncionario(int codigo) {
-    Funcionario *funcionario = buscarFuncionario(codigo, BUSCAR_POR_CODIGO);
+    Funcionario *funcionario = buscarFuncionario(codigo);
 
     if (funcionario != nullptr) {
         std::cout << "Registro do funcionario de codigo: " << funcionario->getCodigo() << std::endl;
-        std::cout << "Nome: " << funcionario->getNomeFuncionario() << std::endl;
-        std::cout << "Data de ingressao: " << funcionario->getDataIngresso() << std::endl; 
-        std::cout << "Endereco: " << funcionario->getEndereco() << std::endl;
+        std::cout << "Nome: " << funcionario->getNome() << std::endl;
+        std::cout << "CPF: " << funcionario->getCPF() << std::endl;
+        std::cout << "Idade: " << funcionario->getIdade() << std::endl;
+       // std::cout << "Data de ingressao: " << funcionario->getDataIngresso() << std::endl; 
+        std::cout << "Endereco: " << funcionario->getEndereco_toString() << std::endl;
         std::cout << "Telefone: " << funcionario->getTelefone() << std::endl;
         std::cout << "Designacao: " << funcionario->getDesignacaoStr() << std::endl;
         
         switch (funcionario->getDesignacaoInt()) {
         case 1:
-            std::cout << "Area de supervisao: " << funcionario->getAreaSupervisao() << std::endl;
+            std::cout << "Area de supervisao: " << ((Gerente*)funcionario)->getAreaSupervisao() << std::endl;
             break;
         case 2:
             {
-                std::cout << "Area de supervisao: " << funcionario->getAreaSupervisao() << std::endl;
-                std::cout << "Area de formacao: " << funcionario->getAreaFormacao() << std::endl;
+                std::cout << "Area de supervisao: " << ((Diretor*)funcionario)->getAreaSupervisao() << std::endl;
+                std::cout << "Area de formacao: " << ((Diretor*)funcionario)->getAreaFormacao() << std::endl;
             }
             break;
         case 3:
             {
-                std::cout << "Area de formacao: " << funcionario->getAreaFormacao() << std::endl;
-                std::cout << "Formacao maxima: " << funcionario->getFormacaoMax() << std::endl;
+                std::cout << "Area de formacao: " << ((Presidente*)funcionario)->getAreaFormacao() << std::endl;
+                std::cout << "Formacao maxima: " << ((Presidente*)funcionario)->getFormacaoMax() << std::endl;
             }
             break;
         }
 
-        std::cout << "Salario: " << funcionario->getSalario() << std::endl;
+        std::cout << "Salario: " << funcionario->getSalarioBase() << std::endl;
     } else {
         throw FuncionarioNaoEstaCadastradoExcept();
     }
@@ -166,41 +180,49 @@ void Empresa::exibirTodosFuncionarios() {
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
                 std::cout << "Registro do funcionario de codigo: " << this->operadores[i]->getCodigo() << std::endl;
-                std::cout << "Nome: " << operadores[i]->getNomeFuncionario() << std::endl;
-                std::cout << "Data de ingressao: " << operadores[i]->getDataIngresso() << std::endl;
-                std::cout << "Endereco: " << operadores[i]->getEndereco() << std::endl;
+                std::cout << "Nome: " << operadores[i]->getNome() << std::endl;
+                std::cout << "CPF: " << operadores[i]->getCPF() << std::endl;
+                std::cout << "Idade: " << operadores[i]->getIdade() << std::endl;
+                //std::cout << "Data de ingressao: " << operadores[i]->getDataIngresso() << std::endl;
+                std::cout << "Endereco: " << operadores[i]->getEndereco_toString() << std::endl;
                 std::cout << "Telefone: " << operadores[i]->getTelefone() << std::endl;
                 std::cout << "Designacao: " << operadores[i]->getDesignacaoStr() << std::endl;
-                std::cout << "Salario: " << operadores[i]->getSalario() << std::endl << std::endl;
+                std::cout << "Salario: " << operadores[i]->getSalarioBase() << std::endl << std::endl;
             } else if(tipoFuncionario == GERENTE) {
                 std::cout << "Registro do funcionario de codigo: " << gerentes[i]->getCodigo() << std::endl;
-                std::cout << "Nome: " << gerentes[i]->getNomeFuncionario() << std::endl;
-                std::cout << "Data de ingressao: " << gerentes[i]->getDataIngresso() << std::endl;
-                std::cout << "Endereco: " << gerentes[i]->getEndereco() << std::endl;
+                std::cout << "Nome: " << gerentes[i]->getNome() << std::endl;
+                std::cout << "CPF: " << gerentes[i]->getCPF() << std::endl;
+                std::cout << "Idade: " << gerentes[i]->getIdade() << std::endl;
+                //std::cout << "Data de ingressao: " << gerentes[i]->getDataIngresso() << std::endl;
+                std::cout << "Endereco: " << gerentes[i]->getEndereco_toString() << std::endl;
                 std::cout << "Telefone: " << gerentes[i]->getTelefone() << std::endl;
                 std::cout << "Designacao: " << gerentes[i]->getDesignacaoStr() << std::endl;
-                std::cout << "Area de supervisao: " << gerentes[i]->getAreaSupervisao() << std::endl;
-                std::cout << "Salario: " << gerentes[i]->getSalario() << std::endl << std::endl;
+                std::cout << "Area de supervisao: " << ((Gerente*)gerentes[i])->getAreaSupervisao() << std::endl;
+                std::cout << "Salario: " << gerentes[i]->getSalarioBase() << std::endl << std::endl;
             } else if (tipoFuncionario == DIRETOR) {
                 std::cout << "Registro do funcionario de codigo: " << diretores[i]->getCodigo() << std::endl;
-                std::cout << "Nome: " << diretores[i]->getNomeFuncionario() << std::endl;
-                std::cout << "Data de ingressao: " << diretores[i]->getDataIngresso() << std::endl;
-                std::cout << "Endereco: " << diretores[i]->getEndereco() << std::endl;
+                std::cout << "Nome: " << diretores[i]->getNome() << std::endl;
+                std::cout << "CPF: " << diretores[i]->getCPF() << std::endl;
+                std::cout << "Idade: " << diretores[i]->getIdade() << std::endl;
+                //std::cout << "Data de ingressao: " << diretores[i]->getDataIngresso() << std::endl;
+                std::cout << "Endereco: " << diretores[i]->getEndereco_toString() << std::endl;
                 std::cout << "Telefone: " << diretores[i]->getTelefone() << std::endl;
                 std::cout << "Designacao: " << diretores[i]->getDesignacaoStr() << std::endl;
-                std::cout << "Area de supervisao: " << diretores[i]->getAreaSupervisao() << std::endl;
-                std::cout << "Area de formacao: " << diretores[i]->getAreaFormacao() << std::endl;
-                std::cout << "Salario: " << diretores[i]->getSalario() << std::endl << std::endl;
+                std::cout << "Area de supervisao: " << ((Diretor*)diretores[i])->getAreaSupervisao() << std::endl;
+                std::cout << "Area de formacao: " << ((Diretor*)diretores[i])->getAreaFormacao() << std::endl;
+                std::cout << "Salario: " << diretores[i]->getSalarioBase() << std::endl << std::endl;
             } else if(tipoFuncionario == PRESIDENTE) {
                 std::cout << "Registro do funcionario de codigo: " << presidente->getCodigo() << std::endl;
-                std::cout << "Nome: " << presidente->getNomeFuncionario() << std::endl;
-                std::cout << "Data de ingressao: " << presidente->getDataIngresso() << std::endl;
-                std::cout << "Endereco: " << presidente->getEndereco() << std::endl;
+                std::cout << "Nome: " << presidente->getNome() << std::endl;
+                std::cout << "CPF: " << presidente->getCPF() << std::endl;
+                std::cout << "Idade: " << presidente->getIdade() << std::endl;
+                //std::cout << "Data de ingressao: " << presidente->getDataIngresso() << std::endl;
+                std::cout << "Endereco: " << presidente->getEndereco_toString() << std::endl;
                 std::cout << "Telefone: " << presidente->getTelefone() << std::endl;
                 std::cout << "Designacao: " << presidente->getDesignacaoStr() << std::endl;
-                std::cout << "Area de formacao: " << presidente->getAreaFormacao() << std::endl;
-                std::cout << "Formacao maxima: " << presidente->getFormacaoMax() << std::endl;
-                std::cout << "Salario: " << presidente->calcularSalarioMensal() << std::endl << std::endl;
+                std::cout << "Area de formacao: " << ((Presidente*)presidente)->getAreaFormacao() << std::endl;
+                std::cout << "Formacao maxima: " << ((Presidente*)presidente)->getFormacaoMax() << std::endl;
+                std::cout << "Salario: " << presidente->getSalarioBase() << std::endl << std::endl;
             }
         }
     }
@@ -210,52 +232,49 @@ void Empresa::exibirFuncionariosPorTipo(int tipoFuncionario) {
     for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
         if(tipoFuncionario == OPERADOR) {
             std::cout << "Registro do funcionario de codigo: " << this->operadores[i]->getCodigo() << std::endl;
-            std::cout << "Nome: " << operadores[i]->getNomeFuncionario() << std::endl;
-            std::cout << "Data de ingressao: "; 
-            operadores[i]->getDataIngresso().exibeData(); 
-            std::cout << std::endl;
-            std::cout << "Endereco: ";
-            operadores[i]->getEndereco().exibeEndereco(); 
-            std::cout << std::endl;
+            std::cout << "Nome: " << operadores[i]->getNome() << std::endl;
+            std::cout << "CPF: " << operadores[i]->getCPF() << std::endl;
+            std::cout << "Idade: " << operadores[i]->getIdade() << std::endl;
+            //std::cout << "Data de ingressao: " << operadores[i]->getDataIngresso() << std::endl;
+            std::cout << "Endereco: " << operadores[i]->getEndereco_toString() << std::endl;
             std::cout << "Telefone: " << operadores[i]->getTelefone() << std::endl;
-            std::cout << "Designacao: " << operadores[i]->getDesignacao() << std::endl;
-            std::cout << "Salario: " << operadores[i]->getSalario() << std::endl << std::endl;
+            std::cout << "Designacao: " << operadores[i]->getDesignacaoStr() << std::endl;
+            std::cout << "Salario: " << operadores[i]->getSalarioBase() << std::endl << std::endl;
         } else if(tipoFuncionario == GERENTE) {
             std::cout << "Registro do funcionario de codigo: " << gerentes[i]->getCodigo() << std::endl;
-            std::cout << "Nome: " << gerentes[i]->getNomeFuncionario() << std::endl;
-            std::cout << "Data de ingressao: "; 
-            gerentes[i]->getDataIngresso().exibeData(); 
-            std::cout << std::endl;
-            std::cout << "Endereco: ";
-            gerentes[i]->getEndereco().exibeEndereco(); 
-            std::cout << std::endl;
+            std::cout << "Nome: " << gerentes[i]->getNome() << std::endl;
+            std::cout << "CPF: " << gerentes[i]->getCPF() << std::endl;
+            std::cout << "Idade: " << gerentes[i]->getIdade() << std::endl;
+            //std::cout << "Data de ingressao: " << gerentes[i]->getDataIngresso() << std::endl;
+            std::cout << "Endereco: " << gerentes[i]->getEndereco_toString() << std::endl;
             std::cout << "Telefone: " << gerentes[i]->getTelefone() << std::endl;
-            std::cout << "Designacao: " << gerentes[i]->getDesignacao() << std::endl;
-            std::cout << "Salario: " << gerentes[i]->getSalario() << std::endl << std::endl;
+            std::cout << "Designacao: " << gerentes[i]->getDesignacaoStr() << std::endl;
+            std::cout << "Area de supervisao: " << ((Gerente*)gerentes[i])->getAreaSupervisao() << std::endl;
+            std::cout << "Salario: " << gerentes[i]->getSalarioBase() << std::endl << std::endl;
         } else if (tipoFuncionario == DIRETOR) {
             std::cout << "Registro do funcionario de codigo: " << diretores[i]->getCodigo() << std::endl;
-            std::cout << "Nome: " << diretores[i]->getNomeFuncionario() << std::endl;
-            std::cout << "Data de ingressao: "; 
-            diretores[i]->getDataIngresso().exibeData(); 
-            std::cout << std::endl;
-            std::cout << "Endereco: ";
-            diretores[i]->getEndereco().exibeEndereco(); 
-            std::cout << std::endl;
+            std::cout << "Nome: " << diretores[i]->getNome() << std::endl;
+            std::cout << "CPF: " << diretores[i]->getCPF() << std::endl;
+            std::cout << "Idade: " << diretores[i]->getIdade() << std::endl;
+            //std::cout << "Data de ingressao: " << diretores[i]->getDataIngresso() << std::endl;
+            std::cout << "Endereco: " << diretores[i]->getEndereco_toString() << std::endl;
             std::cout << "Telefone: " << diretores[i]->getTelefone() << std::endl;
-            std::cout << "Designacao: " << diretores[i]->getDesignacao() << std::endl;
-            std::cout << "Salario: " << diretores[i]->getSalario() << std::endl << std::endl;
+            std::cout << "Designacao: " << diretores[i]->getDesignacaoStr() << std::endl;
+            std::cout << "Area de supervisao: " << ((Diretor*)diretores[i])->getAreaSupervisao() << std::endl;
+            std::cout << "Area de formacao: " << ((Diretor*)diretores[i])->getAreaFormacao() << std::endl;
+            std::cout << "Salario: " << diretores[i]->getSalarioBase() << std::endl << std::endl;
         } else if(tipoFuncionario == PRESIDENTE) {
             std::cout << "Registro do funcionario de codigo: " << presidente->getCodigo() << std::endl;
-            std::cout << "Nome: " << presidente->getNomeFuncionario() << std::endl;
-            std::cout << "Data de ingressao: "; 
-            presidente->getDataIngresso().exibeData(); 
-            std::cout << std::endl;
-            std::cout << "Endereco: ";
-            presidente->getEndereco().exibeEndereco(); 
-            std::cout << std::endl;
+            std::cout << "Nome: " << presidente->getNome() << std::endl;
+            std::cout << "CPF: " << presidente->getCPF() << std::endl;
+            std::cout << "Idade: " << presidente->getIdade() << std::endl;
+            //std::cout << "Data de ingressao: " << presidente->getDataIngresso() << std::endl;
+            std::cout << "Endereco: " << presidente->getEndereco_toString() << std::endl;
             std::cout << "Telefone: " << presidente->getTelefone() << std::endl;
-            std::cout << "Designacao: " << presidente->getDesignacao() << std::endl;
-            std::cout << "Salario: " << presidente->getSalario() << std::endl << std::endl;
+            std::cout << "Designacao: " << presidente->getDesignacaoStr() << std::endl;
+            std::cout << "Area de formacao: " << ((Presidente*)presidente)->getAreaFormacao() << std::endl;
+            std::cout << "Formacao maxima: " << ((Presidente*)presidente)->getFormacaoMax() << std::endl;
+            std::cout << "Salario: " << presidente->getSalarioBase() << std::endl << std::endl;
         }
     }
 }
@@ -265,16 +284,16 @@ void Empresa::concederAumentoSalarial() {
             for (int j = 0; j < this->qtdFuncionarios[i]; j++) {
                 switch (i) {
                 case 0:
-                    operadores[i]->setSalario((operadores[i]->getTaxaAumento() * operadores[i]->getSalario()) + operadores[i]->getSalario());
+                    operadores[i]->setSalarioBase((operadores[i]->getTaxaAumento() * operadores[i]->getSalarioBase()) + operadores[i]->getSalarioBase());
                     break;
                 case 1:
-                    gerentes[i]->setSalario((gerentes[i]->getTaxaAumento() * gerentes[i]->getSalario()) + gerentes[i]->getSalario());
+                    gerentes[i]->setSalarioBase((gerentes[i]->getTaxaAumento() * gerentes[i]->getSalarioBase()) + gerentes[i]->getSalarioBase());
                     break;
                 case 2:
-                    diretores[i]->setSalario((diretores[i]->getTaxaAumento() * diretores[i]->getSalario()) + diretores[i]->getSalario());
+                    diretores[i]->setSalarioBase((diretores[i]->getTaxaAumento() * diretores[i]->getSalarioBase()) + diretores[i]->getSalarioBase());
                     break;
                 case 3:
-                    presidente->setSalario((presidente->getTaxaAumento() * presidente->getSalario()) + presidente->getSalario());
+                    presidente->setSalarioBase((presidente->getTaxaAumento() * presidente->getSalarioBase()) + presidente->getSalarioBase());
                     break;
                 }
             }
@@ -284,43 +303,57 @@ void Empresa::concederAumentoSalarial() {
 }
 
 void Empresa::calcularFolhaSalarial(int mes) {
-    if (getFolhaSalarial(mes - 1) != -1) {
+    if (this->presidente->getSalarioMensal(mes - 1) != -1) {
         std::cout << "A folha salarial desse mes ja foi calculada anteriormente." << std::endl;
     } else {
-        double valorTotal = 0;
-
         for(int i = 0; i < 4; i++) {
             for (int j = 0; j < this->qtdFuncionarios[i]; j++) {
                 switch (i) {
                 case 0:
-                    valorTotal += this->operadores[j]->calcularSalarioMensal();
+                    this->operadores[j]->calcularSalarioMensal(mes);
                     break;
                 case 1:
-                    valorTotal += this->gerentes[j]->calcularSalarioMensal();
+                    this->gerentes[j]->calcularSalarioMensal(mes);
                     break;
                 case 2:
-                    valorTotal += this->diretores[j]->calcularSalarioMensal();
+                    this->diretores[j]->calcularSalarioMensal(mes);
                     break;
                 case 3:
-                    valorTotal += this->presidente->calcularSalarioMensal();
+                    this->presidente->calcularSalarioMensal(mes);
                     break;
                 }
             }
         }
 
-        setFolhaSalarial(mes, valorTotal);
         std::cout << "A folha salarial foi para o mes solicitado foi calculada com sucesso." << std::endl;
     }
 }
 
-template<typename info>
-void Empresa::imprimirFolhaSalarialFuncionario(const info informacao, int tipoInformacao) {
-    Funcionario *funcionario = buscarFuncionario(informacao, tipoInformacao);
 
-    std::cout << "Folha Salarial do Funcionario: " << funcionario->getNome() << " ///// Codigo: " << funcionario->getCodigo() << std::endl;
-    std::cout << "Salario base: " << funcionario->getSalario();
-    std::cout << "Descontos: " << funcionario->getDescontosSalario();
-    std::cout << "Salario liquido: " << (funcionario->getSalario() - funcionario->getDescontosSalario()) << std::endl << std::endl;
+void Empresa::imprimirFolhaSalarialFuncionario(int codigo) {
+    Funcionario *funcionario = buscarFuncionario(codigo);
+
+    if (funcionario != nullptr) {
+        std::cout << "Folha Salarial do Funcionario: " << funcionario->getNome() << " ///// Codigo: " << funcionario->getCodigo() << std::endl;
+        std::cout << "Salario base: " << funcionario->getSalarioBase() << std::endl;
+        std::cout << "Salario liquido: " << (funcionario->getSalarioLiquido()) << std::endl;
+        std::cout << "Descontos: " << funcionario->getDescontosSalario() << std::endl << std::endl;
+    } else {
+        std::cout << "Funcionario nao esta cadastrado." << std::endl;
+    } 
+}
+
+void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
+    Funcionario *funcionario = buscarFuncionario(nome, BUSCAR_POR_NOME);
+
+    if (funcionario != nullptr) {
+        std::cout << "Folha Salarial do Funcionario: " << funcionario->getNome() << " ///// Codigo: " << funcionario->getCodigo() << std::endl;
+        std::cout << "Salario base: " << funcionario->getSalarioBase() << std::endl;
+        std::cout << "Salario liquido: " << (funcionario->getSalarioLiquido()) << std::endl;
+        std::cout << "Descontos: " << funcionario->getDescontosSalario() << std::endl << std::endl;    
+    } else {
+        std::cout << "Funcionario nao esta cadastrado." << std::endl;
+    }
 }
 
 void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
@@ -328,27 +361,38 @@ void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
         double valorTotal = 0;
 
         for(int meses = 0; meses < 12; meses++) {
-            if(getFolhaSalarial(meses) == -1) {
-                for(int i = 0; i < 4; i++) {
-                    for (int j = 0; j < this->qtdFuncionarios[i]; j++) {
-                        switch (i) {
-                        case 0:
-                            valorTotal += this->operadores[j]->calcularSalarioMensal();
-                            break;
-                        case 1:
-                            valorTotal += this->gerentes[j]->calcularSalarioMensal();
-                            break;
-                        case 2:
-                            valorTotal += this->diretores[j]->calcularSalarioMensal();
-                            break;
-                        case 3:
-                            valorTotal += this->presidente->calcularSalarioMensal();
-                            break;
+            for(int i = 0; i < 4; i++) {
+                for(int j = 0; j < this->qtdFuncionarios[i]; j++) {
+                    if(this->presidente->getSalarioMensal(meses) == -1) {
+                        if(i == OPERADOR) {
+                            this->operadores[j]->calcularSalarioMensal(meses);
+
+                            valorTotal += operadores[j]->getSalarioMensal(meses);
+                        } else if(i == GERENTE) {
+                            this->gerentes[j]->calcularSalarioMensal(meses);
+
+                            valorTotal += gerentes[j]->getSalarioMensal(meses);
+                        } else if(i == DIRETOR) {
+                            this->diretores[j]->calcularSalarioMensal(meses);
+
+                            valorTotal += diretores[j]->getSalarioMensal(meses);
+                        } else if(i == PRESIDENTE) {
+                            this->presidente->calcularSalarioMensal(meses);
+
+                            valorTotal += presidente->getSalarioMensal(meses);
+                        }
+                    } else {
+                        if(i == OPERADOR) {
+                            valorTotal += operadores[j]->getSalarioMensal(meses);
+                        } else if(i == GERENTE) {
+                            valorTotal += gerentes[j]->getSalarioMensal(meses);
+                        } else if(i == DIRETOR) {
+                            valorTotal += diretores[j]->getSalarioMensal(meses);
+                        } else if(i == PRESIDENTE) {
+                            valorTotal += presidente->getSalarioMensal(meses);
                         }
                     }
                 }
-            } else {
-                valorTotal += getFolhaSalarial(meses);
             }
         }
 
@@ -360,62 +404,105 @@ void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
         std::cout << "Para qual mes deseja imprimir a folha salarial (Digite o numero do mes):" << std::endl;
         std::cin >> mes;
 
-        double valorTotal;
+        double valorTotal = 0;
 
-        valorTotal = getFolhaSalarial(mes);
+        for(int i = 0; i < 4; i++) {
+                for(int j = 0; j < this->qtdFuncionarios[i]; j++) {
+                    if(i == OPERADOR) {
+                        if(operadores[j]->getSalarioMensal(mes) == -1) {
+                            this->operadores[j]->calcularSalarioMensal(mes);
+                        } 
+
+                        valorTotal += operadores[j]->getSalarioMensal(mes);
+                    } else if(i == GERENTE) {
+                        if(gerentes[j]->getSalarioMensal(mes) == -1) {
+                            this->gerentes[j]->calcularSalarioMensal(mes);
+                        } 
+
+                        valorTotal += gerentes[j]->getSalarioMensal(mes);
+                    } else if(i == DIRETOR) {
+                        if(diretores[j]->getSalarioMensal(mes) == -1) {
+                            this->diretores[j]->calcularSalarioMensal(mes);
+                        } 
+
+                        valorTotal += diretores[j]->getSalarioMensal(mes);
+                    } else if(i == PRESIDENTE) {
+                        if(presidente->getSalarioMensal(mes) == -1) {
+                            this->presidente->calcularSalarioMensal(mes);
+                        } 
+
+                        valorTotal += presidente->getSalarioMensal(mes);
+                    }
+                }
+            }
 
         std::cout << getNome() << " ///// " << getCNPJ() << std::endl;
         std::cout << "A folha salarial para o mes solicitado eh: " << valorTotal << std::endl;
     }
 }
 
-template<typename info>
-Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao) {
+Funcionario* Empresa::buscarFuncionario(int codigo) {
+    for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+        for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
+            if(tipoFuncionario == OPERADOR) {
+                if (this->operadores[i]->getCodigo() == codigo) return operadores[i];
+            } else if(tipoFuncionario == GERENTE) {
+                if (this->diretores[i]->getCodigo() == codigo) return diretores[i];
+            } else if(tipoFuncionario == DIRETOR) {
+                if (this->gerentes[i]->getCodigo() == codigo) return gerentes[i];
+            } else if(tipoFuncionario == PRESIDENTE) {
+                if (this->presidente->getCodigo() == codigo) return presidente;
+            }
+        }
+    }
+
+    return nullptr;
+}
+
+Funcionario* Empresa::buscarFuncionario(int *data) {
+    for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+        for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
+            if(tipoFuncionario == OPERADOR) {
+                if (this->operadores[i]->getDataIngresso().comparaDatas(data)) return operadores[i];
+            } else if(tipoFuncionario == GERENTE) {
+                if (this->diretores[i]->getDataIngresso().comparaDatas(data)) return diretores[i];
+            } else if(tipoFuncionario == DIRETOR) {
+                if (this->gerentes[i]->getDataIngresso().comparaDatas(data)) return gerentes[i];
+            } else if(tipoFuncionario == PRESIDENTE) {
+                if (this->presidente->getDataIngresso().comparaDatas(data)) return presidente;
+            }
+        }
+    }
+}
+
+Funcionario* Empresa::buscarFuncionario(std::string informacao, int opcao) {
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
                 switch (opcao) {
                 case 5:
-                    if (this->operadores->getNome().find(informacao) != std::string::npos) return operadores;
+                    if (this->operadores[i]->getNome().find(informacao) != std::string::npos) return operadores[i];
                     break;
                 case 6:
-                    if (this->operadores->getEndereco().comparaEndereco(informacao) != std::string::npos) return operadores;
-                    break;
-                case 7:
-                    if (this->operadores->getDataDeInsercao().comparaDatas(informacao)) return operadores;
-                    break;
-                case 8:
-                    if (this->operadores->getCodigo() == informacao) return operadores;
+                    if (this->operadores[i]->getEndereco().comparaEndereco(informacao) != std::string::npos) return operadores[i];
                     break;
                 }
             } else if(tipoFuncionario == GERENTE) {
                 switch (opcao) {
                 case 5:
-                    if (this->gerentes->getNome().find(informacao) != std::string::npos) return gerentes;
+                    if (this->gerentes[i]->getNome().find(informacao) != std::string::npos) return gerentes[i];
                     break;
                 case 6:
-                    if (this->gerentes->getEndereco().comparaEndereco(informacao) != std::string::npos) return gerentes;
-                    break;
-                case 7:
-                    if (this->gerentes->getDataDeInsercao().comparaDatas(informacao)) return gerentes;
-                    break;
-                case 8:
-                    if (this->gerentes->getCodigo() == informacao) return gerentes;
+                    if (this->gerentes[i]->getEndereco().comparaEndereco(informacao) != std::string::npos) return gerentes[i];
                     break;
                 }
             } else if(tipoFuncionario == DIRETOR) {
                 switch (opcao) {
                 case 5:
-                    if (this->diretores->getNome().find(informacao) != std::string::npos) return diretores;
+                    if (this->diretores[i]->getNome().find(informacao) != std::string::npos) return diretores[i];
                     break;
                 case 6:
-                    if (this->diretores->getEndereco().comparaEndereco(informacao) != std::string::npos) return diretores;
-                    break;
-                case 7:
-                    if (this->diretores->getDataDeInsercao().comparaDatas(informacao)) return diretores;
-                    break;
-                case 8:
-                    if (this->diretores->getCodigo() == informacao) return diretores;
+                    if (this->diretores[i]->getEndereco().comparaEndereco(informacao) != std::string::npos) return diretores[i];
                     break;
                 }
             } else if(tipoFuncionario == PRESIDENTE) {
@@ -426,16 +513,10 @@ Funcionario* Empresa::buscarFuncionario(const info informacao, int opcao) {
                 case 6:
                     if (this->presidente->getEndereco().comparaEndereco(informacao) != std::string::npos) return presidente;
                     break;
-                case 7:
-                    if (this->presidente->getDataDeInsercao().comparaDatas(informacao)) return presidente;
-                    break;
-                case 8:
-                    if (this->presidente->getCodigo() == informacao) return presidente;
-                    break;
                 }
             }
         }
     }
-    
+
     return nullptr;
 }
