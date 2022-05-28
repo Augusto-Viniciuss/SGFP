@@ -1,0 +1,1 @@
+g++ Data.cpp Endereco.cpp Empresa.cpp Pessoa.cpp Funcionario.cpp Operador.cpp Gerente.cpp Diretor.cpp Presidente.cpp Interface.cpp main.cpp TelefoneException.cpp CPFException.cpp  -o testeDeCompilacao

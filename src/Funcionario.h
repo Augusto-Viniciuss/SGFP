@@ -13,7 +13,7 @@ class Funcionario: public Pessoa {
         Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao);
 
         /* DESTRUTOR */
-        virtual ~Funcionario();
+
         
         /* ESPECIFICAÇÕES */
         virtual void calcularSalarioMensal(int mes) = 0;
@@ -26,7 +26,7 @@ class Funcionario: public Pessoa {
         double getDescontosSalario();
         double getSalarioLiquido();
         double getTaxaAumento();
-        //Endereco getEndereco();
+        Endereco getEndereco();
         //std::string getNomeFuncionario();
         //std::string getTelefone();
         std::string getDesignacaoStr();
@@ -46,7 +46,7 @@ class Funcionario: public Pessoa {
         //void setEndereco(std::string endereco); //numero,complemento,rua,bairro,cidade,estado,CEP
         //void setTelefone(std::string telefone);
         //void setNomeFuncionario(std::string nome);
-        void setDataIngresso(Data data);
+        void setDataIngresso(int *data);
         void setDataIngresso(std::string data);
         void setCodigoFuncionario(int codigo);
         
@@ -59,13 +59,13 @@ class Funcionario: public Pessoa {
         int horasTrabalhadas;
         int codigoFuncionario;
         //int idade;
-        int designacao; /*1 = Presidente; 2 = Diretor; 3 = Gerente; 4 = Operador*/
+        int designacao; /*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
         double salarioBase, salarioLiquido;
         double descontosSalario;
         double taxaAumento;
         //char nomeFuncionario[100];
         //char CPF[15]; /*Enviar como XXXXXXXXXXX e será armazenado como XXX.XXX.XXX-XX */
-        //Endereco endereco;
+        Endereco endereco;
         //char telefone[15]; /*Enviar como XXXXXXXXXXX e será armazenado como (XX)XXXXX-XXXX */
         Data dataIngresso;
 

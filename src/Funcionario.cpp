@@ -50,11 +50,11 @@ double Funcionario::getTaxaAumento(){
     return this->taxaAumento;
 }
 
-/*
+
 Endereco Funcionario::getEndereco(){
     return this->endereco;
 }
-*/
+
 
 /*
 std::string Funcionario::getTelefone(){
@@ -63,7 +63,7 @@ std::string Funcionario::getTelefone(){
 */
 
 std::string Funcionario::getDesignacaoStr(){
-    switch(this->designacao){
+    switch(getDesignacaoInt()){
         case 1:
             return "Operador";
             break;
@@ -266,11 +266,11 @@ void Funcionario::setNomeFuncionario(std::string nome){
 }
 */
 
-void Funcionario::setDataIngresso(Data data){
-    this->dataIngresso = data;
+void Funcionario::setDataIngresso(int *data){
+    this->dataIngresso = Data(data[0], data[1], data[2]);
 }
 
-void Funcionario::setDataIngresso(std::string data){
+/*void Funcionario::setDataIngresso(std::string data){
     Data *aux;
     std::string dia, mes, ano;
 
@@ -302,7 +302,7 @@ void Funcionario::setDataIngresso(std::string data){
     aux = new Data(std::stoi(dia), std::stoi(mes), std::stoi(ano));
 
     this->dataIngresso = *aux;
-}
+}*/
 
 void Funcionario::setCodigoFuncionario(int codigo){
     this->codigoFuncionario = codigo;

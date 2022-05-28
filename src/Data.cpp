@@ -9,10 +9,10 @@ Data::Data(int dia, int mes, int ano) {
 	setAno(ano);
 }
 
-int Data::getQuantidadeDiaMes(int indice) const {
+int Data::getQuantidadeDiaMes(int mes) {
 	int diasMeses[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
-	return diasMeses[indice - 1];
+	return diasMeses[mes - 1];
 }
 
 void Data::setDia(int dia) {	
@@ -23,7 +23,7 @@ void Data::setDia(int dia) {
 	}
 }
 
-int Data::getDia() const {
+int Data::getDia() {
 	return this->dia;
 }
 
@@ -35,7 +35,7 @@ void Data::setMes(int mes) {
 	}
 }
 
-int  Data::getMes() const {
+int  Data::getMes() {
 	return this->mes;
 }
 
@@ -43,22 +43,20 @@ void Data::setAno(int ano) {
 	this->ano = ano;
 }
 
-int Data::getAno() const {
+int Data::getAno() {
 	return this->ano;
 }
 
-void Data::exibeData() const {
+void Data::exibeData() {
 	std::cout << getDia() << "/0" << getMes() << "/" << getAno() << std::endl;
 }
 
 
-bool Data::comparaDatas(const Data &data1, const Data &data2){
-
-	if(data1.getDia() == data2.getDia() && data1.getAno() == data2.getAno() && data1.getMes() == data2.getMes()){
+bool Data::comparaDatas(int *data){
+	if((getDia() == data[0]) && (getAno() == data[2]) && (getMes() == data[1])){
 		return true;
 	}
 	else{
 		return false;
 	}
-	
 }

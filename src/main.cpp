@@ -13,7 +13,6 @@
 
 using namespace std;
 
-template<typename atributo>
 int main() {
     Empresa empresa;
     Funcionario *funcionario;
@@ -33,14 +32,24 @@ int main() {
 
                 empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
             } else if (opcaoMenu == 2) {
-                atributo atributoFuncionario;
+                std::string atributoFuncionarioStr;
+                int atributoFuncionarioInt;
+                int *atributoFuncionarioData;
                 int opcao, codigo;
 
                 codigo = interface.lerCodigoParaModificarFuncionario();
                 opcao = interface.lerOpcaoParaModificarFuncionario();
-                atributoFuncionario = interface.novoAtributoParaModificarFuncionario();
 
-                empresa.modificarFuncionario(codigo, opcao, atributo);
+                if((opcao >= 1) and (opcao <= 3)) {
+                    atributoFuncionarioInt = interface.lerNovoAtributoIntParaModificarFuncionario(opcao);
+                    empresa.modificarFuncionario(codigo, opcao, atributoFuncionarioInt);
+                } else if((opcao >= 4) and (opcao <= 8)) {
+                    atributoFuncionarioStr = interface.lerNovoAtributoStrParaModificarFuncionario(opcao);
+                    empresa.modificarFuncionario(codigo, opcao, atributoFuncionarioStr);
+                } else {
+                    atributoFuncionarioData = interface.lerNovaDataParaModificarFuncionario();
+                    empresa.modificarFuncionario(codigo, opcao, atributoFuncionarioData);
+                }  
             } else if(opcaoMenu == 3) {
                 int codigo;
 
@@ -70,14 +79,19 @@ int main() {
 
                 empresa.calcularFolhaSalarial(mes);
             } else if(opcaoMenu == 9) {
-                atributo atributoFuncionario;
+                std::string nome;
+                int codigo;
                 int tipoAtributo;
 
                 tipoAtributo = interface.lerTipoAtributoParaImprimirFolhaSalarialFuncionario();
-                atributoFuncionario = interface.lerAtributoParaImprimirFolhaSalarialFuncionario();
-
-
-                empresa.imprimirFolhaSalarialFuncionario(atributoFuncionario, tipoAtributo);
+                
+                if(tipoAtributo == 1) {
+                    nome = interface.lerNomeParaImprimirFolhaSalarialFuncionario();
+                    empresa.imprimirFolhaSalarialFuncionario(nome);
+                } else {
+                    codigo = interface.lerCodigoParaImprimirFolhaSalarialFuncionario();
+                    empresa.imprimirFolhaSalarialFuncionario(codigo);
+                }
             } else if(opcaoMenu == 10) {
                 int opcaoParaImprimir;
 

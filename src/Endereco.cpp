@@ -54,3 +54,11 @@ void Endereco::exibeEndereco() {
     std::cout << getRua() << ", " << getNumero() << ", " << getComplemento() << ", " << getBairro() << ", " << getCidade() << ", " << getEstado() << ", " << getCEP() << std::endl;
 }
 
+bool Endereco::comparaEndereco(std::string endereco) {
+    if (endereco.find(getCEP()) != std::string::npos) {
+        return true;
+    } else {
+        return false;
+    }
+}
+

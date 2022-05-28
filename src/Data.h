@@ -5,25 +5,25 @@ class Data {
 	public:
 		/* CONSTRUTORES */
 		Data();
-		Data(int, int, int);
+		Data(int dia, int mes, int ano);
 		
 		/* GET */
-		int getDia() const;
-		int getMes() const;
-		int getAno() const;
+		int getDia();
+		int getMes();
+		int getAno();
 		
 		/* SET */
-		void setMes(int);
-		void setDia(int);
-		void setAno(int);
+		void setMes(int mes);
+		void setDia(int dia);
+		void setAno(int ano);
 		
 		/* ESPECIFICAÇÕES */ 
-		int getQuantidadeDiaMes(int) const;
-		void exibeData() const;
+		int getQuantidadeDiaMes(int mes);
+		void exibeData();
 
 		/* Função comparaDatas */
 
-		bool comparaDatas(const Data &, const Data &);
+		bool comparaDatas(int *data);
 	private:
 		int dia;
 		int mes;

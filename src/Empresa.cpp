@@ -17,14 +17,8 @@ void Empresa::setCNPJ(std::string CNPJ) {
     this->CNPJ = CNPJ;
 }
 
-void Empresa::setDataFundacao(int *dataEmInt) {
-    Data dataObjeto;
-
-    dataObjeto.setAno(dataEmInt[2]);
-    dataObjeto.setMes(dataEmInt[1]);
-    dataObjeto.setDia(dataEmInt[0]);
-
-    this->dataFundacao = dataObjeto;
+void Empresa::setDataFundacao(int *data) {
+    this->dataFundacao =  Data(data[0], data[1], data[2]);
 }
 
 std::string Empresa::getNome() {
@@ -473,6 +467,8 @@ Funcionario* Empresa::buscarFuncionario(int *data) {
             }
         }
     }
+
+    return nullptr;
 }
 
 Funcionario* Empresa::buscarFuncionario(std::string informacao, int opcao) {

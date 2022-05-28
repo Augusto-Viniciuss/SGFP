@@ -18,7 +18,7 @@ int Interface::menu() {
 
     std::cin >> opcao;
 
-    while (opcao < 10 or opcao > 0) {
+    while (opcao > 10 or opcao < 0) {
         std::cout << std::endl << "Opcao invalida, por favor escolha uma opcao valida." << std::endl << std::endl;
         menu();
         std::cin >> opcao;
@@ -43,7 +43,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
     std::cout << "Digite a idade do funcionario:" << std::endl;
     std::cin >> idade;
     std::cin.ignore();
-    std::cout << "Digite o endereco do funcionario:" << std::endl;
+    std::cout << "Digite o endereco do funcionario na ordem numero, complemento, rua, bairro, cidade, estado, CEP. e separados por virgula:" << std::endl;
     getline(std::cin, endereco);
     std::cout << "Digite o telefone para contato do funcionario:" << std::endl;
     getline(std::cin, telefone);
@@ -107,27 +107,72 @@ int Interface::lerOpcaoParaModificarFuncionario() {
     int opcao;
 
     std::cout << "Digite 1 para modificar o codigo" << std::endl;
-    std::cout << "Digite 2 para modificar a data de ingresso na empresa" << std::endl;
-    std::cout << "Digite 3 para modificar o nome" << std::endl;
-    std::cout << "Digite 4 para modificar o endereco" << std::endl;
-    std::cout << "Digite 5 para modificar o telefone" << std::endl;
-    std::cout << "Digite 6 para modificar o designacao" << std::endl;
-    std::cout << "Digite 7 para modificar a idade" << std::endl;
+    std::cout << "Digite 2 para modificar a idade" << std::endl;
+    std::cout << "Digite 3 para modificar o designacao" << std::endl;
+    std::cout << "Digite 4 para modificar a data de ingresso na empresa" << std::endl;
+    std::cout << "Digite 5 para modificar o nome" << std::endl;
+    std::cout << "Digite 6 para modificar o endereco" << std::endl;
+    std::cout << "Digite 7 para modificar o telefone" << std::endl;
     std::cout << "Digite 8 para modificar o CPF" << std::endl;
     std::cin >> opcao;
+
+    if((opcao < 1) or (opcao > 8)) {
+        opcao = lerOpcaoParaModificarFuncionario();
+    }
 
     return opcao;
 }
 
-template<typename atributo>
-atributo Interface::novoAtributoParaModificarFuncionario() {
-    atributo atributoFuncionario;
 
-    std::cout << "Digite o novo valor para o atributo:" << std::endl;
-    std::cin.ignore();
-    getline(std::cin, atributoFuncionario);
+std::string Interface::lerNovoAtributoStrParaModificarFuncionario(int opcao) {
+    std::string atributoFuncionario;
+
+    if(opcao == 5) {
+        std::cout << "Digite o novo nome para o funcionario:" << std::endl;
+        std::cin.ignore();
+        getline(std::cin, atributoFuncionario);
+    } else if(opcao == 6) {
+        std::cout << "Digite o novo endereco para o funcionario na ordem numero, complemento, rua, bairro, cidade, estado, CEP. e separados por virgula:" << std::endl;
+        std::cin.ignore();
+        getline(std::cin, atributoFuncionario);
+    } else if(opcao == 7) {
+        std::cout << "Digite o telefone novo para o funcionario:" << std::endl;
+        std::cin.ignore();
+        getline(std::cin, atributoFuncionario);
+    } else if(opcao == 8) {
+        std::cout << "Digite o CPF novo para o funcionario:" << std::endl;
+        std::cin.ignore();
+        getline(std::cin, atributoFuncionario);
+    }
 
     return atributoFuncionario;
+}
+
+int Interface::lerNovoAtributoIntParaModificarFuncionario(int opcao) {
+    int atributoFuncionario;
+
+    if(opcao == 1) {
+        std::cout << "Digite o novo codigo para o funcionario:" << std::endl;
+        std::cin >> atributoFuncionario;    
+    } else if(opcao == 3) {
+        std::cout << "Qual a nova designacao do funcionario:" << std::endl;
+        std::cout << "Digite 1 para operador" << std::endl << "Digite 2 para gerente" << std::endl << std::endl << "Digite 3 para diretor" << std::endl << "Digite 4 para presidente" << std::endl;
+        std::cin >> atributoFuncionario;
+    } else if(opcao == 2) {
+        std::cout << "Digite a nova idade para o funcionario:" << std::endl;
+        std::cin >> atributoFuncionario;
+    }
+    
+    return atributoFuncionario;
+}
+
+int* Interface::lerNovaDataParaModificarFuncionario() {
+    int *data;
+
+    std::cout << "Digite a data de ingresso nova, na ordem dia, mes e ano separados por espacos:" << std::endl;
+    std::cin >> data[0] >> data[1] >> data[2];
+
+    return data;
 }
 
 int Interface::lerCodigoParaExcluirFuncionario() {
@@ -166,15 +211,23 @@ int Interface::lerMesParaCalcularFolhaSalarialEmpresa() {
     return mes;
 }
 
-template<typename atributo>
-atributo Interface::lerAtributoParaImprimirFolhaSalarialFuncionario() {
-    atributo atributoFuncionario;
+std::string Interface::lerNomeParaImprimirFolhaSalarialFuncionario() {
+    std::string nome;
 
-    std::cout << "Digite o codigo ou o nome completo do funcionario que deseja calcular a folha salarial:" << std::endl;
+    std::cout << "Digite o nome completo do funcionario que deseja calcular a folha salarial:" << std::endl;
     std::cin.ignore();
-    getline(std::cin, atributoFuncionario);
+    getline(std::cin, nome);
 
-    return atributoFuncionario;
+    return nome;
+}
+
+int Interface::lerCodigoParaImprimirFolhaSalarialFuncionario() {
+    int codigo;
+
+    std::cout << "Digite o codigo do funcionario que deseja imprimir a folha salarial:" << std::endl;
+    std::cin >> codigo;
+
+    return codigo;
 }
 
 int Interface::lerTipoAtributoParaImprimirFolhaSalarialFuncionario() {

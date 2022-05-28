@@ -13,12 +13,15 @@ class Interface {
         Funcionario* lerAtributosFuncionario();
         int lerCodigoParaModificarFuncionario();
         int lerOpcaoParaModificarFuncionario();
-        template<typename atributo> atributo novoAtributoParaModificarFuncionario();
+        std::string lerNovoAtributoStrParaModificarFuncionario(int opcao);
+        int lerNovoAtributoIntParaModificarFuncionario(int opcao);
+        int* lerNovaDataParaModificarFuncionario();
         int lerCodigoParaExcluirFuncionario();
         int lerCodigoParaExibirFuncionario();
         int lerTipoParaExibirFuncionarios();
         int lerMesParaCalcularFolhaSalarialEmpresa();
-        template<typename atributo> atributo lerAtributoParaImprimirFolhaSalarialFuncionario();
+        std::string lerNomeParaImprimirFolhaSalarialFuncionario();
+        int lerCodigoParaImprimirFolhaSalarialFuncionario();
         int lerTipoAtributoParaImprimirFolhaSalarialFuncionario();
         int lerOpcaoParaImprimirFolhaSalarialEmpresa();
 };

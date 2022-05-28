@@ -19,6 +19,7 @@ class Endereco{
         
         bool validaCEP(std::string CEP, std::string rua);
         void exibeEndereco();
+        bool comparaEndereco(std::string endereco);
     private:
         std::string numero, complemento, rua, bairro, cidade, estado, CEP;
 };
