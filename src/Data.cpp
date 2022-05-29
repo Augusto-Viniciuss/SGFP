@@ -1,6 +1,11 @@
 #include "Data.h"
 #include <iostream>
 
+#include <chrono> // biblioteca para pegar a data do computador
+
+using namespace std::chrono;
+
+
 Data::Data(){}
 
 Data::Data(int dia, int mes, int ano) {
@@ -59,4 +64,22 @@ bool Data::comparaDatas(int *data){
 	else{
 		return false;
 	}
+}
+
+
+std::string Data::retornaStringData() {
+
+	std::string dataString = std::to_string(getDia()) + "/0" + std::to_string(getMes()) + "/" + std::to_string(getAno());
+	
+	return dataString;
+}
+
+std::string Data::retornaDataComputador() {
+	auto now = system_clock::now();
+   	time_t t = system_clock::to_time_t(now); // variavel do tipo time_t, o qual possui as informações do time do computador
+		
+	std::string dataString = std::to_string(localtime(&t)->tm_mday) + " " + std::to_string(localtime(&t)->tm_mon + 1) + " " + std::to_string(localtime(&t)->tm_year + 1900);
+
+	return dataString;
+
 }

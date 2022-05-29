@@ -32,6 +32,8 @@ class Arquivo{
 		void excluiDados(int, int);
 		
 		void mostraDadosArquivos(int);
+
+		void mostraHistorico(int tipoFuncionario, int codigo); 
 		
 			
 	private:
