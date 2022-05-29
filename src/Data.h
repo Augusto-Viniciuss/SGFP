@@ -1,5 +1,6 @@
 #ifndef DATA_H
 #define DATA_H
+#include <string>
 
 class Data {
 	public:
@@ -20,6 +21,8 @@ class Data {
 		/* ESPECIFICAÇÕES */ 
 		int getQuantidadeDiaMes(int mes);
 		void exibeData();
+		std::string retornaStringData();
+		std::string retornaDataComputador();
 
 		/* Função comparaDatas */
 
