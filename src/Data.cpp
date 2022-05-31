@@ -78,8 +78,18 @@ std::string Data::retornaDataComputador() {
 	auto now = std::chrono::system_clock::now();
    	time_t t = std::chrono::system_clock::to_time_t(now); // variavel do tipo time_t, o qual possui as informações do time do computador
 		
-	std::string dataString = std::to_string(localtime(&t)->tm_mday) + " " + std::to_string(localtime(&t)->tm_mon + 1) + " " + std::to_string(localtime(&t)->tm_year + 1900);
+	std::string dataString;
+	
+	if(localtime(&t)->tm_mon + 1 < 10) {
+		dataString = std::to_string(localtime(&t)->tm_mday) + "/0" + std::to_string(localtime(&t)->tm_mon + 1) + "/" + std::to_string(localtime(&t)->tm_year + 1900);
+	}
+	else {
+		dataString = std::to_string(localtime(&t)->tm_mday) + "/" + std::to_string(localtime(&t)->tm_mon + 1) + "/" + std::to_string(localtime(&t)->tm_year + 1900);
+	}
+		
+	
 
 	return dataString;
+
 
 }
