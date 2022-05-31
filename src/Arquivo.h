@@ -9,6 +9,7 @@
 #include "Presidente.h"
 #include "Diretor.h"
 #include "HistoricoArquivo.h"
+#include <vector>
 
 
 #define QUANTIA_ARQUIVOS 4
@@ -34,11 +35,13 @@ class Arquivo{
 		void mostraDadosArquivos(int);
 
 		void mostraHistorico(int tipoFuncionario, int codigo); 
-		
+
+		void carregaDados(std::vector < Funcionario * > &funcionariosVec);
 			
 	private:
 		std::fstream arquivoFuncionarios[QUANTIA_ARQUIVOS];
 		std::string nomeArquivos[QUANTIA_ARQUIVOS];
+		std::fstream arquivosEntradas[QUANTIA_ARQUIVOS];
 		// Histórico do arquivo
 		HistoricoArquivo historico;
 		
