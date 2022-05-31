@@ -21,6 +21,9 @@ class HistoricoArquivo{
 		void setCodigo(int tipoFuncionario, int codigo);
 		int getCodigo(int);
 
+		void setNome(int tipoFuncionario, std::string nome);
+		std::string getNome(int);
+
 		void printaModificacao(int ,int);
 		
 		void escreveArquivoModificacoes(int);
@@ -30,6 +33,7 @@ class HistoricoArquivo{
 		std::string modificacoes[QUANTIA_ARQUIVOS];
 		int codigos[QUANTIA_ARQUIVOS];
 		std::string  datasModificacoes[QUANTIA_ARQUIVOS];
+		std::string nome[QUANTIA_ARQUIVOS];
 		std::ofstream saidaHistorico;
 		std::ifstream entradaHistorico;
 

@@ -10,7 +10,6 @@ HistoricoArquivo::HistoricoArquivo() {
 	if(!saidaHistorico) {
 		saidaHistorico.open("Historico.csv", std::ios::out);
 		
-	
 	}
 
 	saidaHistorico.close();
@@ -40,6 +39,15 @@ int HistoricoArquivo::getCodigo(int tipoFuncionario)
 	return this->codigos[tipoFuncionario];
 }
 
+
+void HistoricoArquivo::setNome(int tipoFuncionario, std::string nomeValor) {
+	nome[tipoFuncionario] = nomeValor;
+}
+
+std::string HistoricoArquivo::getNome(int tipoFuncionario) {
+
+	return this->nome[tipoFuncionario];
+}
 
 void HistoricoArquivo::printaModificacao(int tipoFuncionario,int codigoFuncionario){
 	entradaHistorico.open("Historico.csv", std::ios::in);
@@ -72,8 +80,7 @@ void HistoricoArquivo::escreveArquivoModificacoes(int tipoFuncionario) {
 	
 	saidaHistorico.open("Historico.csv", std::ios::app);
 
-	saidaHistorico << tipoFuncionario << "," << getCodigo(tipoFuncionario) << "," << modificacoes[tipoFuncionario] << "," << datasModificacoes[tipoFuncionario] << '\n';
-
+	saidaHistorico << tipoFuncionario << "," << getCodigo(tipoFuncionario) << "," << getNome(tipoFuncionario) << "," << modificacoes[tipoFuncionario] << "," << datasModificacoes[tipoFuncionario] << '\n';
 	saidaHistorico.close();
 
 }
