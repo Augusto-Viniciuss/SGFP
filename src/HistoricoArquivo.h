@@ -21,6 +21,7 @@ class HistoricoArquivo{
 		void setCodigo(int tipoFuncionario, int codigo);
 		int getCodigo(int);
 
+		/* SetNome e getNome	*/
 		void setNome(int tipoFuncionario, std::string nome);
 		std::string getNome(int);
 
@@ -30,6 +31,8 @@ class HistoricoArquivo{
 		virtual ~HistoricoArquivo();
 
 	private:
+		/* modificacoes, codigos, datas, nome, referem-se à um determinado arquivo	*/
+		/* Dependendo do indice, daquela modificação atual	*/
 		std::string modificacoes[QUANTIA_ARQUIVOS];
 		int codigos[QUANTIA_ARQUIVOS];
 		std::string  datasModificacoes[QUANTIA_ARQUIVOS];

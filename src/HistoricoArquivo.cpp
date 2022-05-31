@@ -16,13 +16,14 @@ HistoricoArquivo::HistoricoArquivo() {
 	
 }
 
-
+/* SetData modificação, recebe o tipo de funcionario que está sendo modificado e então	*/
+/* Cria um obj tipo Data para salvar em um vetor a data do computador que foi feita a mudança	*/
 void HistoricoArquivo::setDataModificacao(int tipoFuncionario){
 	Data *objData = new Data();
 	datasModificacoes[tipoFuncionario] = objData->retornaDataComputador();
 }
 
-
+/* A função seta o tipo de modificação que foi realizada	*/
 void HistoricoArquivo::setModificacao(int tipoFuncionario,std::string modificacao){
 	modificacoes[tipoFuncionario] = modificacao;
 }
@@ -49,6 +50,8 @@ std::string HistoricoArquivo::getNome(int tipoFuncionario) {
 	return this->nome[tipoFuncionario];
 }
 
+/* Printa modificaçao recebe o tipoFuncionario e o codigo dele, e então abre o arquivo .csv	*/
+/* E tenta procurar a linha correspondente ao tipo e codigo do usuario	*/
 void HistoricoArquivo::printaModificacao(int tipoFuncionario,int codigoFuncionario){
 	entradaHistorico.open("Historico.csv", std::ios::in);
 
