@@ -136,7 +136,8 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
     Operador operador;
   
     Funcionario *funcionario;
-  
+	bool funcionarioExiste = false; // variável que indica se existe ou não o funcionario
+
     switch(tipoFuncionario){
   
         // Coloca-se na posição referente ao código
@@ -162,11 +163,16 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 
 	// Abre o arquivo para saidas de dados e entrada
 	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out |std::ios::in |  std::ios::binary);
+	
 	// Posiciona na posição para dar o get e pegar os dados
 	arquivoFuncionarios[tipoFuncionario].seekg((dadosFuncionario.getCodigo() - 1) * sizeof(*funcionario));
 	// Ler o que está contido no arquivo correspondente
 	arquivoFuncionarios[tipoFuncionario].read(reinterpret_cast < char * > (funcionario), sizeof(*funcionario));
 
+	// Indica que o funcionario já existe
+	if(funcionario->getCodigo() != 0) {
+		funcionarioExiste = true;
+	}
 
 	
 	// Posiciona o ponteiro de arquivo put na localização que devemos colocar o funcionario correspondente ao arquivo que estamos abrindo
@@ -177,7 +183,15 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		
 		
 	historico.setDataModificacao(tipoFuncionario);
-	historico.setModificacao(tipoFuncionario,"O usuario foi cadastrado");
+
+	// Se o funcionario existe, é porque foi realizada uma atualização
+	if(funcionarioExiste) {
+		historico.setModificacao(tipoFuncionario,"O usuario foi atualizado");
+	}
+	else {
+		historico.setModificacao(tipoFuncionario,"O usuario foi cadastrado");
+	}
+	
 	historico.setCodigo(tipoFuncionario, dadosFuncionario.getCodigo());
 	historico.setNome(tipoFuncionario, dadosFuncionario.getNome());
 	historico.escreveArquivoModificacoes(tipoFuncionario);
