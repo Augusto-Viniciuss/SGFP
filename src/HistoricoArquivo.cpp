@@ -66,12 +66,10 @@ void HistoricoArquivo::printaModificacao(int tipoFuncionario,int codigoFuncionar
 		std::getline(entradaHistorico, linha);
 		if(linha.find(std::to_string(tipoFuncionario)) != -1 && linha.find(std::to_string(codigoFuncionario)) != -1)
 		{
-			break;
+			std::cout << linha << std::endl;
 		}
 
 	}
-
-	std::cout << linha << std::endl;
 
 	entradaHistorico.close();
 
