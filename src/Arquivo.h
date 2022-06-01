@@ -37,6 +37,8 @@ class Arquivo{
 		void mostraHistorico(int tipoFuncionario, int codigo); 
 
 		void carregaDados(std::vector < Funcionario * > &funcionariosVec);
+
+		void criaArquivoCsv(const std::vector < Funcionario *> &funcionariosVec);
 			
 	private:
 		std::fstream arquivoFuncionarios[QUANTIA_ARQUIVOS];
@@ -44,6 +46,9 @@ class Arquivo{
 		std::fstream arquivosEntradas[QUANTIA_ARQUIVOS];
 		// Arquivos para exclusao de dados
 		std::ifstream exclusaoDados[QUANTIA_ARQUIVOS];
+
+		std::ofstream outputCsv; // saida de dados apenas para o arquivo csv
+
 		// Histórico do arquivo
 		HistoricoArquivo historico;
 		

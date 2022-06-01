@@ -447,3 +447,20 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 	}
 
 }
+
+
+void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec) {
+
+	outputCsv.open("Folha.csv", std::ios::out);
+
+	if(!outputCsv) {
+		std::cout << "Nao foi possivel criar o arquivo" << std::endl;
+	}
+
+	for(int i = 0; i < funcionarioVec.size(); i++) {
+		outputCsv << funcionarioVec[i]->getCodigo() << "," << funcionarioVec[i]->getDesignacaoInt()  << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
+		<< funcionarioVec[i]->getHorasTrabalhadas() << "," << funcionarioVec[i]->getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
+	}
+
+	outputCsv.close();
+}
