@@ -191,7 +191,7 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 	else {
 		historico.setModificacao(tipoFuncionario,"O usuario foi cadastrado");
 	}
-	
+
 	historico.setCodigo(tipoFuncionario, dadosFuncionario.getCodigo());
 	historico.setNome(tipoFuncionario, dadosFuncionario.getNome());
 	historico.escreveArquivoModificacoes(tipoFuncionario);
@@ -256,72 +256,89 @@ void Arquivo::mostraDadosArquivos(int tipoFuncionario){
 }
 
 
-void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario){
+void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
+{
 
-	// Cria os tipos filhos previamente	
+	// Cria os tipos filhos previamente
 	Diretor diretores[2];
 	Gerente gerentes[2];
 	Operador operadores[2];
+	Presidente presidente;
 
 	Funcionario *funcionarios;
 	Funcionario *ptrLeitura;
-	// Abre o arquivo 
-	
-	if(tipoFuncionario == 0){
+	bool tentaPresidenteExcluir = false;
+	; // variavel que indica se houve tentativa de exclusão do presidente
+
+	if (tipoFuncionario == 0)
+	{
 		std::cout << "Não eh possivel excluir o presidente" << std::endl;
+		tentaPresidenteExcluir = true;
 	}
-	
+
 	// Verifica o tipo de funcionario e faz o ponteiro funcionarios apontar para aquele tipo
-	else{
-		switch(tipoFuncionario){
-			
-			case 1:
-				funcionarios = &diretores[0];
-				ptrLeitura = &diretores[1];
-				break;
-			case 2:
-				funcionarios = &gerentes[0];
-				ptrLeitura = &gerentes[1];
-				break;
-			case 3:
-				funcionarios = &operadores[0];
-				ptrLeitura = &operadores[1];
-				break;
-		}
-
-		arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out | std::ios::in |std::ios::binary);
-		if(!arquivoFuncionarios[tipoFuncionario]) {
-			std::cout << "Erro ao abrir o arquivo" << std::endl;
-		}
-
-		exclusaoDados[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
-
-		if(!exclusaoDados[tipoFuncionario]) {
-			std::cout << "Erro ao abrir o arquivo" << std::endl;
-		}
-		// Posiciona o arquivo no local referente ao codigoFuncionario
-		arquivoFuncionarios[tipoFuncionario].seekp((codigoFuncionario - 1) * sizeof(*funcionarios));
-
-		// Posiciona também o ponteiro de leitura
-		exclusaoDados[tipoFuncionario].seekg((codigoFuncionario - 1) * sizeof(*funcionarios));
-
-		// Coloca um funcionario zerado naquela posição
-		arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast <const char * > (funcionarios),  sizeof(*funcionarios) );
-		// Faz a leitura do dado
-		exclusaoDados[tipoFuncionario].read(reinterpret_cast < char * > (ptrLeitura), sizeof(*ptrLeitura));
+	switch (tipoFuncionario)
+	{
 		
-		historico.setDataModificacao(tipoFuncionario);
-		historico.setModificacao(tipoFuncionario,"O usuario foi excluido");
-		historico.setCodigo(tipoFuncionario, codigoFuncionario);
-		historico.setNome(tipoFuncionario, ptrLeitura->getNome());
-		historico.escreveArquivoModificacoes(tipoFuncionario);
-
-			
+		case 0:
+			ptrLeitura = &presidente;
+		case 1:
+			funcionarios = &diretores[0];
+			ptrLeitura = &diretores[1];
+			break;
+		case 2:
+			funcionarios = &gerentes[0];
+			ptrLeitura = &gerentes[1];
+			break;
+		case 3:
+			funcionarios = &operadores[0];
+			ptrLeitura = &operadores[1];
+			break;
 	}
+	// Abre o arquivo
+	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out | std::ios::in | std::ios::binary);
+
+	if (!arquivoFuncionarios[tipoFuncionario])
+	{
+		std::cout << "Erro ao abrir o arquivo" << std::endl;
+	}
+
+	exclusaoDados[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
+
+	if (!exclusaoDados[tipoFuncionario])
+	{
+		std::cout << "Erro ao abrir o arquivo" << std::endl;
+	}
+	// Posiciona o arquivo no local referente ao codigoFuncionario
+	arquivoFuncionarios[tipoFuncionario].seekp((codigoFuncionario - 1) * sizeof(*funcionarios));
+
+	// Posiciona também o ponteiro de leitura
+	exclusaoDados[tipoFuncionario].seekg((codigoFuncionario - 1) * sizeof(*funcionarios));
+
+	// Coloca um funcionario zerado naquela posição
+	arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast<const char *>(funcionarios), sizeof(*funcionarios));
+	
+	// Faz a leitura do dado
+	exclusaoDados[tipoFuncionario].read(reinterpret_cast<char *>(ptrLeitura), sizeof(*ptrLeitura));
+
+	if (tentaPresidenteExcluir)
+	{
+
+		historico.setModificacao(tipoFuncionario, "Tentaram excluir o presidente");
+	}
+
+	else
+	{
+		historico.setModificacao(tipoFuncionario, "O usuario foi excluido");
+	}
+
+	historico.setDataModificacao(tipoFuncionario);
+	historico.setCodigo(tipoFuncionario, codigoFuncionario);
+	historico.setNome(tipoFuncionario, ptrLeitura->getNome());
+	historico.escreveArquivoModificacoes(tipoFuncionario);
 
 	arquivoFuncionarios[tipoFuncionario].close();
 	exclusaoDados[tipoFuncionario].close();
-
 }
 
 
