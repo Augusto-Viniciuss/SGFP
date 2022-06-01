@@ -29,14 +29,12 @@ void HistoricoArquivo::setModificacao(int tipoFuncionario,std::string modificaca
 }
 
 
-void HistoricoArquivo::setCodigo(int tipoFuncionario, int codigo)
-{
+void HistoricoArquivo::setCodigo(int tipoFuncionario, int codigo) {
 	this->codigos[tipoFuncionario] = codigo;
 }
 
 
-int HistoricoArquivo::getCodigo(int tipoFuncionario)
-{
+int HistoricoArquivo::getCodigo(int tipoFuncionario) {
 	return this->codigos[tipoFuncionario];
 }
 
