@@ -71,7 +71,7 @@ void Pessoa::setTelefone(std::string telefone){
     if(telefone.size() == 11){
         for(int i = 0; i < 11; i++){
             if(telefone[i] < '0' || telefone[i] > 9){
-                throw TelefoneException("Numero invalido digitado");
+                throw TelefoneException("Número inválido digitado");
             }
         }
         int j = 0;
@@ -93,7 +93,7 @@ void Pessoa::setTelefone(std::string telefone){
         this->telefone[14] = '\0';
         
     }else{
-        throw TelefoneException("Quantidade invalida de caracteres");
+        throw TelefoneException("Quantidade inválida de caracteres");
     }
 }
 
@@ -105,7 +105,7 @@ void Pessoa::setCPF(std::string CPF){
 
         for(int i = 0; i < 11; i++){
             if(CPF[i] < '0' || CPF[i] > '9'){
-                throw CPFException("Caracter invalido digitado");
+                throw CPFException("Caracter inválido digitado");
             }
             cpfaux[i] = static_cast<int>(CPF[i] - 48);
         }
@@ -150,10 +150,10 @@ void Pessoa::setCPF(std::string CPF){
             }
             this->CPF[14] = '\0';
         }else{
-            throw CPFException("CPF invalido");
+            throw CPFException("CPF inválido");
         }
     }else{
-        throw CPFException("Quantidade invalida de caracteres");
+        throw CPFException("Quantidade inválida de caracteres");
     }
     
 }

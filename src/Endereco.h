@@ -17,7 +17,7 @@ class Endereco{
         std::string getEstado();
         std::string getCEP();
         
-        bool validaCEP(std::string CEP, std::string rua);
+        void validaCEP(std::string CEP);
         void exibeEndereco();
         bool comparaEndereco(std::string endereco);
     private:

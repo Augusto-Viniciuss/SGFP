@@ -1,4 +1,5 @@
 #include "Endereco.h"
+#include "CEPException.h"
 
 Endereco::Endereco(){
 
@@ -42,12 +43,20 @@ std::string Endereco::getCEP(){
     return CEP;
 }
 
-bool Endereco::validaCEP(std::string CEP, std::string rua){
-    /*
-    Ainda vou implementar, mas a ideia é:
-    True -> CEP condiz com a rua
-    False -> CEP não condiz com a rua
-    */
+void Endereco::validaCEP(std::string CEP){
+    if(CEP.size() == 8){
+        for(int i = 0; i < 8; i++){
+            if(CEP[i] < '0' || CEP[i] > '9'){
+                throw CEPException("Caracter inválido digitado");
+            }
+        }
+
+            /*
+                Falta a implementação do download da url
+            */
+    }else{
+        throw CEPException("Quantidade inválida de caracteres");
+    }
 }
 
 void Endereco::exibeEndereco() {
