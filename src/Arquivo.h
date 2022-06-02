@@ -21,7 +21,7 @@ class Arquivo{
 	public:
 		
 		// O construtor irá inicializar o arquivo recebendo o nome dos 4 tipo de arquivos
-		Arquivo(std::string, std::string, std::string, std::string);
+		Arquivo();
 
 		// A função salvarDadosFuncionario recebe os dados do funcionario e adiciona ao arquivo de dados dele
 		void salvarDadosFuncionario(Funcionario &, int);

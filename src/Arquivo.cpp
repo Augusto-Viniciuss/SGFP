@@ -6,7 +6,7 @@
 
 
 
-Arquivo::Arquivo(std::string nomeArquivoPresidente, std::string nomeArquivoDiretor, std::string nomeArquivoGerente, std::string nomeArquivoOperador){
+Arquivo::Arquivo(){
 
 	// Salva o nome de cada arquivo no vetor de nomes de arquivos
 	nomeArquivos[0] = "Presidente.dat";
