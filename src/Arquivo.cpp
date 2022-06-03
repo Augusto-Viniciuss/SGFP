@@ -280,9 +280,10 @@ void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
 	bool tentaPresidenteExcluir = false;
 	; // variavel que indica se houve tentativa de exclusão do presidente
 
+	//Throw tentativa falha de excluir o presidente
 	if (tipoFuncionario == 0)
 	{
-		std::cout << "Não eh possivel excluir o presidente" << std::endl;
+		throw InvalidoArgumento();
 		tentaPresidenteExcluir = true;
 	}
 
