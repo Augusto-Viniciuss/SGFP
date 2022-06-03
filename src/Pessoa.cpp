@@ -48,7 +48,7 @@ Endereco Pessoa::getEndereco_toObject(){
 }
 
 std::string Pessoa::getEndereco_toString(){ // numero, complemento, rua, bairro, cidade, estado, CEP;
-    std::string texto = endereco.getNumero() + "," + endereco.getComplemento() + "," + endereco.getRua() + "," + endereco.getBairro() + "," + endereco.getCidade() + "," + endereco.getEstado() + "," + endereco.getCEP();
+    std::string texto = endereco.getRua() + "," + endereco.getBairro() + "," + endereco.getCidade() + "," + endereco.getEstado() + "," + endereco.getCEP();
     return texto;
 }
 
@@ -168,23 +168,8 @@ void Pessoa::setEndereco(Endereco endereco){
 
 void Pessoa::setEndereco(std::string endereco){
     Endereco aux;
-    std::string numero, complemento, rua, bairro, cidade, estado, CEP;
+    std::string rua, bairro, cidade, estado, CEP;
     int j = 0;
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        numero[i] = endereco[j++];
-    }
-
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        complemento[i] = endereco[j++];
-    }
 
     for(int i = 0; i < endereco.size(); i++){
         if(endereco[j] == ','){
@@ -226,6 +211,6 @@ void Pessoa::setEndereco(std::string endereco){
         CEP[i] = endereco[j++];
     }
 
-    aux.setEndereco(numero, complemento, rua, bairro, cidade, estado, CEP);
+    aux.setEndereco(CEP, rua, bairro, cidade, estado);
     this->endereco = aux;
 }
