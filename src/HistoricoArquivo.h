@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Data.h"
 #include <string>
+#include "TentativaAbrirArquivo.h"
 
 
 #define QUANTIA_ARQUIVOS 4

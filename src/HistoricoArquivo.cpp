@@ -10,6 +10,11 @@ HistoricoArquivo::HistoricoArquivo() {
 	if(!saidaHistorico) {
 		saidaHistorico.open("Historico.csv", std::ios::out);
 		
+		// Caso ele n consiga criar
+		if(!saidaHistorico) {
+			throw TentativaAbrirArquivo("Historico.csv");
+		}
+		
 	}
 
 	saidaHistorico.close();
@@ -54,7 +59,7 @@ void HistoricoArquivo::printaModificacao(int tipoFuncionario,int codigoFuncionar
 	entradaHistorico.open("Historico.csv", std::ios::in);
 
 	if(!entradaHistorico) {
-		std::cout << "Arquivo não existe." << std::endl;
+		throw TentativaAbrirArquivo("Historico.csv");
 	}
 
 	
@@ -79,6 +84,10 @@ void HistoricoArquivo::escreveArquivoModificacoes(int tipoFuncionario) {
 	
 	saidaHistorico.open("Historico.csv", std::ios::app);
 
+	if(!saidaHistorico) {
+		throw TentativaAbrirArquivo("Historico.csv");
+	}
+	
 	saidaHistorico << tipoFuncionario << "," << getCodigo(tipoFuncionario) << "," << getNome(tipoFuncionario) << "," << modificacoes[tipoFuncionario] << "," << datasModificacoes[tipoFuncionario] << '\n';
 	saidaHistorico.close();
 
