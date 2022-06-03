@@ -10,6 +10,7 @@
 #include "Diretor.h"
 #include "HistoricoArquivo.h"
 #include <vector>
+#include "TentativaAbrirArquivo.h"
 
 
 #define QUANTIA_ARQUIVOS 4
@@ -26,6 +27,7 @@ class Arquivo{
 		// A função salvarDadosFuncionario recebe os dados do funcionario e adiciona ao arquivo de dados dele
 		void salvarDadosFuncionario(Funcionario &, int);
 		
+		// Criar arquivo irá jogar uma exception
 		// Função responsável por criar inicialmente os arquivos
 		void criaArquivo(std::string, std::string, std::string, std::string);
 		

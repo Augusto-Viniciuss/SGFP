@@ -39,6 +39,8 @@ Arquivo::Arquivo(){
 
 void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArquivoDiretor, std::string nomeArquivoGerente, std::string nomeArquivoOperador){
 
+	std::string nomeArquivoErro;
+
 	// Cria o arquivo para entrada e saida de dados em formato binario para cada usuário
 	for(int i = 0; i < 4; i++){
 
@@ -62,22 +64,22 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 			
 			switch(i){
 				case 0:
-					std::cerr << "Nao foi possivel criar o arquivo presidente" << std::endl;
+					nomeArquivoErro = "presidente";
 					break;
 
 				case 1:
-					std::cerr << "Nao foi possivel criar o arquivo diretor" << std::endl;
+					nomeArquivoErro = "diretor";
 					break;
 
 				case 2:
-					std::cerr << "Nao foi possivel criar o arquivo gerente" << std::endl;
+					nomeArquivoErro = "gerente";
 					break;
 				
 				case 3:
-					std::cerr << "Nao foi possivel criar o arquivo operador" << std::endl;
+					nomeArquivoErro = "operador";
 					break;
 			}
-			exit(1);
+			throw TentativaAbrirArquivo(nomeArquivoErro);
 		}
 
 	}
@@ -164,6 +166,10 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 	// Abre o arquivo para saidas de dados e entrada
 	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out |std::ios::in |  std::ios::binary);
 	
+	if(!arquivoFuncionarios[tipoFuncionario]) {
+		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
+	}
+
 	// Posiciona na posição para dar o get e pegar os dados
 	arquivoFuncionarios[tipoFuncionario].seekg((dadosFuncionario.getCodigo() - 1) * sizeof(*funcionario));
 	// Ler o que está contido no arquivo correspondente
@@ -238,6 +244,10 @@ void Arquivo::mostraDadosArquivos(int tipoFuncionario){
 
 	// Abre o arquivo para entrada de dados	
 	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
+
+	if(!arquivoFuncionarios[tipoFuncionario]) {
+		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
+	}
 	
 	// Posiciona no local para leitura de dados
 	arquivoFuncionarios[tipoFuncionario].seekg(0);
@@ -298,16 +308,14 @@ void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
 	// Abre o arquivo
 	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out | std::ios::in | std::ios::binary);
 
-	if (!arquivoFuncionarios[tipoFuncionario])
-	{
-		std::cout << "Erro ao abrir o arquivo" << std::endl;
+	if(!arquivoFuncionarios[tipoFuncionario]) {
+		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
 	}
 
 	exclusaoDados[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
 
-	if (!exclusaoDados[tipoFuncionario])
-	{
-		std::cout << "Erro ao abrir o arquivo" << std::endl;
+	if(!exclusaoDados[tipoFuncionario]) {
+		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
 	}
 	// Posiciona o arquivo no local referente ao codigoFuncionario
 	arquivoFuncionarios[tipoFuncionario].seekp((codigoFuncionario - 1) * sizeof(*funcionarios));
@@ -376,8 +384,8 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 		arquivosEntradas[i].open(nomeArquivos[i], std::ios::in | std::ios::binary);
 
 		if(!arquivosEntradas[i]) {
-			std::cout << "Nada para atualizar em " <<  nomeArquivos[i] << std::endl;
-		}
+		throw TentativaAbrirArquivo(nomeArquivos[i]);
+	}
 
 		/* i = 0 -> Arquivo de presidente
 		   i = 1 -> Arquivo de diretor
@@ -454,7 +462,7 @@ void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec
 	outputCsv.open("Folha.csv", std::ios::out);
 
 	if(!outputCsv) {
-		std::cout << "Nao foi possivel criar o arquivo" << std::endl;
+		throw TentativaAbrirArquivo("Folha.csv");
 	}
 
 	for(int i = 0; i < funcionarioVec.size(); i++) {
