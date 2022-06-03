@@ -1,5 +1,6 @@
 #include "Endereco.h"
 #include "CEPException.h"
+#include <fstream>
 
 Endereco::Endereco(){
 
@@ -50,10 +51,23 @@ void Endereco::validaCEP(std::string CEP){
                 throw CEPException("Caracter inválido digitado");
             }
         }
+        
+        std::string comando = "wget -qO ValidaCEP.json https://viacep.com.br/ws/" + CEP + "/json";
+        
+        system(comando.c_str());
 
+        std::fstream arq;
+        arq.open("ValidaCEP.json", std::ios::in);
+
+        if(arq.is_open()){
             /*
-                Falta a implementação do download da url
+            tamo quase
             */
+        }else{
+            throw CEPException("Erro ao abrir o arquivo");
+        }
+
+        arq.close();
     }else{
         throw CEPException("Quantidade inválida de caracteres");
     }
