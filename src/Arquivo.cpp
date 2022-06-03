@@ -384,8 +384,8 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 		arquivosEntradas[i].open(nomeArquivos[i], std::ios::in | std::ios::binary);
 
 		if(!arquivosEntradas[i]) {
-		throw TentativaAbrirArquivo(nomeArquivos[i]);
-	}
+			throw TentativaAbrirArquivo(nomeArquivos[i]);
+		}
 
 		/* i = 0 -> Arquivo de presidente
 		   i = 1 -> Arquivo de diretor
