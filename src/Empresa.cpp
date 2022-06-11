@@ -128,7 +128,9 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
 
 void Empresa::excluirFuncionario(int codigo) {
     Funcionario *funcionario = buscarFuncionario(codigo);
-    
+    // Colocado antes por conta do throw
+    dadosArquivos.excluiDados(funcionario->getDesignacaoInt(), funcionario->getCodigo());
+
     if (funcionario == nullptr) {
         throw FuncionarioNaoEstaCadastradoExcept();
     } else {
@@ -136,7 +138,7 @@ void Empresa::excluirFuncionario(int codigo) {
         std::cout << "Funcionario excluido dos registros." << std::endl;
     }
     
-    dadosArquivos.excluiDados(funcionario->getDesignacaoInt(), funcionario->getCodigo());
+    
 }
 
 void Empresa::exibirFuncionario(int codigo) {

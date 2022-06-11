@@ -24,6 +24,7 @@ class Interface {
         int lerCodigoParaImprimirFolhaSalarialFuncionario();
         int lerTipoAtributoParaImprimirFolhaSalarialFuncionario();
         int lerOpcaoParaImprimirFolhaSalarialEmpresa();
+        int buscarFuncionario();
 };
 
 #endif

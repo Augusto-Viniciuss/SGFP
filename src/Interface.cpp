@@ -12,13 +12,14 @@ int Interface::menu() {
     std::cout << "Digite 8 para calcular a folha salarial da empresa para um determinado mes." << std::endl;
     std::cout << "Digite 9 para imprimir a folha de salario de um funcionario." << std::endl;
     std::cout << "Digite 10 para imprimir a folha salarial da empresa." << std::endl;
+    std::cout << "Digite 11 para buscar um funcionario." << std::endl;
     std::cout << "Digite 0 para sair do programa." << std::endl;
 
     int opcao;
 
     std::cin >> opcao;
 
-    while (opcao > 10 or opcao < 0) {
+    while (opcao > 11 or opcao < 0) {
         std::cout << std::endl << "Opcao invalida, por favor escolha uma opcao valida." << std::endl << std::endl;
         menu();
         std::cin >> opcao;
