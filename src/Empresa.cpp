@@ -62,7 +62,7 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
         qtdFuncionarios[tipoFuncionario] += 1;
         break;
     }
-    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getCodigo()); // Adiciona ele aos arquivos
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 
 }
 
@@ -87,7 +87,7 @@ void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
     } else {
         throw FuncionarioNaoEstaCadastradoExcept();
     }
-    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getCodigo());
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, int *valor) {
@@ -102,6 +102,7 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int *valor) {
     } else {
         throw FuncionarioNaoEstaCadastradoExcept();
     }
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
@@ -122,6 +123,7 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
     } else {
         throw FuncionarioNaoEstaCadastradoExcept();
     }
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
 
 void Empresa::excluirFuncionario(int codigo) {
@@ -133,6 +135,8 @@ void Empresa::excluirFuncionario(int codigo) {
         delete funcionario;
         std::cout << "Funcionario excluido dos registros." << std::endl;
     }
+    
+    dadosArquivos.excluiDados(funcionario->getDesignacaoInt(), funcionario->getCodigo());
 }
 
 void Empresa::exibirFuncionario(int codigo) {

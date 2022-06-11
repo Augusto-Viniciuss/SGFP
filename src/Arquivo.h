@@ -53,6 +53,7 @@ class Arquivo{
 
 		// Histórico do arquivo
 		HistoricoArquivo historico;
+		/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 		
 
 

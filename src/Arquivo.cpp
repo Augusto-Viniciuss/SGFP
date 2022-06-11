@@ -8,11 +8,12 @@
 
 Arquivo::Arquivo(){
 
+	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 	// Salva o nome de cada arquivo no vetor de nomes de arquivos
-	nomeArquivos[0] = "Presidente.dat";
-	nomeArquivos[1] = "Diretor.dat";
-	nomeArquivos[2] = "Gerente.dat";
-	nomeArquivos[3] = "Operador.dat";
+	nomeArquivos[0] = "Operador.dat";
+	nomeArquivos[1] = "Gerente.dat";
+	nomeArquivos[2] = "Diretor.dat";
+	nomeArquivos[3] = "Presidente.dat";
 
 	bool existe = true;
 
@@ -41,20 +42,21 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 
 	std::string nomeArquivoErro;
 
+	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 	// Cria o arquivo para entrada e saida de dados em formato binario para cada usuário
 	for(int i = 0; i < 4; i++){
 
 		switch(i){
-			case 0:
+			case 3:
 				arquivoFuncionarios[i].open(nomeArquivoPresidente, std::ios::out | std::ios::binary);
 				break;
-			case 1:
+			case 2:
 				arquivoFuncionarios[i].open(nomeArquivoDiretor, std::ios::out | std::ios::binary);
 				break;
-			case 2:
+			case 1:
 				arquivoFuncionarios[i].open(nomeArquivoGerente, std::ios::out | std::ios::binary);
 				break;
-			case 3:
+			case 0:
 				arquivoFuncionarios[i].open(nomeArquivoOperador, std::ios::out | std::ios::binary);
 				break;
 		}
@@ -63,19 +65,19 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 		if(!arquivoFuncionarios[i]){
 			
 			switch(i){
-				case 0:
+				case 3:
 					nomeArquivoErro = "presidente";
 					break;
 
-				case 1:
+				case 2:
 					nomeArquivoErro = "diretor";
 					break;
 
-				case 2:
+				case 1:
 					nomeArquivoErro = "gerente";
 					break;
 				
-				case 3:
+				case 0:
 					nomeArquivoErro = "operador";
 					break;
 			}
@@ -95,23 +97,23 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 		
 		switch(i){
 
-			case 0:
+			case 3:
 
 				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&presidentes), sizeof(Presidente));
 				}
 				break;
-			case 1:
+			case 2:
 				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&diretores), sizeof(Diretor));
 				}
 				break;
-			case 2:
+			case 1:
 				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&gerentes), sizeof(Gerente));
 				}
 				break;
-			case 3:
+			case 0:
 				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&operadores), sizeof(Operador));
 				}
@@ -138,25 +140,29 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
     Operador operador;
   
     Funcionario *funcionario;
+
+	// Realiza a troca por conta da diferença
+	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
+	
 	bool funcionarioExiste = false; // variável que indica se existe ou não o funcionario
 
     switch(tipoFuncionario){
   
         // Coloca-se na posição referente ao código
         // Ler o que está contido
-        case 0:
+        case 3:
         	funcionario = &presidente;
             break;
   
-        case 1:
-            funcionario = &gerente;
-            break;
-  
         case 2:
-            funcionario =  &diretor;
+            funcionario = &diretor;
             break;
   
-        case 3:
+        case 1:
+            funcionario =  &gerente;
+            break;
+  
+        case 0:
             funcionario = &operador;
             break;
   
@@ -221,26 +227,28 @@ void Arquivo::mostraDadosArquivos(int tipoFuncionario){
 	
 	Funcionario *funcionario;	
 
+	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 	switch(tipoFuncionario){
-
-		// Coloca-se na posição referente ao código
-		// Ler o que está contido
-		case 0:
-			funcionario = &presidente;
-			break;
-
-		case 1:
-			funcionario = &gerente;
-			break;
-		
-		case 2:
-			funcionario =  &diretor;
-			break;
-		
-		case 3:
-			funcionario = &operador;
-			break;
-	}
+  
+        // Coloca-se na posição referente ao código
+        // Ler o que está contido
+        case 3:
+        	funcionario = &presidente;
+            break;
+  
+        case 2:
+            funcionario = &diretor;
+            break;
+  
+        case 1:
+            funcionario =  &gerente;
+            break;
+  
+        case 0:
+            funcionario = &operador;
+            break;
+  
+    }
 
 	// Abre o arquivo para entrada de dados	
 	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
@@ -278,30 +286,31 @@ void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
 	Funcionario *funcionarios;
 	Funcionario *ptrLeitura;
 	bool tentaPresidenteExcluir = false;
-	; // variavel que indica se houve tentativa de exclusão do presidente
+	// variavel que indica se houve tentativa de exclusão do presidente
 
 	//Throw tentativa falha de excluir o presidente
-	if (tipoFuncionario == 0)
+	if (tipoFuncionario == 3)
 	{
 		throw InvalidoArgumento();
 		tentaPresidenteExcluir = true;
 	}
 
+	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 	// Verifica o tipo de funcionario e faz o ponteiro funcionarios apontar para aquele tipo
 	switch (tipoFuncionario)
 	{
 		
-		case 0:
+		case 3:
 			ptrLeitura = &presidente;
-		case 1:
+		case 2:
 			funcionarios = &diretores[0];
 			ptrLeitura = &diretores[1];
 			break;
-		case 2:
+		case 1:
 			funcionarios = &gerentes[0];
 			ptrLeitura = &gerentes[1];
 			break;
-		case 3:
+		case 0:
 			funcionarios = &operadores[0];
 			ptrLeitura = &operadores[1];
 			break;
@@ -360,10 +369,12 @@ void Arquivo::mostraHistorico(int tipoFuncionario, int codigo)
 
 void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 
-	nomeArquivos[0] = "Presidente.dat";
-	nomeArquivos[1] = "Diretor.dat";
-	nomeArquivos[2] = "Gerente.dat";
-	nomeArquivos[3] = "Operador.dat";
+	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
+	// Salva o nome de cada arquivo no vetor de nomes de arquivos
+	nomeArquivos[0] = "Operador.dat";
+	nomeArquivos[1] = "Gerente.dat";
+	nomeArquivos[2] = "Diretor.dat";
+	nomeArquivos[3] = "Presidente.dat";
 
 	/* Criação de variáveis de buffer para armazenar temporariamente o dado lido	*/
 	Presidente presidenteBuffer;
@@ -388,27 +399,27 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 			throw TentativaAbrirArquivo(nomeArquivos[i]);
 		}
 
-		/* i = 0 -> Arquivo de presidente
-		   i = 1 -> Arquivo de diretor
-		   i = 2- > Arquivo de gerente
-		   i = 3 -> Arquivo de operador
+		/* i = 3 -> Arquivo de presidente
+		   i = 2 -> Arquivo de diretor
+		   i = 1- > Arquivo de gerente
+		   i = 0 -> Arquivo de operador
 		Como para cada um deles, o tamanho dos dados são diferentes, o ponteiro irá apontar para cada um adequadamente
 		*/
 		switch(i) {
 				
-			case 0:
+			case 3:
 				ptrFuncionarioTemp = &presidenteBuffer;
 				break;
 
-			case 1:
+			case 2:
 				ptrFuncionarioTemp = &diretorBuffer;
 				break;
 					
-			case 2:
+			case 1:
 				ptrFuncionarioTemp =  &gerenteBuffer;
 				break;
 					
-			case 3:
+			case 0:
 				ptrFuncionarioTemp = &operadorBuffer;
 				break;
 		}
@@ -426,19 +437,19 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 				/* Aponta adequadamente para uma nova região de memória, dependendo de qual arquivo estamos lendo	*/
 				/* Toda vez que damos new, há alocação de memória em algum local e retorna seu endereço, armazenando em funcionario	*/
 				switch(i) {
-					case 0:
+					case 3:
 						funcionario = new Presidente();
 						break;
 
-					case 1:
+					case 2:
 						funcionario = new Diretor();
 						break;
 							
-					case 2:
+					case 1:
 						funcionario =  new Gerente();
 						break;
 							
-					case 3:
+					case 0:
 						funcionario = new Operador();
 						break;
 				}
