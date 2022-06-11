@@ -286,21 +286,27 @@ void Empresa::concederAumentoSalarial() {
                 switch (i) {
                 case 0:
                     operadores[i]->setSalarioBase((operadores[i]->getTaxaAumento() * operadores[i]->getSalarioBase()) + operadores[i]->getSalarioBase());
+                    dadosArquivos.salvarDadosFuncionario(*operadores[i], operadores[i]->getDesignacaoInt());
                     break;
                 case 1:
                     gerentes[i]->setSalarioBase((gerentes[i]->getTaxaAumento() * gerentes[i]->getSalarioBase()) + gerentes[i]->getSalarioBase());
+                    dadosArquivos.salvarDadosFuncionario(*gerentes[i], gerentes[i]->getDesignacaoInt());
                     break;
                 case 2:
                     diretores[i]->setSalarioBase((diretores[i]->getTaxaAumento() * diretores[i]->getSalarioBase()) + diretores[i]->getSalarioBase());
+                    dadosArquivos.salvarDadosFuncionario(*diretores[i], diretores[i]->getDesignacaoInt());
                     break;
                 case 3:
                     presidente->setSalarioBase((presidente->getTaxaAumento() * presidente->getSalarioBase()) + presidente->getSalarioBase());
+                    dadosArquivos.salvarDadosFuncionario(*presidente, presidente->getDesignacaoInt());
                     break;
                 }
+                
             }
         }
 
     std::cout << "Aumento concedido a todos os funcionarios." << std::endl;
+    
 }
 
 void Empresa::calcularFolhaSalarial(int mes) {
