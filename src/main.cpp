@@ -7,6 +7,8 @@
 #include "Interface.h"
 #include "FuncionarioJaCadastradoExcept.h"
 #include "FuncionarioNaoEstaCadastradoExcept.h"
+#include "Arquivo.h"
+#include "HistoricoArquivo.h"
 
 #define INT 1
 #define STR 2
@@ -121,7 +123,12 @@ int main() {
 
                 empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
             }
+        } catch(TentativaAbrirArquivo &ProblemaArquivo) {
+            int opcao;
+            std::cout << "Não foi possivel criar o arquivo, ou abri-lo, verifique se ele existe na pasta do programa" << std::endl;
+            
         }
+
     }
 
     return 0;

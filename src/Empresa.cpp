@@ -62,6 +62,8 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
         qtdFuncionarios[tipoFuncionario] += 1;
         break;
     }
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getCodigo()); // Adiciona ele aos arquivos
+
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {

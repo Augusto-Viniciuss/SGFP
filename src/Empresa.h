@@ -12,6 +12,8 @@
 #include "Endereco.h"
 #include "FuncionarioJaCadastradoExcept.h"
 #include "FuncionarioNaoEstaCadastradoExcept.h"
+#include "Arquivo.h"
+#include "HistoricoArquivo.h"
 
 class Empresa {
     public:
@@ -64,6 +66,7 @@ class Empresa {
         const int BUSCAR_POR_NOME = 5;
         const int BUSCAR_POR_ENDERECO = 6;
         const int QTD_DE_TIPOS = 4;
+        Arquivo dadosArquivos; // Banco de dados
 };
 
 #endif
