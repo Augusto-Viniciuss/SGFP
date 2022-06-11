@@ -77,6 +77,8 @@ std::string Funcionario::getDesignacaoStr(){
             return "Presidente";
             break;
     }
+
+    return nullptr;
 }
 
 int Funcionario::getDesignacaoInt() {

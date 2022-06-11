@@ -33,7 +33,6 @@ class Funcionario: public Pessoa {
         int getDesignacaoInt();
         double getSalarioMensal(int mes);
         
-
         Data getDataIngresso();
 
         /* Set */
