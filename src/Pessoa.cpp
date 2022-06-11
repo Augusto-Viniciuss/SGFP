@@ -48,7 +48,7 @@ Endereco Pessoa::getEndereco_toObject(){
 }
 
 std::string Pessoa::getEndereco_toString(){ // numero, complemento, rua, bairro, cidade, estado, CEP;
-    std::string texto = endereco.getNumero() + "," + endereco.getComplemento() + "," + endereco.getRua() + "," + endereco.getBairro() + "," + endereco.getCidade() + "," + endereco.getEstado() + "," + endereco.getCEP();
+    std::string texto = endereco.getRua() + "," + endereco.getBairro() + "," + endereco.getCidade() + "," + endereco.getEstado() + "," + endereco.getCEP();
     return texto;
 }
 
@@ -71,7 +71,7 @@ void Pessoa::setTelefone(std::string telefone){
     if(telefone.size() == 11){
         for(int i = 0; i < 11; i++){
             if(telefone[i] < '0' || telefone[i] > 9){
-                throw TelefoneException("Numero invalido digitado");
+                throw TelefoneException("Número inválido digitado");
             }
         }
         int j = 0;
@@ -93,7 +93,7 @@ void Pessoa::setTelefone(std::string telefone){
         this->telefone[14] = '\0';
         
     }else{
-        throw TelefoneException("Quantidade invalida de caracteres");
+        throw TelefoneException("Quantidade inválida de caracteres");
     }
 }
 
@@ -105,7 +105,7 @@ void Pessoa::setCPF(std::string CPF){
 
         for(int i = 0; i < 11; i++){
             if(CPF[i] < '0' || CPF[i] > '9'){
-                throw CPFException("Caracter invalido digitado");
+                throw CPFException("Caracter inválido digitado");
             }
             cpfaux[i] = static_cast<int>(CPF[i] - 48);
         }
@@ -150,10 +150,10 @@ void Pessoa::setCPF(std::string CPF){
             }
             this->CPF[14] = '\0';
         }else{
-            throw CPFException("CPF invalido");
+            throw CPFException("CPF inválido");
         }
     }else{
-        throw CPFException("Quantidade invalida de caracteres");
+        throw CPFException("Quantidade inválida de caracteres");
     }
     
 }
@@ -168,23 +168,8 @@ void Pessoa::setEndereco(Endereco endereco){
 
 void Pessoa::setEndereco(std::string endereco){
     Endereco aux;
-    std::string numero, complemento, rua, bairro, cidade, estado, CEP;
+    std::string rua, bairro, cidade, estado, CEP;
     int j = 0;
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        numero[i] = endereco[j++];
-    }
-
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        complemento[i] = endereco[j++];
-    }
 
     for(int i = 0; i < endereco.size(); i++){
         if(endereco[j] == ','){
@@ -226,6 +211,6 @@ void Pessoa::setEndereco(std::string endereco){
         CEP[i] = endereco[j++];
     }
 
-    aux.setEndereco(numero, complemento, rua, bairro, cidade, estado, CEP);
+    aux.setEndereco(CEP, rua, bairro, cidade, estado);
     this->endereco = aux;
 }
