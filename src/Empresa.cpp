@@ -87,6 +87,7 @@ void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
     } else {
         throw FuncionarioNaoEstaCadastradoExcept();
     }
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getCodigo());
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, int *valor) {
