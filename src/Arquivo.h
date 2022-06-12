@@ -41,6 +41,8 @@ class Arquivo{
 		void carregaDados(std::vector < Funcionario * > &funcionariosVec);
 
 		void criaArquivoCsv(const std::vector < Funcionario *> &funcionariosVec);
+
+		void adicionaArquivoCsv(Funcionario *); //armazena somente do presidente
 			
 	private:
 		std::fstream arquivoFuncionarios[QUANTIA_ARQUIVOS];

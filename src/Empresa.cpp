@@ -531,3 +531,10 @@ Funcionario* Empresa::buscarFuncionario(std::string informacao, int opcao) {
 
     return nullptr;
 }
+
+
+Empresa::~Empresa() {
+    dadosArquivos.criaArquivoCsv(operadores);
+    dadosArquivos.criaArquivoCsv(diretores);
+    dadosArquivos.criaArquivoCsv(gerentes);
+}

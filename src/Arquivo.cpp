@@ -471,10 +471,11 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 
 void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec) {
 
-	outputCsv.open("Folha.csv", std::ios::out);
+	outputCsv.open("Folha.csv", std::ios::app);
 
 	if(!outputCsv) {
-		throw TentativaAbrirArquivo("Folha.csv");
+		outputCsv.open("Folha.csv", std::ios::out);
+		//throw TentativaAbrirArquivo("Folha.csv");
 	}
 
 	for(int i = 0; i < funcionarioVec.size(); i++) {
@@ -483,4 +484,18 @@ void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec
 	}
 
 	outputCsv.close();
+}
+
+
+void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
+	outputCsv.open("Folha.csv", std::ios::app);
+
+	if(!outputCsv) {
+		outputCsv.open("Folha.csv", std::ios::out);
+		//throw TentativaAbrirArquivo("Folha.csv");
+	}
+
+	outputCsv << presidente->getCodigo() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
+		<< presidente->getHorasTrabalhadas() << "," << presidente->getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
+
 }
