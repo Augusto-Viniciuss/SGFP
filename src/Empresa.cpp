@@ -537,4 +537,5 @@ Empresa::~Empresa() {
     dadosArquivos.criaArquivoCsv(operadores);
     dadosArquivos.criaArquivoCsv(diretores);
     dadosArquivos.criaArquivoCsv(gerentes);
+    dadosArquivos.adicionaArquivoCsv(presidente);
 }
