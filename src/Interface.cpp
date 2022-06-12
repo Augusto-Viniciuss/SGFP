@@ -250,3 +250,4 @@ int Interface::lerOpcaoParaImprimirFolhaSalarialEmpresa() {
 
     return opcao;
 }
+

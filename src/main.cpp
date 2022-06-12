@@ -100,7 +100,47 @@ int main() {
                 opcaoParaImprimir = interface.lerOpcaoParaImprimirFolhaSalarialEmpresa();
 
                 empresa.imprimirFolhaSalarialEmpresa(opcaoParaImprimir);
+            } else if(opcaoMenu == 11) {
+                int tipoBusca;
+                Funcionario *funcionarios;
+                std::string informacao, codigo;
+                int data, codigoFuncionario;
+
+
+                std::cout << "Digite o tipo de busca, 1 por informacao, 2 por data e 3 pelo codigo: ";
+                std::cin >> tipoBusca;
+
+                switch(tipoBusca) {
+                    case 1:
+                        std::cout << "Digite a informação, e 5 para nome e 6 para localizacao.";
+                        std::getline(std::cin, informacao);
+                        std::cin >> codigo;
+
+                        //funcionarios = empresa.buscarFuncionario(informacao, BUSCAR_POR_NOME);
+                        break;
+
+                    case 2:
+                        std::cout << "Digite a data de ingresso: ";
+                        std::cin >> data;
+                        funcionarios = empresa.buscarFuncionario(&data);
+                        break;
+                    
+                    case 3:
+                        std::cout << "Digite o codigo do funcionario: ";
+                        std::cin >> codigoFuncionario;
+                        funcionarios = empresa.buscarFuncionario(codigoFuncionario);
+                        break;
+                    
+                }
+
+                if(funcionario == nullptr) {
+                    std::cout << "Funcionario nao foi encontrado." << std::endl;
+                }
+                else {
+                    std::cout << funcionario->getNome() << " " << "encontrado." << std::endl;
+                }
             }
+            
         } catch(FuncionarioJaCadastradoExcept &funcionarioJaCadastrado) {
             int opcao;
             
