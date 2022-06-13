@@ -4,11 +4,11 @@
 
 HistoricoArquivo::HistoricoArquivo() {
 	
-	saidaHistorico.open("Historico.csv", std::ios::app);
+	saidaHistorico.open(path + "Historico.csv", std::ios::app);
 	
 	// Caso o arquivo não exista é necessário criar
 	if(!saidaHistorico) {
-		saidaHistorico.open("Historico.csv", std::ios::out);
+		saidaHistorico.open(path + "Historico.csv", std::ios::out);
 		
 		// Caso ele n consiga criar
 		if(!saidaHistorico) {
@@ -56,7 +56,7 @@ std::string HistoricoArquivo::getNome(int tipoFuncionario) {
 /* Printa modificaçao recebe o tipoFuncionario e o codigo dele, e então abre o arquivo .csv	*/
 /* E tenta procurar a linha correspondente ao tipo e codigo do usuario	*/
 void HistoricoArquivo::printaModificacao(int tipoFuncionario,int codigoFuncionario){
-	entradaHistorico.open("Historico.csv", std::ios::in);
+	entradaHistorico.open(path + "Historico.csv", std::ios::in);
 
 	if(!entradaHistorico) {
 		throw TentativaAbrirArquivo("Historico.csv");
@@ -82,7 +82,7 @@ void HistoricoArquivo::printaModificacao(int tipoFuncionario,int codigoFuncionar
 
 void HistoricoArquivo::escreveArquivoModificacoes(int tipoFuncionario) {
 	
-	saidaHistorico.open("Historico.csv", std::ios::app);
+	saidaHistorico.open(path + "Historico.csv", std::ios::app);
 
 	if(!saidaHistorico) {
 		throw TentativaAbrirArquivo("Historico.csv");

@@ -40,6 +40,7 @@ class HistoricoArquivo{
 		std::string nome[QUANTIA_ARQUIVOS];
 		std::ofstream saidaHistorico;
 		std::ifstream entradaHistorico;
+		std::string path = "../.gitignore/Dados/"; // path de armazenamento
 
 
 };

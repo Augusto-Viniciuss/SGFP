@@ -48,16 +48,16 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 
 		switch(i){
 			case 3:
-				arquivoFuncionarios[i].open(nomeArquivoPresidente, std::ios::out | std::ios::binary);
+				arquivoFuncionarios[i].open(path + nomeArquivoPresidente, std::ios::out | std::ios::binary);
 				break;
 			case 2:
-				arquivoFuncionarios[i].open(nomeArquivoDiretor, std::ios::out | std::ios::binary);
+				arquivoFuncionarios[i].open(path + nomeArquivoDiretor, std::ios::out | std::ios::binary);
 				break;
 			case 1:
-				arquivoFuncionarios[i].open(nomeArquivoGerente, std::ios::out | std::ios::binary);
+				arquivoFuncionarios[i].open(path + nomeArquivoGerente, std::ios::out | std::ios::binary);
 				break;
 			case 0:
-				arquivoFuncionarios[i].open(nomeArquivoOperador, std::ios::out | std::ios::binary);
+				arquivoFuncionarios[i].open(path + nomeArquivoOperador, std::ios::out | std::ios::binary);
 				break;
 		}
 		
@@ -170,7 +170,7 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 	// Vamos primeiro posicionar o ponteiro para a localização que corresponde ao codigo do funcionario
 
 	// Abre o arquivo para saidas de dados e entrada
-	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out |std::ios::in |  std::ios::binary);
+	arquivoFuncionarios[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::out |std::ios::in |  std::ios::binary);
 	
 	if(!arquivoFuncionarios[tipoFuncionario]) {
 		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
@@ -316,13 +316,13 @@ void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
 			break;
 	}
 	// Abre o arquivo
-	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::out | std::ios::in | std::ios::binary);
+	arquivoFuncionarios[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::out | std::ios::in | std::ios::binary);
 
 	if(!arquivoFuncionarios[tipoFuncionario]) {
 		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
 	}
 
-	exclusaoDados[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
+	exclusaoDados[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
 
 	if(!exclusaoDados[tipoFuncionario]) {
 		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
@@ -393,7 +393,7 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 	/* Feito isso, copiamos o conteudo de ptrFuncionarioTemp para Funcionario e então, coloca-se esse endereço no vector		*/
 	for(int i = 0; i < QUANTIA_ARQUIVOS; i++) {
 
-		arquivosEntradas[i].open(nomeArquivos[i], std::ios::in | std::ios::binary);
+		arquivosEntradas[i].open(path + nomeArquivos[i], std::ios::in | std::ios::binary);
 
 		if(!arquivosEntradas[i]) {
 			throw TentativaAbrirArquivo(nomeArquivos[i]);
@@ -471,10 +471,10 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 
 void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec) {
 
-	outputCsv.open("Folha.csv", std::ios::app);
+	outputCsv.open(path + "Folha.csv", std::ios::app);
 
 	if(!outputCsv) {
-		outputCsv.open("Folha.csv", std::ios::out);
+		outputCsv.open(path + "Folha.csv", std::ios::out);
 		//throw TentativaAbrirArquivo("Folha.csv");
 	}
 
@@ -488,10 +488,10 @@ void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec
 
 
 void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
-	outputCsv.open("Folha.csv", std::ios::app);
+	outputCsv.open(path + "Folha.csv", std::ios::app);
 
 	if(!outputCsv) {
-		outputCsv.open("Folha.csv", std::ios::out);
+		outputCsv.open(path + "Folha.csv", std::ios::out);
 		//throw TentativaAbrirArquivo("Folha.csv");
 	}
 

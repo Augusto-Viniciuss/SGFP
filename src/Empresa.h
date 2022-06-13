@@ -50,6 +50,9 @@ class Empresa {
         Funcionario* buscarFuncionario(int *data);
         Funcionario* buscarFuncionario(std::string informacao, int opcao);
 
+        /* DESTRUTOR */
+        virtual ~Empresa();
+
     private:
         std::string nome;
         std::string CNPJ;
