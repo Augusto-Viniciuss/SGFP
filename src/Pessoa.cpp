@@ -167,50 +167,5 @@ void Pessoa::setEndereco(Endereco endereco){
 }
 
 void Pessoa::setEndereco(std::string endereco){
-    Endereco aux;
-    std::string rua, bairro, cidade, estado, CEP;
-    int j = 0;
-
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        rua[i] = endereco[j++];
-    }
-
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        bairro[i] = endereco[j++];
-    }
-
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        cidade[i] = endereco[j++];
-    }
-
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        estado[i] = endereco[j++];
-    }
-
-    for(int i = 0; i < endereco.size(); i++){
-        if(endereco[j] == ','){
-            j++;
-            break;
-        }
-        CEP[i] = endereco[j++];
-    }
-
-    aux.setEndereco(CEP, rua, bairro, cidade, estado);
-    this->endereco = aux;
+    this->endereco.validaCEP(endereco);
 }
