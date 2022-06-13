@@ -9,10 +9,13 @@ Funcionario::Funcionario(){
 
 Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao) {
     setCodigoFuncionario(codigo);
+    setNome(nome);
     //setNomeFuncionario(nome);
     setCPF(CPF);
     setIdade(idade);
     setEndereco(endereco);
+    setTelefone(telefone);
+    setDataIngresso(data);
     //setDataIngresso(data);
     setDesignacao(designacao);
     setTaxaAumento();
