@@ -2,36 +2,10 @@
 #include "CEPException.h"
 #include <fstream>
 
-Endereco::Endereco(){
+Endereco::Endereco() {}
 
-}
-
-void Endereco::setEndereco(std::string CEP, std::string rua, std::string bairro, std::string cidade, std::string estado){
-    int i;
-    for(i = 0; i < CEP.size() && i < 10; i++){
-        this->CEP[i] = CEP[i];
-    }
-    this->CEP[i] = '\0';
-
-    for(i = 0; i < rua.size() && i < 99; i++){
-        this->rua[i] = rua[i];
-    }
-    this->rua[i] = '\0';
-
-    for(i = 0; i < bairro.size() && i < 49; i++){
-        this->bairro[i] = bairro[i];
-    }
-    this->bairro[i] = '\0';
-
-    for(i = 0; i < cidade.size() && i < 49; i++){
-        this->cidade[i] = cidade[i];
-    }
-    this->cidade[i] = '\0';
-
-    for(i = 0; i < estado.size() && i < 49; i++){
-        this->estado[i] = estado[i];
-    }
-    this->estado[i] = '\0';
+void Endereco::setEndereco(std::string CEP) {
+    validaCEP(CEP);
 }
         
 std::string Endereco::getRua(){
@@ -130,8 +104,8 @@ void Endereco::validaCEP(std::string CEP){
     }
 }
 
-void Endereco::exibeEndereco() {
-    std::cout << getRua() << ", " << getBairro() << ", " << getCidade() << ", " << getEstado() << ", " << getCEP() << std::endl;
+std::string Endereco::getInformacao() {
+    return getRua() + ", " + getBairro() + ", " + getCidade() + ", " + getEstado() + ", " + getCEP();
 }
 
 bool Endereco::comparaEndereco(std::string endereco) {

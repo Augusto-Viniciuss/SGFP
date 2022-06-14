@@ -7,7 +7,7 @@ Presidente::Presidente() {
 Presidente::Presidente(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao, std::string areaFormacao, std::string formacaoMax) : Funcionario(codigo, nome, CPF, idade, endereco, telefone, data, designacao) {
     setAreaFormacao(areaFormacao);
     setFormacaoMax(formacaoMax);
-    setSalarioBase(9432);
+    
 }
 
 std::string Presidente::getAreaFormacao() {
@@ -29,14 +29,14 @@ void Presidente::setFormacaoMax(std::string formacaoMax) {
 void Presidente::calcularSalarioMensal(int mes) {
     //editar para cada função ter sua hora mínima
     setHorasTrabalhadas(gerarAleatorio(260));
-   
+
     double salarioLiquido;
 
     if (getHorasTrabalhadas() > 194) {
-        salarioLiquido = getSalarioLiquido() + ((getHorasTrabalhadas() - 194) * HORA_EXTRA);
+        salarioLiquido = getFolhaSalarial(mes).getSalarioBase() + ((getHorasTrabalhadas() - 194) * HORA_EXTRA);
     } else {
-        salarioLiquido = getSalarioLiquido();
+        salarioLiquido = getFolhaSalarial(mes).getSalarioBase();
     }
    
-    this->folhaSalarial[mes - 1] = salarioLiquido;
+    getFolhaSalarial(mes).setSalarioLiquido(salarioLiquido);
 }

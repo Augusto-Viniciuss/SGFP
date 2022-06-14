@@ -56,7 +56,6 @@ void Data::exibeData() {
 	std::cout << getDia() << "/0" << getMes() << "/" << getAno() << std::endl;
 }
 
-
 bool Data::comparaDatas(int *data){
 	if((getDia() == data[0]) && (getAno() == data[2]) && (getMes() == data[1])){
 		return true;

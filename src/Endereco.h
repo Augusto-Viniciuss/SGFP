@@ -6,7 +6,7 @@
 class Endereco{
     public:
         Endereco();
-        void setEndereco(std::string CEP, std::string rua, std::string bairro, std::string cidade, std::string estado);
+        void setEndereco(std::string CEP);
         
         /* Get */
         std::string getRua();
@@ -16,7 +16,7 @@ class Endereco{
         std::string getCEP();
         
         void validaCEP(std::string CEP);
-        void exibeEndereco();
+        std::string getInformacao();
         bool comparaEndereco(std::string endereco);
     private:
         char CEP[10], rua[100], bairro[50], cidade[50], estado[20];

@@ -6,20 +6,12 @@ Pessoa::Pessoa(){
     /* ... */
 }
 
-Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, Endereco endereco){
+Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, std::string CEP){
     setNome(nome);
     setTelefone(telefone);
     setCPF(CPF);
     setIdade(idade);
-    setEndereco(endereco);
-}
-
-Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, std::string endereco){
-    setNome(nome);
-    setTelefone(telefone);
-    setCPF(CPF);
-    setIdade(idade);
-    setEndereco(endereco);
+    this->endereco.setEndereco(CEP);
 }
 
 Pessoa::~Pessoa(){
@@ -43,13 +35,8 @@ int Pessoa::getIdade(){
     return idade;
 }
 
-Endereco Pessoa::getEndereco_toObject(){
-    return endereco;
-}
-
-std::string Pessoa::getEndereco_toString(){ // numero, complemento, rua, bairro, cidade, estado, CEP;
-    std::string texto = endereco.getRua() + "," + endereco.getBairro() + "," + endereco.getCidade() + "," + endereco.getEstado() + "," + endereco.getCEP();
-    return texto;
+Endereco *Pessoa::getEndereco(){
+    return &endereco;
 }
 
 /* Set */
@@ -160,12 +147,4 @@ void Pessoa::setCPF(std::string CPF){
 
 void Pessoa::setIdade(int idade){
     this->idade = idade;
-}
-
-void Pessoa::setEndereco(Endereco endereco){
-    this->endereco = endereco;
-}
-
-void Pessoa::setEndereco(std::string endereco){
-    this->endereco.validaCEP(endereco);
 }

@@ -15,7 +15,7 @@ class Interface {
         int lerOpcaoParaModificarFuncionario();
         std::string lerNovoAtributoStrParaModificarFuncionario(int opcao);
         int lerNovoAtributoIntParaModificarFuncionario(int opcao);
-        int* lerNovaDataParaModificarFuncionario();
+        void lerNovaDataParaModificarFuncionario(int *data);
         int lerCodigoParaExcluirFuncionario();
         int lerCodigoParaExibirFuncionario();
         int lerTipoParaExibirFuncionarios();

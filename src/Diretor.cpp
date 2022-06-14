@@ -7,7 +7,6 @@ Diretor::Diretor(){
 Diretor::Diretor(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao, std::string areaSupervisao, std::string areaFormacao) : Funcionario(codigo, nome, CPF, idade, endereco, telefone, data, designacao) {
     setAreaSupervisao(areaSupervisao);
     setAreaFormacao(areaFormacao);
-    setSalarioBase(6256);
 }
 
 std::string Diretor::getAreaSupervisao() {
@@ -29,14 +28,14 @@ void Diretor::setAreaFormacao(std::string areaFormacao) {
 void Diretor::calcularSalarioMensal(int mes){
     //editar para cada função ter sua hora mínima
     setHorasTrabalhadas(gerarAleatorio(260));
-    
+
     double salarioLiquido;
 
     if (getHorasTrabalhadas() > 168) {
-        salarioLiquido = getSalarioLiquido() + ((getHorasTrabalhadas() - 168) * HORA_EXTRA);
+        salarioLiquido = getFolhaSalarial(mes).getSalarioBase() + ((getHorasTrabalhadas() - 168) * HORA_EXTRA);
     } else {
-        salarioLiquido = getSalarioLiquido();
+        salarioLiquido = getFolhaSalarial(mes).getSalarioBase();
     }
    
-    this->folhaSalarial[mes - 1] = salarioLiquido;
+    getFolhaSalarial(mes).setSalarioLiquido(salarioLiquido);
 }

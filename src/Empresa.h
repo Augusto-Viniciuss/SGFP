@@ -19,24 +19,18 @@ class Empresa {
     public:
         /* CONSTRUTOR*/
         Empresa();
-        Empresa(std::string nome, std::string CNPJ, int *dataEmInt);
 
         /* SET */
-        void setNome(std::string nome);
-        void setCNPJ(std::string CNPJ);
-        void setDataFundacao(int *dataEmInt);
+
         
         /* GET */
-        std::string getNome();
-        std::string getCNPJ();
-        Data getDataFundacao();
         int getQtdFuncionarios(int tipoFuncionario);
         
         /* ESPECIFICAÇÕES */
         void addFuncionario(Funcionario *funcionario, int tipoFuncionario);
         void modificarFuncionario(int codigo, int opcao, std::string valor);
         void modificarFuncionario(int codigo, int opcao, int valor);
-        void modificarFuncionario(int codigo, int opcao, int *valor);
+        void modificarFuncionario(int codigo, int *valor);
         void excluirFuncionario(int codigo);
         void exibirFuncionario(int codigo);
         void exibirTodosFuncionarios();
@@ -54,10 +48,7 @@ class Empresa {
         virtual ~Empresa();
 
     private:
-        std::string nome;
-        std::string CNPJ;
-        Data dataFundacao;
-        int qtdFuncionarios[4];
+        int qtdFuncionarios[4] = {0};
         std::vector<Funcionario*> operadores;
         std::vector<Funcionario*> gerentes;
         std::vector<Funcionario*> diretores;

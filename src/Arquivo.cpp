@@ -177,18 +177,18 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 	}
 
 	// Posiciona na posição para dar o get e pegar os dados
-	arquivoFuncionarios[tipoFuncionario].seekg((dadosFuncionario.getCodigo() - 1) * sizeof(*funcionario));
+	arquivoFuncionarios[tipoFuncionario].seekg((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
 	// Ler o que está contido no arquivo correspondente
 	arquivoFuncionarios[tipoFuncionario].read(reinterpret_cast < char * > (funcionario), sizeof(*funcionario));
 
 	// Indica que o funcionario já existe
-	if(funcionario->getCodigo() != 0) {
+	if(funcionario->getCodigoFuncionario() != 0) {
 		funcionarioExiste = true;
 	}
 
 	
 	// Posiciona o ponteiro de arquivo put na localização que devemos colocar o funcionario correspondente ao arquivo que estamos abrindo
-	arquivoFuncionarios[tipoFuncionario].seekp((dadosFuncionario.getCodigo() - 1) * sizeof(*funcionario));
+	arquivoFuncionarios[tipoFuncionario].seekp((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
 
 	// Escreve os dados no arquivo correspondente ao tipo de funcionário
   	arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast <const char *> (&dadosFuncionario), sizeof(*funcionario));
@@ -204,7 +204,7 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		historico.setModificacao(tipoFuncionario,"O usuario foi cadastrado");
 	}
 
-	historico.setCodigo(tipoFuncionario, dadosFuncionario.getCodigo());
+	historico.setCodigo(tipoFuncionario, dadosFuncionario.getCodigoFuncionario());
 	historico.setNome(tipoFuncionario, dadosFuncionario.getNome());
 	historico.escreveArquivoModificacoes(tipoFuncionario);
 
@@ -264,8 +264,8 @@ void Arquivo::mostraDadosArquivos(int tipoFuncionario){
 	{
 		arquivoFuncionarios[tipoFuncionario].read(reinterpret_cast < char * > (funcionario), sizeof(*funcionario));
 
-		if(funcionario->getCodigo() != 0) {
-			std::cout << funcionario->getCodigo() << " " << funcionario->getNome() << " " << funcionario->getCodigo() << std::endl;
+		if(funcionario->getCodigoFuncionario() != 0) {
+			std::cout << funcionario->getCodigoFuncionario() << " " << funcionario->getNome() << " " << funcionario->getCodigoFuncionario() << std::endl;
 		}
 
 	}
@@ -432,7 +432,7 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 				
 			arquivosEntradas[i].read(reinterpret_cast < char*  > (ptrFuncionarioTemp), sizeof(*ptrFuncionarioTemp));
 			
-			if(ptrFuncionarioTemp->getCodigo() != 0) {
+			if(ptrFuncionarioTemp->getCodigoFuncionario() != 0) {
 				
 				/* Aponta adequadamente para uma nova região de memória, dependendo de qual arquivo estamos lendo	*/
 				/* Toda vez que damos new, há alocação de memória em algum local e retorna seu endereço, armazenando em funcionario	*/
@@ -479,8 +479,8 @@ void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec
 	}
 
 	for(int i = 0; i < funcionarioVec.size(); i++) {
-		outputCsv << funcionarioVec[i]->getCodigo() << "," << funcionarioVec[i]->getDesignacaoInt()  << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
-		<< funcionarioVec[i]->getHorasTrabalhadas() << "," << funcionarioVec[i]->getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
+		outputCsv << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getDesignacaoInt()  << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
+		 << "," << funcionarioVec[i]->getFolhaSalarial(1).getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
 	}
 
 	outputCsv.close();
@@ -495,7 +495,7 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 		//throw TentativaAbrirArquivo("Folha.csv");
 	}
 
-	outputCsv << presidente->getCodigo() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
-		<< presidente->getHorasTrabalhadas() << "," << presidente->getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
+	outputCsv << presidente->getCodigoFuncionario() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
+		 << "," << presidente->getFolhaSalarial(1).getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
 
 }
