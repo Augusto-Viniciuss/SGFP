@@ -14,7 +14,7 @@ class Funcionario: public Pessoa {
         Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao);
 
         /* DESTRUTOR */
-        ~Funcionario();
+        virtual ~Funcionario();
         
         /* ESPECIFICAÇÕES */
         virtual void calcularSalarioMensal(int mes) = 0;

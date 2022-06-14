@@ -32,7 +32,7 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
         break;
     }
 
-    //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
