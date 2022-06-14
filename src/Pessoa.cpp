@@ -70,7 +70,7 @@ void Pessoa::setNome(std::string nome){
 void Pessoa::setTelefone(std::string telefone){
     if(telefone.size() == 11){
         for(int i = 0; i < 11; i++){
-            if(telefone[i] < '0' || telefone[i] > 9){
+            if(telefone[i] < '0' || telefone[i] > '9'){
                 throw TelefoneException("Número inválido digitado");
             }
         }

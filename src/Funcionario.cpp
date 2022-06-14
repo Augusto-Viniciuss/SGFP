@@ -67,16 +67,16 @@ std::string Funcionario::getTelefone(){
 
 std::string Funcionario::getDesignacaoStr(){
     switch(getDesignacaoInt()){
-        case 1:
+        case 0:
             return "Operador";
             break;
-        case 2:
+        case 1:
             return "Gerente";
             break;
-        case 3:
+        case 2:
             return "Diretor";
             break;
-        case 4:
+        case 3:
             return "Presidente";
             break;
     }
