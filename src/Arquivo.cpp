@@ -494,8 +494,8 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 		outputCsv.open(path + "Folha.csv", std::ios::out);
 		//throw TentativaAbrirArquivo("Folha.csv");
 	}
-
+	outputCsv << "Codigo," << "Designação," << "CPF," << "Nome," << "Salario," << "Telefone," << "Idade," << "Data Ingresso," << std::endl;
 	outputCsv << presidente->getCodigo() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
-		<< presidente->getHorasTrabalhadas() << "," << presidente->getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
+		<< "," << presidente->getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
 
 }
