@@ -51,15 +51,15 @@ Funcionario* Interface::lerAtributosFuncionario() {
     std::cout << "Digite a data de ingresso na empresa, na ordem dia, mes e ano separados por espacos:" << std::endl;
     std::cin >> data[0] >> data[1] >> data[2];
     std::cout << "Qual a designacao do funcionario:" << std::endl;
-    std::cout << "Digite 1 para operador" << std::endl << "Digite 2 para gerente" << std::endl << "Digite 3 para diretor" << std::endl << "Digite 4 para presidente" << std::endl;
+    std::cout << "Digite 0 para operador" << std::endl << "Digite 1 para gerente" << std::endl << "Digite 2 para diretor" << std::endl << "Digite 3 para presidente" << std::endl;
     std::cin >> designacao;
     std::cin.ignore();
 
     switch (designacao) {
-    case 1:
+    case 0:
         funcionario = new Operador(codigo, nome, CPF, idade, endereco, telefone, data, designacao);
         break;
-    case 2:
+    case 1:
         {
             std::string areaSupervisao;
 
@@ -68,7 +68,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
             funcionario = new Gerente(codigo, nome, CPF, idade, endereco, telefone, data, designacao, areaSupervisao);
             break;
         }
-    case 3:
+    case 2:
         {
             std::string areaSupervisao, areaFormacao;
 
@@ -79,7 +79,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
             funcionario = new Diretor(codigo, nome, CPF, idade, endereco, telefone, data, designacao, areaSupervisao, areaFormacao);
             break;
         }
-    case 4:
+    case 3:
         {
             std::string areaFormacao, formacaoMax;
 

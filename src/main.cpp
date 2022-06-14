@@ -113,7 +113,7 @@ int main() {
                 switch(tipoBusca) {
                     case 1:
                         std::cout << "Digite a informação, e 5 para nome e 6 para localizacao.";
-                        std::getline(std::cin, informacao);
+                        //std::getline(std::cin, informacao);
                         std::cin >> codigo;
 
                         //funcionarios = empresa.buscarFuncionario(informacao, BUSCAR_POR_NOME);

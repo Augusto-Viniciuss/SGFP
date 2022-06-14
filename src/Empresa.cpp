@@ -1,6 +1,8 @@
 #include "Empresa.h"
 
-Empresa::Empresa(){}
+Empresa::Empresa(){
+    this->qtdFuncionarios[4] = {0};
+}
 
 Empresa::Empresa(std::string nome, std::string CNPJ, int *dataEmInt) {
     setNome(nome);
@@ -40,7 +42,7 @@ int Empresa::getQtdFuncionarios(int tipo) {
 void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
     Funcionario *func = buscarFuncionario(funcionario->getNome(), BUSCAR_POR_NOME);
 
-    if(!(func != nullptr)) {
+    if(func != nullptr) {
         throw FuncionarioJaCadastradoExcept();
     }
 
