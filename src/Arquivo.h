@@ -57,7 +57,7 @@ class Arquivo{
 		HistoricoArquivo historico;
 		/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 
-		std::string path = "../.gitignore/Dados/"; // path de armazenamento
+		std::string path = "../.gitignore/Dados"; // path de armazenamento
 		
 
 

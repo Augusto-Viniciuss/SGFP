@@ -244,7 +244,7 @@ int Interface::lerTipoAtributoParaImprimirFolhaSalarialFuncionario() {
 int Interface::lerOpcaoParaImprimirFolhaSalarialEmpresa() {
     int opcao;
 
-    std::cout << "Digite 1 para imprimir a folha salarial do ano todo" << std::endl << "Digite 2 para imprimir a folha salarial de um mes especifico" << std::endl;
+    std::cout << "Digite 1 para imprimir a folha salarial do ano todo" << std::endl;
     std::cout << "Digite 2 para imprimir a folha salrial para um mes especifico" <<  std::endl;
     std::cin >> opcao;
 

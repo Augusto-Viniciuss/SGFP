@@ -4,7 +4,7 @@ Operador::Operador() {
     /* ... */
 }
 
-Operador::Operador(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao) : Funcionario(codigo, nome, CPF, idade, endereco, telefone, data, designacao) {}
+Operador::Operador(int codigo, std::string nome, std::string CPF, int idade, std::string CEP, std::string telefone, int *data, int designacao) : Funcionario(codigo, nome, CPF, idade, CEP, telefone, data, designacao) {}
 
 void Operador::calcularSalarioMensal(int mes){
     //editar para cada função ter sua hora mínima

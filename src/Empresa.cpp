@@ -32,7 +32,7 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
         break;
     }
 
-    //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
@@ -282,23 +282,23 @@ void Empresa::concederAumentoSalarial() {
 }
 
 void Empresa::calcularFolhaSalarial(int mes) {
-    if (this->presidente->getFolhaSalarial(mes - 1).getSalarioLiquido() != 0) {
+    if (this->presidente->getFolhaSalarial(mes).getSalarioLiquido() != 0) {
         std::cout << "A folha salarial desse mes ja foi calculada anteriormente." << std::endl;
     } else {
         for(int tipoFuncionario = 0; tipoFuncionario < 4; tipoFuncionario++) {
             for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
                 switch (tipoFuncionario) {
                 case 0:
-                    this->operadores[i]->calcularSalarioMensal(mes - 1);
+                    this->operadores[i]->calcularSalarioMensal(mes);
                     break;
                 case 1:
-                    this->gerentes[i]->calcularSalarioMensal(mes - 1);
+                    this->gerentes[i]->calcularSalarioMensal(mes);
                     break;
                 case 2:
-                    this->diretores[i]->calcularSalarioMensal(mes - 1);
+                    this->diretores[i]->calcularSalarioMensal(mes);
                     break;
                 case 3:
-                    this->presidente->calcularSalarioMensal(mes - 1);
+                    this->presidente->calcularSalarioMensal(mes);
                     break;
                 }
             }
@@ -346,7 +346,7 @@ void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
                 std::cout << "Mes: " << (meses + 1) << std::endl;
                 std::cout << "Salario base: R$ " << funcionario->getFolhaSalarial(meses).getSalarioBase() << std::endl;
                 std::cout << "Salario liquido: R$ " << (funcionario->getFolhaSalarial(meses).getSalarioLiquido()) << std::endl;
-                std::cout << "Descontos imposto de rensa: R$ " << funcionario->getFolhaSalarial(meses).getDescontoImpostoRenda() << std::endl;
+                std::cout << "Descontos imposto de renda: R$ " << funcionario->getFolhaSalarial(meses).getDescontoImpostoRenda() << std::endl;
                 std::cout << "Descontos previdencia social: R$ " << funcionario->getFolhaSalarial(meses).getDescontoPrevidencia() << std::endl;
                 std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;   
             }
@@ -366,27 +366,27 @@ void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
 
             double salarioTotalLiquido, salarioTotalBase, descontoPrevidencia, descontoImpostoRenda = 0;
 
-            for(int i = 0; i < 4; i++) {
-                for(int j = 0; j < this->qtdFuncionarios[i]; j++) {
-                    if(this->presidente->getFolhaSalarial(meses).getSalarioBase() != 0) {
-                        if(i == OPERADOR) {
-                            salarioTotalBase += operadores[j]->getFolhaSalarial(meses).getSalarioBase();
-                            salarioTotalLiquido += operadores[j]->getFolhaSalarial(meses).getSalarioLiquido();
-                            descontoPrevidencia += operadores[j]->getFolhaSalarial(meses).getDescontoPrevidencia();
-                            descontoImpostoRenda += operadores[j]->getFolhaSalarial(meses).getDescontoPrevidencia();
-                        } else if(i == GERENTE) {
-                            salarioTotalBase += gerentes[j]->getFolhaSalarial(meses).getSalarioBase();
-                            salarioTotalLiquido += gerentes[j]->getFolhaSalarial(meses).getSalarioLiquido();
-                            descontoPrevidencia += gerentes[j]->getFolhaSalarial(meses).getDescontoPrevidencia();
-                            descontoImpostoRenda += gerentes[j]->getFolhaSalarial(meses).getDescontoPrevidencia();
-                        } else if(i == DIRETOR) {
-                            this->diretores[j]->calcularSalarioMensal(meses);
+            for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+                for(int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
+                    if(this->presidente->getFolhaSalarial(meses).getSalarioLiquido() != 0) {
+                        if(tipoFuncionario == OPERADOR) {
+                            salarioTotalBase += operadores[i]->getFolhaSalarial(meses).getSalarioBase();
+                            salarioTotalLiquido += operadores[i]->getFolhaSalarial(meses).getSalarioLiquido();
+                            descontoPrevidencia += operadores[i]->getFolhaSalarial(meses).getDescontoPrevidencia();
+                            descontoImpostoRenda += operadores[i]->getFolhaSalarial(meses).getDescontoPrevidencia();
+                        } else if(tipoFuncionario == GERENTE) {
+                            salarioTotalBase += gerentes[i]->getFolhaSalarial(meses).getSalarioBase();
+                            salarioTotalLiquido += gerentes[i]->getFolhaSalarial(meses).getSalarioLiquido();
+                            descontoPrevidencia += gerentes[i]->getFolhaSalarial(meses).getDescontoPrevidencia();
+                            descontoImpostoRenda += gerentes[i]->getFolhaSalarial(meses).getDescontoPrevidencia();
+                        } else if(tipoFuncionario == DIRETOR) {
+                            this->diretores[i]->calcularSalarioMensal(meses);
 
-                            salarioTotalBase += diretores[j]->getFolhaSalarial(meses).getSalarioBase();
-                            salarioTotalLiquido += diretores[j]->getFolhaSalarial(meses).getSalarioLiquido();
-                            descontoPrevidencia += diretores[j]->getFolhaSalarial(meses).getDescontoPrevidencia();
-                            descontoImpostoRenda += diretores[j]->getFolhaSalarial(meses).getDescontoPrevidencia();
-                        } else if(i == PRESIDENTE) {
+                            salarioTotalBase += diretores[i]->getFolhaSalarial(meses).getSalarioBase();
+                            salarioTotalLiquido += diretores[i]->getFolhaSalarial(meses).getSalarioLiquido();
+                            descontoPrevidencia += diretores[i]->getFolhaSalarial(meses).getDescontoPrevidencia();
+                            descontoImpostoRenda += diretores[i]->getFolhaSalarial(meses).getDescontoPrevidencia();
+                        } else if(tipoFuncionario == PRESIDENTE) {
                             salarioTotalBase += presidente->getFolhaSalarial(meses).getSalarioBase();
                             salarioTotalLiquido += presidente->getFolhaSalarial(meses).getSalarioLiquido();
                             descontoPrevidencia += presidente->getFolhaSalarial(meses).getDescontoPrevidencia();
@@ -413,32 +413,32 @@ void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
 
         double salarioTotalLiquido, salarioTotalBase, descontoPrevidencia, descontoImpostoRenda = 0;
 
-        if(this->presidente->getFolhaSalarial(mes - 1).getSalarioBase() != 0) {
+        if(this->presidente->getFolhaSalarial(mes).getSalarioLiquido() != 0) {
             
             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
 
             for(int i = 0; i < 4; i++) {
                 for(int j = 0; j < this->qtdFuncionarios[i]; j++) {
                     if(i == OPERADOR) {
-                        salarioTotalBase += operadores[j]->getFolhaSalarial(mes - 1).getSalarioBase();
-                        salarioTotalLiquido += operadores[j]->getFolhaSalarial(mes - 1).getSalarioLiquido();
-                        descontoPrevidencia += operadores[j]->getFolhaSalarial(mes - 1).getDescontoPrevidencia();
-                        descontoImpostoRenda += operadores[j]->getFolhaSalarial(mes - 1).getDescontoPrevidencia();
+                        salarioTotalBase += operadores[j]->getFolhaSalarial(mes).getSalarioBase();
+                        salarioTotalLiquido += operadores[j]->getFolhaSalarial(mes).getSalarioLiquido();
+                        descontoPrevidencia += operadores[j]->getFolhaSalarial(mes).getDescontoPrevidencia();
+                        descontoImpostoRenda += operadores[j]->getFolhaSalarial(mes).getDescontoPrevidencia();
                     } else if(i == GERENTE) {
-                        salarioTotalBase += gerentes[j]->getFolhaSalarial(mes - 1).getSalarioBase();
-                        salarioTotalLiquido += gerentes[j]->getFolhaSalarial(mes - 1).getSalarioLiquido();
-                        descontoPrevidencia += gerentes[j]->getFolhaSalarial(mes - 1).getDescontoPrevidencia();
-                        descontoImpostoRenda += gerentes[j]->getFolhaSalarial(mes - 1).getDescontoPrevidencia();
+                        salarioTotalBase += gerentes[j]->getFolhaSalarial(mes).getSalarioBase();
+                        salarioTotalLiquido += gerentes[j]->getFolhaSalarial(mes).getSalarioLiquido();
+                        descontoPrevidencia += gerentes[j]->getFolhaSalarial(mes).getDescontoPrevidencia();
+                        descontoImpostoRenda += gerentes[j]->getFolhaSalarial(mes).getDescontoPrevidencia();
                     } else if(i == DIRETOR) {
-                        salarioTotalBase += diretores[j]->getFolhaSalarial(mes - 1).getSalarioBase();
-                        salarioTotalLiquido += diretores[j]->getFolhaSalarial(mes - 1).getSalarioLiquido();
-                        descontoPrevidencia += diretores[j]->getFolhaSalarial(mes - 1).getDescontoPrevidencia();
-                        descontoImpostoRenda += diretores[j]->getFolhaSalarial(mes - 1).getDescontoPrevidencia();
+                        salarioTotalBase += diretores[j]->getFolhaSalarial(mes).getSalarioBase();
+                        salarioTotalLiquido += diretores[j]->getFolhaSalarial(mes).getSalarioLiquido();
+                        descontoPrevidencia += diretores[j]->getFolhaSalarial(mes).getDescontoPrevidencia();
+                        descontoImpostoRenda += diretores[j]->getFolhaSalarial(mes).getDescontoPrevidencia();
                     } else if(i == PRESIDENTE) {
-                        salarioTotalBase += presidente->getFolhaSalarial(mes - 1).getSalarioBase();
-                        salarioTotalLiquido += presidente->getFolhaSalarial(mes - 1).getSalarioLiquido();
-                        descontoPrevidencia += presidente->getFolhaSalarial(mes - 1).getDescontoPrevidencia();
-                        descontoImpostoRenda += presidente->getFolhaSalarial(mes - 1).getDescontoPrevidencia();
+                        salarioTotalBase += presidente->getFolhaSalarial(mes).getSalarioBase();
+                        salarioTotalLiquido += presidente->getFolhaSalarial(mes).getSalarioLiquido();
+                        descontoPrevidencia += presidente->getFolhaSalarial(mes).getDescontoPrevidencia();
+                        descontoImpostoRenda += presidente->getFolhaSalarial(mes).getDescontoPrevidencia();
                     }      
                 }
             }  

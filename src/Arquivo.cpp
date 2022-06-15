@@ -2,10 +2,6 @@
 #include <iostream>
 #include <string.h>
 
-
-
-
-
 Arquivo::Arquivo(){
 
 	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
@@ -186,7 +182,6 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		funcionarioExiste = true;
 	}
 
-	
 	// Posiciona o ponteiro de arquivo put na localização que devemos colocar o funcionario correspondente ao arquivo que estamos abrindo
 	arquivoFuncionarios[tipoFuncionario].seekp((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
 
@@ -494,14 +489,8 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 		outputCsv.open(path + "Folha.csv", std::ios::out);
 		//throw TentativaAbrirArquivo("Folha.csv");
 	}
-<<<<<<< HEAD
 
 	outputCsv << presidente->getCodigoFuncionario() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
 		 << "," << presidente->getFolhaSalarial(1).getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
-=======
-	outputCsv << "Codigo," << "Designação," << "CPF," << "Nome," << "Salario," << "Telefone," << "Idade," << "Data Ingresso," << std::endl;
-	outputCsv << presidente->getCodigo() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
-		<< "," << presidente->getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
->>>>>>> 27c4f356f645dc249c8e6f7e42076c7597f72f0c
 
 }

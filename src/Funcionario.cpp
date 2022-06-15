@@ -1,5 +1,4 @@
 #include "Funcionario.h"
-//#include "TelefoneException.h"
 #include <cstdlib>
 #include <ctime>
 
@@ -11,7 +10,8 @@ Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idad
     setDesignacao(designacao);
 
     for(int i = 0; i < 12; i++) {
-        folhaSalarial[i] = FolhaSalarial(designacao);
+        this->folhaSalarial[i] = FolhaSalarial(designacao);
+        std::cout << folhaSalarial[i].getSalarioBase() << std::endl;
     }
 }
 
