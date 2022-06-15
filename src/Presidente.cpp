@@ -19,11 +19,31 @@ std::string Presidente::getFormacaoMax() {
 }
 
 void Presidente::setAreaFormacao(std::string areaFormacao) {
-    this->areaFormacao = areaFormacao;
+    if(areaFormacao.size() > 99){
+        for(int i = 0; i < 98; i++){
+            this->areaFormacao[i] = areaFormacao[i];
+        }
+        this->areaFormacao[99] = '\0';
+    }else{
+        for(int i = 0; i < areaFormacao.size(); i++){
+            this->areaFormacao[i] = areaFormacao[i];
+        }
+        this->areaFormacao[areaFormacao.size()] = '\0';
+    }
 }
 
 void Presidente::setFormacaoMax(std::string formacaoMax) {
-    this->formacaoMax = formacaoMax;
+    if(formacaoMax.size() > 99){
+        for(int i = 0; i < 98; i++){
+            this->formacaoMax[i] = formacaoMax[i];
+        }
+        this->formacaoMax[99] = '\0';
+    }else{
+        for(int i = 0; i < formacaoMax.size(); i++){
+            this->formacaoMax[i] = formacaoMax[i];
+        }
+        this->formacaoMax[formacaoMax.size()] = '\0';
+    }
 }
 
 void Presidente::calcularSalarioMensal(int mes) {
