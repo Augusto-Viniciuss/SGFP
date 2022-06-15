@@ -11,7 +11,7 @@ class Funcionario: public Pessoa {
     public:
         /* CONSTRUTOR */
         Funcionario();
-        Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string CEP, std::string telefone, int *data, int designacao);
+        Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string CEP, int numeroResidencia, std::string telefone, int *data, int designacao);
 
         /* DESTRUTOR */
         virtual ~Funcionario();
