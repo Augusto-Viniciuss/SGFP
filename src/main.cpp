@@ -31,6 +31,7 @@ int main() {
                 funcionario = interface.lerAtributosFuncionario();
 
                 empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
+               
             } else if (opcaoMenu == 2) {
                 std::string atributoFuncionarioStr;
                 int atributoFuncionarioInt;
