@@ -21,6 +21,7 @@ class Pessoa{
         void setTelefone(std::string telefone);
         void setCPF(std::string CPF);
         void setIdade(int idade);
+        void setEndereco(std::string endereco);
 
     private:
         char nome[100], telefone[15], CPF[15];

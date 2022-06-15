@@ -11,7 +11,7 @@ Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idad
     setTelefone(telefone);
     setCPF(CPF);
     setIdade(idade);
-    getEndereco()->setEndereco(CEP);
+    setEndereco(CEP);
 }
 
 Pessoa::~Pessoa(){
@@ -147,4 +147,8 @@ void Pessoa::setCPF(std::string CPF){
 
 void Pessoa::setIdade(int idade){
     this->idade = idade;
+}
+
+void Pessoa::setEndereco(std::string endereco) {
+    this->endereco.validaCEP(endereco);
 }

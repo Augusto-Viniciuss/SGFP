@@ -484,7 +484,7 @@ void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec
 
 	for(int i = 0; i < funcionarioVec.size(); i++) {
 		outputCsv << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getDesignacaoInt()  << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
-		 << "," << funcionarioVec[i]->getFolhaSalarial(1).getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
+		 << "," << funcionarioVec[i]->getFolhaSalarial(1)->getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
 	}
 
 	outputCsv.close();
@@ -500,6 +500,6 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 	}
 
 	outputCsv << presidente->getCodigoFuncionario() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
-		 << "," << presidente->getFolhaSalarial(1).getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
+		 << "," << presidente->getFolhaSalarial(1)->getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
 
 }

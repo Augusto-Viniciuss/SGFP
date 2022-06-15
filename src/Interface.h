@@ -6,6 +6,9 @@
 #include "Gerente.h"
 #include "Diretor.h"
 #include "Presidente.h"
+#include "TelefoneException.h"
+#include "CPFException.h"
+#include "CEPException.h"
 
 class Interface {
     public:

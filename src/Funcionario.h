@@ -24,7 +24,7 @@ class Funcionario: public Pessoa {
         int getCodigoFuncionario();
         std::string getDesignacaoStr();
         int getDesignacaoInt();
-        FolhaSalarial getFolhaSalarial(int mes);
+        FolhaSalarial *getFolhaSalarial(int mes);
         Data getDataIngresso();
 
         /* Set */
@@ -40,7 +40,7 @@ class Funcionario: public Pessoa {
         int horasTrabalhadas;
         int codigoFuncionario;
         int designacao; /*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
-        FolhaSalarial folhaSalarial[12];
+        FolhaSalarial *folhaSalarial[12];
         Data dataIngresso;
        
 };

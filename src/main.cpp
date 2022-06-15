@@ -89,7 +89,7 @@ int main() {
                 if(tipoAtributo == 1) {
                     nome = interface.lerNomeParaImprimirFolhaSalarialFuncionario();
                     empresa.imprimirFolhaSalarialFuncionario(nome);
-                } else {
+                } else if(tipoAtributo == 2){
                     codigo = interface.lerCodigoParaImprimirFolhaSalarialFuncionario();
                     empresa.imprimirFolhaSalarialFuncionario(codigo);
                 }
@@ -101,37 +101,47 @@ int main() {
                 empresa.imprimirFolhaSalarialEmpresa(opcaoParaImprimir);
             } else if(opcaoMenu == 11) {
                 int tipoBusca;
-                Funcionario *funcionarios;
-                std::string informacao, codigo;
-                int data, codigoFuncionario;
+                Funcionario *funcionario;
+                std::string informacao;
+                int data[3], codigoFuncionario, tipoInformacao;
 
 
                 std::cout << "Digite o tipo de busca, 1 por informacao, 2 por data e 3 pelo codigo: ";
                 std::cin >> tipoBusca;
 
-                switch(tipoBusca) {
+                if(tipoBusca == 1) {
+                    std::cout << "Digite 1 para buscar por nome e 2 para buscar por localizacao.";
+                    std::cin >> tipoInformacao;
+                    switch (tipoInformacao) {
                     case 1:
-                        std::cout << "Digite a informação, e 5 para nome e 6 para localizacao.";
-                        //std::getline(std::cin, informacao);
-                        std::cin >> codigo;
-
-                        //funcionarios = empresa.buscarFuncionario(informacao, BUSCAR_POR_NOME);
+                        {
+                            std::cout << "Digite o nome:" << std::endl;
+                            std::cin.ignore();
+                            std::getline(std::cin, informacao);
+                            tipoInformacao = 5;
+                        }
                         break;
-
                     case 2:
-                        std::cout << "Digite a data de ingresso: ";
-                        std::cin >> data;
-                        funcionarios = empresa.buscarFuncionario(&data);
+                        {
+                            std::cout << "Digite o CEP:" << std::endl;
+                            std::cin.ignore();
+                            std::getline(std::cin, informacao);
+                            tipoInformacao = 6;
+                        }
                         break;
+                    }
                     
-                    case 3:
-                        std::cout << "Digite o codigo do funcionario: ";
-                        std::cin >> codigoFuncionario;
-                        funcionarios = empresa.buscarFuncionario(codigoFuncionario);
-                        break;
-                    
+                    funcionario = empresa.buscarFuncionario(informacao, tipoInformacao);
+                } else if(tipoBusca == 2) {
+                    std::cout << "Digite a data de ingresso: ";
+                    std::cin >> data[0] >> data[1] >> data[2];
+                    funcionario = empresa.buscarFuncionario(data);
+                } else if(tipoBusca == 3) {
+                    std::cout << "Digite o codigo do funcionario: ";
+                    std::cin >> codigoFuncionario;
+                    funcionario = empresa.buscarFuncionario(codigoFuncionario);
                 }
-
+                    
                 if(funcionario == nullptr) {
                     std::cout << "Funcionario nao foi encontrado." << std::endl;
                 }

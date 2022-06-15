@@ -1,11 +1,16 @@
 #include "Endereco.h"
 #include "CEPException.h"
 #include <fstream>
+#include <string.h>
 
 Endereco::Endereco() {}
 
 void Endereco::setEndereco(std::string CEP) {
     validaCEP(CEP);
+}
+
+void Endereco::setNumero(int numero){
+    this->numero = numero;
 }
         
 std::string Endereco::getRua(){
@@ -26,6 +31,10 @@ std::string Endereco::getEstado(){
 
 std::string Endereco::getCEP(){
     return CEP;
+}
+
+int Endereco::getNumero(){
+    return numero;
 }
 
 void Endereco::validaCEP(std::string CEP){
@@ -109,6 +118,18 @@ std::string Endereco::getInformacao() {
 }
 
 bool Endereco::comparaEndereco(std::string endereco) {
+    char CEPaux[10];
+    strcpy(CEPaux, endereco.c_str());
+
+    CEPaux[9] = '\0';
+    for(int i = 8; i >= 5; i--){
+        if(i == 5) {
+            CEPaux[i] = '-';
+        } else {
+            CEPaux[i] = CEPaux[i-1]; 
+        }
+    }
+    endereco = CEPaux;
     if (endereco.find(getCEP()) != std::string::npos) {
         return true;
     } else {

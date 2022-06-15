@@ -52,10 +52,10 @@ void Diretor::calcularSalarioMensal(int mes){
     double salarioLiquido;
 
     if (getHorasTrabalhadas() > 168) {
-        salarioLiquido = getFolhaSalarial(mes).getSalarioBase() + ((getHorasTrabalhadas() - 168) * HORA_EXTRA);
+        salarioLiquido = getFolhaSalarial(mes)->getSalarioBase() + ((getHorasTrabalhadas() - 168) * HORA_EXTRA);
     } else {
-        salarioLiquido = getFolhaSalarial(mes).getSalarioBase();
+        salarioLiquido = getFolhaSalarial(mes)->getSalarioBase();
     }
    
-    getFolhaSalarial(mes).setSalarioLiquido(salarioLiquido);
+    getFolhaSalarial(mes)->setSalarioLiquido(salarioLiquido);
 }
