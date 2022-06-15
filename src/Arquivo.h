@@ -38,7 +38,7 @@ class Arquivo{
 
 		void mostraHistorico(int tipoFuncionario, int codigo); 
 
-		void carregaDados(std::vector < Funcionario * > &funcionariosVec);
+		void carregaDados(std::vector < Funcionario * > &funcionariosVec, int tipoFuncionario);
 
 		void criaArquivoCsv(const std::vector < Funcionario *> &funcionariosVec);
 

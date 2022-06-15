@@ -11,7 +11,7 @@ Arquivo::Arquivo(){
 	nomeArquivos[2] = "Diretor.dat";
 	nomeArquivos[3] = "Presidente.dat";
 
-	bool existe = true;
+	bool existe = false;
 
 	
 	for(int i = 0; i < QUANTIA_ARQUIVOS; i++) {
@@ -19,7 +19,7 @@ Arquivo::Arquivo(){
 		arquivosEntradas[i].open(nomeArquivos[i], std::ios::in);
 
 		if(!arquivosEntradas[i]) {
-			existe = false;
+			existe = true;
 		}
 		arquivosEntradas[i].close();
 	}
@@ -27,7 +27,6 @@ Arquivo::Arquivo(){
 
 	// Só chamamos criaArquivo se os arquivos não existirem
 	if(!existe) {
-	
 		// Cria os arquivos para cada setor
 		criaArquivo("Presidente.dat", "Diretor.dat", "Gerente.dat", "Operador.dat");
 		
@@ -371,7 +370,7 @@ void Arquivo::mostraHistorico(int tipoFuncionario, int codigo)
 }
 
 
-void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
+void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int tipoFuncionario) {
 
 	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 	// Salva o nome de cada arquivo no vetor de nomes de arquivos
@@ -395,80 +394,80 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec) {
 	/* Essa variável, irá armazenar os dados lidos até achar um dado válido, ou seja, um dado que possui seu código diferente de 0	*/
 	/* Quando for achado um usuário válido, iremos fazer o ponteiro funcionario apontar para uma nova região de memória dependedo de qual tipo de varável foi lida*/
 	/* Feito isso, copiamos o conteudo de ptrFuncionarioTemp para Funcionario e então, coloca-se esse endereço no vector		*/
-	for(int i = 0; i < QUANTIA_ARQUIVOS; i++) {
+	
 
-		arquivosEntradas[i].open(path + nomeArquivos[i], std::ios::in | std::ios::binary);
+	arquivosEntradas[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
 
-		if(!arquivosEntradas[i]) {
-			throw TentativaAbrirArquivo(nomeArquivos[i]);
-		}
+	if(!arquivosEntradas[tipoFuncionario]) {
+		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
+	}
 
-		/* i = 3 -> Arquivo de presidente
-		   i = 2 -> Arquivo de diretor
-		   i = 1- > Arquivo de gerente
-		   i = 0 -> Arquivo de operador
-		Como para cada um deles, o tamanho dos dados são diferentes, o ponteiro irá apontar para cada um adequadamente
-		*/
-		switch(i) {
-				
-			case 3:
-				ptrFuncionarioTemp = &presidenteBuffer;
-				break;
-
-			case 2:
-				ptrFuncionarioTemp = &diretorBuffer;
-				break;
-					
-			case 1:
-				ptrFuncionarioTemp =  &gerenteBuffer;
-				break;
-					
-			case 0:
-				ptrFuncionarioTemp = &operadorBuffer;
-				break;
-		}
-		
-		/* Posiciona o ponteiro no inicio	*/
-		arquivosEntradas[i].seekg(0);
-
-		/* Ler todos os dados até achar um usuário válido	*/
-		while(!arquivosEntradas[i].eof()) {
-				
-			arquivosEntradas[i].read(reinterpret_cast < char*  > (ptrFuncionarioTemp), sizeof(*ptrFuncionarioTemp));
+	/* i = 3 -> Arquivo de presidente
+		i = 2 -> Arquivo de diretor
+		i = 1- > Arquivo de gerente
+		i = 0 -> Arquivo de operador
+	Como para cada um deles, o tamanho dos dados são diferentes, o ponteiro irá apontar para cada um adequadamente
+	*/
+	switch(tipoFuncionario) {
 			
-			if(ptrFuncionarioTemp->getCodigoFuncionario() != 0) {
-				
-				/* Aponta adequadamente para uma nova região de memória, dependendo de qual arquivo estamos lendo	*/
-				/* Toda vez que damos new, há alocação de memória em algum local e retorna seu endereço, armazenando em funcionario	*/
-				switch(i) {
-					case 3:
-						funcionario = new Presidente();
-						break;
+		case 3:
+			ptrFuncionarioTemp = &presidenteBuffer;
+			break;
 
-					case 2:
-						funcionario = new Diretor();
-						break;
-							
-					case 1:
-						funcionario =  new Gerente();
-						break;
-							
-					case 0:
-						funcionario = new Operador();
-						break;
-				}
+		case 2:
+			ptrFuncionarioTemp = &diretorBuffer;
+			break;
 				
-				// Cópia de memoria
-				memcpy(funcionario, ptrFuncionarioTemp, sizeof(*ptrFuncionarioTemp));
-				funcionariosVec.push_back(funcionario);
-												
+		case 1:
+			ptrFuncionarioTemp =  &gerenteBuffer;
+			break;
+				
+		case 0:
+			ptrFuncionarioTemp = &operadorBuffer;
+			break;
+	}
+	
+	/* Posiciona o ponteiro no inicio	*/
+	arquivosEntradas[tipoFuncionario].seekg(0);
+
+	/* Ler todos os dados até achar um usuário válido	*/
+	while(!arquivosEntradas[tipoFuncionario].eof()) {
+			
+		arquivosEntradas[tipoFuncionario].read(reinterpret_cast < char*  > (ptrFuncionarioTemp), sizeof(*ptrFuncionarioTemp));
+		
+		if(ptrFuncionarioTemp->getCodigoFuncionario() != 0) {
+			std::cout << "oi" << std::endl;
+			/* Aponta adequadamente para uma nova região de memória, dependendo de qual arquivo estamos lendo	*/
+			/* Toda vez que damos new, há alocação de memória em algum local e retorna seu endereço, armazenando em funcionario	*/
+			switch(tipoFuncionario) {
+				case 3:
+					funcionario = new Presidente();
+					break;
+
+				case 2:
+					funcionario = new Diretor();
+					break;
+						
+				case 1:
+					funcionario =  new Gerente();
+					break;
+						
+				case 0:
+					funcionario = new Operador();
+					break;
 			}
 			
-				
+			// Cópia de memoria
+			memcpy(funcionario, ptrFuncionarioTemp, sizeof(*ptrFuncionarioTemp));
+			funcionariosVec.push_back(funcionario);
+											
 		}
-		/* Fecha o arquivo após ler os dados	*/
-		arquivosEntradas[i].close();
+		
+			
 	}
+	/* Fecha o arquivo após ler os dados	*/
+	arquivosEntradas[tipoFuncionario].close();
+
 
 }
 
@@ -496,7 +495,7 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 
 	if(!outputCsv) {
 		outputCsv.open(path + "Folha.csv", std::ios::out);
-		//throw TentativaAbrirArquivo("Folha.csv");
+		throw TentativaAbrirArquivo("Folha.csv");
 	}
 
 	outputCsv << presidente->getCodigoFuncionario() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
