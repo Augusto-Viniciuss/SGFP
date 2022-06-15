@@ -16,7 +16,7 @@ class Gerente : public Funcionario{
         void calcularSalarioMensal(int mes);
 
     private:
-        std::string areaSupervisao;
+        char areaSupervisao[100];
         const double HORA_EXTRA = 40.16;
 };
 

@@ -2,7 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 
-Funcionario::Funcionario() {}
+Funcionario::Funcionario() {
+    setCodigoFuncionario(0);
+}
 
 Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string CEP, std::string telefone, int *data, int designacao) : Pessoa(nome, telefone, CPF, idade, CEP) {
     setCodigoFuncionario(codigo);
