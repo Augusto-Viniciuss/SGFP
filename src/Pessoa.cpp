@@ -11,7 +11,7 @@ Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idad
     setTelefone(telefone);
     setCPF(CPF);
     setIdade(idade);
-    this->endereco.setEndereco(CEP);
+    getEndereco()->setEndereco(CEP);
 }
 
 Pessoa::~Pessoa(){

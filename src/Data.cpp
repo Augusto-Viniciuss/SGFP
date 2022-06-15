@@ -68,7 +68,7 @@ bool Data::comparaDatas(int *data){
 
 std::string Data::retornaStringData() {
 
-	std::string dataString = std::to_string(getDia()) + "/0" + std::to_string(getMes()) + "/" + std::to_string(getAno());
+	std::string dataString = std::to_string(getDia()) + "/" + std::to_string(getMes()) + "/" + std::to_string(getAno());
 	
 	return dataString;
 }
