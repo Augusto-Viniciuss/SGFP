@@ -2,6 +2,13 @@
 
 Empresa::Empresa() {}
 
+Empresa::~Empresa() {
+    dadosArquivos.criaArquivoCsv(operadores);
+    dadosArquivos.criaArquivoCsv(diretores);
+    dadosArquivos.criaArquivoCsv(gerentes);
+    dadosArquivos.adicionaArquivoCsv(presidente);
+}
+
 int Empresa::getQtdFuncionarios(int tipo) {
     return this->qtdFuncionarios[tipo];
 }
@@ -11,27 +18,23 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
 
     if(func != nullptr) {
         throw FuncionarioJaCadastradoExcept();
-    }
-
-    switch (tipoFuncionario) {
-    case 0:
+    } else if(tipoFuncionario == OPERADOR) {
         operadores.push_back(funcionario);
         qtdFuncionarios[tipoFuncionario] += 1;
-        break;
-    case 1:
+    } else if(tipoFuncionario == GERENTE) {
         gerentes.push_back(funcionario);
         qtdFuncionarios[tipoFuncionario] += 1;
-        break; 
-    case 2:
+    } else if(tipoFuncionario == DIRETOR) {
         diretores.push_back(funcionario);
         qtdFuncionarios[tipoFuncionario] += 1;
-        break;
-    case 3:
-        presidente = funcionario;
-        qtdFuncionarios[tipoFuncionario] += 1;
-        break;
+    } else if(tipoFuncionario == PRESIDENTE) {
+        if(qtdFuncionarios[tipoFuncionario] == 0) {
+            presidente = funcionario;
+            qtdFuncionarios[tipoFuncionario] += 1;
+        } else{
+            std::cout << "Presidente já foi cadastrado" << std::endl;
+        }
     }
-
 
     dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
     
@@ -550,10 +553,3 @@ Funcionario* Empresa::buscarFuncionario(std::string informacao, int opcao) {
     return nullptr;
 }
 
-
-Empresa::~Empresa() {
-    dadosArquivos.criaArquivoCsv(operadores);
-    dadosArquivos.criaArquivoCsv(diretores);
-    dadosArquivos.criaArquivoCsv(gerentes);
-    dadosArquivos.adicionaArquivoCsv(presidente);
-}
