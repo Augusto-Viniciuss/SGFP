@@ -2,6 +2,19 @@
 
 Empresa::Empresa() {}
 
+Empresa::~Empresa() {
+    
+    dadosArquivos.criaArquivoCsv(operadores);
+    dadosArquivos.criaArquivoCsv(diretores);
+    dadosArquivos.criaArquivoCsv(gerentes);
+    
+    if(qtdFuncionarios[3] != 0) {
+        dadosArquivos.adicionaArquivoCsv(presidente);
+    }
+    
+    
+}
+
 int Empresa::getQtdFuncionarios(int tipo) {
     return this->qtdFuncionarios[tipo];
 }
@@ -551,15 +564,4 @@ Funcionario* Empresa::buscarFuncionario(std::string informacao, int opcao) {
 }
 
 
-Empresa::~Empresa() {
-    
-    dadosArquivos.criaArquivoCsv(operadores);
-    dadosArquivos.criaArquivoCsv(diretores);
-    dadosArquivos.criaArquivoCsv(gerentes);
-    
-    if(qtdFuncionarios[3] != 0) {
-        dadosArquivos.adicionaArquivoCsv(presidente);
-    }
-    
-    
-}
+
