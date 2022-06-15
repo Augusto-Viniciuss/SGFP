@@ -496,7 +496,7 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 
 	if(!outputCsv) {
 		outputCsv.open(path + "Folha.csv", std::ios::out);
-		//throw TentativaAbrirArquivo("Folha.csv");
+		throw TentativaAbrirArquivo("Folha.csv");
 	}
 
 	outputCsv << presidente->getCodigoFuncionario() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 

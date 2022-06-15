@@ -6,7 +6,10 @@ Empresa::~Empresa() {
     dadosArquivos.criaArquivoCsv(operadores);
     dadosArquivos.criaArquivoCsv(diretores);
     dadosArquivos.criaArquivoCsv(gerentes);
-    dadosArquivos.adicionaArquivoCsv(presidente);
+
+    if(qtdFuncionarios[PRESIDENTE] != 0) {
+        dadosArquivos.adicionaArquivoCsv(presidente);
+    }
 }
 
 int Empresa::getQtdFuncionarios(int tipo) {
