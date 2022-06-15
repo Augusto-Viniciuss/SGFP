@@ -1,6 +1,10 @@
 #include "Empresa.h"
 
-Empresa::Empresa() {}
+Empresa::Empresa() {
+    dadosArquivos.carregaDados(operadores, OPERADOR);
+    dadosArquivos.carregaDados(gerentes, GERENTE);
+    dadosArquivos.carregaDados(diretores, DIRETOR);
+}
 
 Empresa::~Empresa() {
     dadosArquivos.criaArquivoCsv(operadores);
