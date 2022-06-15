@@ -13,7 +13,17 @@ std::string Gerente::getAreaSupervisao() {
 }
 
 void Gerente::setAreaSupervisao(std::string areaSupervisao) {
-    this->areaSupervisao = areaSupervisao;
+    if(areaSupervisao.size() > 99){
+        for(int i = 0; i < 98; i++){
+            this->areaSupervisao[i] = areaSupervisao[i];
+        }
+        this->areaSupervisao[99] = '\0';
+    }else{
+        for(int i = 0; i < areaSupervisao.size(); i++){
+            this->areaSupervisao[i] = areaSupervisao[i];
+        }
+        this->areaSupervisao[areaSupervisao.size()] = '\0';
+    }
 }
 
 void Gerente::calcularSalarioMensal(int mes){

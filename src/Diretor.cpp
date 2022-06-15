@@ -18,11 +18,31 @@ std::string Diretor::getAreaFormacao() {
 }
 
 void Diretor::setAreaSupervisao(std::string areaSupervisao) {
-    this->areaSupervisao = areaSupervisao;
+    if(areaSupervisao.size() > 99){
+        for(int i = 0; i < 98; i++){
+            this->areaSupervisao[i] = areaSupervisao[i];
+        }
+        this->areaSupervisao[99] = '\0';
+    }else{
+        for(int i = 0; i < areaSupervisao.size(); i++){
+            this->areaSupervisao[i] = areaSupervisao[i];
+        }
+        this->areaSupervisao[areaSupervisao.size()] = '\0';
+    }
 }
 
 void Diretor::setAreaFormacao(std::string areaFormacao) {
-    this->areaFormacao = areaFormacao;
+    if(areaFormacao.size() > 99){
+        for(int i = 0; i < 98; i++){
+            this->areaFormacao[i] = areaFormacao[i];
+        }
+        this->areaFormacao[99] = '\0';
+    }else{
+        for(int i = 0; i < areaFormacao.size(); i++){
+            this->areaFormacao[i] = areaFormacao[i];
+        }
+        this->areaFormacao[areaFormacao.size()] = '\0';
+    }
 }
 
 void Diretor::calcularSalarioMensal(int mes){
