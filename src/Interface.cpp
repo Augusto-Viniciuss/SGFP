@@ -265,8 +265,8 @@ int Interface::lerCodigoParaImprimirFolhaSalarialFuncionario() {
 int Interface::lerTipoAtributoParaImprimirFolhaSalarialFuncionario() {
     int tipo;
 
-    std::cout << "Digite 5 para imprimir a folha salarial do funcionario atraves do nome" << std::endl;
-    std::cout << "Digite 8 para imprimir a folha salrial do funcionario atraves do codigo dele" << std::endl;
+    std::cout << "Digite 1 para imprimir a folha salarial do funcionario atraves do nome" << std::endl;
+    std::cout << "Digite 2 para imprimir a folha salrial do funcionario atraves do codigo dele" << std::endl;
     std::cin >> tipo;
 
     return tipo;

@@ -67,10 +67,17 @@ bool Data::comparaDatas(int *data){
 
 
 std::string Data::retornaStringData() {
+	std::string data;
 
-	std::string dataString = std::to_string(getDia()) + "/" + std::to_string(getMes()) + "/" + std::to_string(getAno());
-	
-	return dataString;
+	if(getDia() < 10 and getMes() < 10) {
+		data = "0" + std::to_string(getDia()) + "/0" + std::to_string(getMes()) + "/" + std::to_string(getAno());
+	} else if(getDia() < 10) {
+		data = "0" + std::to_string(getDia()) + "/" + std::to_string(getMes()) + "/" + std::to_string(getAno());
+	} else if(getMes() < 10) {
+		data = std::to_string(getDia()) + "/0" + std::to_string(getMes()) + "/" + std::to_string(getAno());
+	}
+
+	return data;
 }
 
 std::string Data::retornaDataComputador() {

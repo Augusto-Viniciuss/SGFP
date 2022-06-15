@@ -509,37 +509,37 @@ Funcionario* Empresa::buscarFuncionario(std::string informacao, int opcao) {
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
                 switch (opcao) {
-                case 1:
+                case 5:
                     if (this->operadores[i]->getNome().find(informacao) != std::string::npos) return operadores[i];
                     break;
-                case 2:
+                case 6:
                     if (this->operadores[i]->getEndereco()->comparaEndereco(informacao)) return operadores[i];
                     break;
                 }
             } else if(tipoFuncionario == GERENTE) {
                 switch (opcao) {
-                case 1:
+                case 5:
                     if (this->gerentes[i]->getNome().find(informacao) != std::string::npos) return gerentes[i];
                     break;
-                case 2:
+                case 6:
                     if (this->gerentes[i]->getEndereco()->comparaEndereco(informacao)) return gerentes[i];
                     break;
                 }
             } else if(tipoFuncionario == DIRETOR) {
                 switch (opcao) {
-                case 1:
+                case 5:
                     if (this->diretores[i]->getNome().find(informacao) != std::string::npos) return diretores[i];
                     break;
-                case 2:
+                case 6:
                     if (this->diretores[i]->getEndereco()->comparaEndereco(informacao)) return diretores[i];
                     break;
                 }
             } else if(tipoFuncionario == PRESIDENTE) {
                 switch (opcao) {
-                case 1:
+                case 5:
                     if (this->presidente->getNome().find(informacao) != std::string::npos) return presidente;
                     break;
-                case 2:
+                case 6:
                     if (this->presidente->getEndereco()->comparaEndereco(informacao)) return presidente;
                     break;
                 }

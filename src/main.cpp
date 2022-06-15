@@ -89,7 +89,7 @@ int main() {
                 if(tipoAtributo == 1) {
                     nome = interface.lerNomeParaImprimirFolhaSalarialFuncionario();
                     empresa.imprimirFolhaSalarialFuncionario(nome);
-                } else {
+                } else if(tipoAtributo == 2){
                     codigo = interface.lerCodigoParaImprimirFolhaSalarialFuncionario();
                     empresa.imprimirFolhaSalarialFuncionario(codigo);
                 }
@@ -118,6 +118,7 @@ int main() {
                             std::cout << "Digite o nome:" << std::endl;
                             std::cin.ignore();
                             std::getline(std::cin, informacao);
+                            tipoInformacao = 5;
                         }
                         break;
                     case 2:
@@ -125,6 +126,7 @@ int main() {
                             std::cout << "Digite o CEP:" << std::endl;
                             std::cin.ignore();
                             std::getline(std::cin, informacao);
+                            tipoInformacao = 6;
                         }
                         break;
                     }
