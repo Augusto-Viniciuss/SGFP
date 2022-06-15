@@ -11,7 +11,7 @@ Arquivo::Arquivo(){
 	nomeArquivos[2] = "Diretor.dat";
 	nomeArquivos[3] = "Presidente.dat";
 
-	bool existe = true;
+	bool existe = false;
 
 	
 	for(int i = 0; i < QUANTIA_ARQUIVOS; i++) {
@@ -19,7 +19,7 @@ Arquivo::Arquivo(){
 		arquivosEntradas[i].open(nomeArquivos[i], std::ios::in);
 
 		if(!arquivosEntradas[i]) {
-			existe = false;
+			existe = true;
 		}
 		arquivosEntradas[i].close();
 	}
@@ -27,7 +27,6 @@ Arquivo::Arquivo(){
 
 	// Só chamamos criaArquivo se os arquivos não existirem
 	if(!existe) {
-	
 		// Cria os arquivos para cada setor
 		criaArquivo("Presidente.dat", "Diretor.dat", "Gerente.dat", "Operador.dat");
 		
@@ -437,7 +436,7 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 		arquivosEntradas[tipoFuncionario].read(reinterpret_cast < char*  > (ptrFuncionarioTemp), sizeof(*ptrFuncionarioTemp));
 		
 		if(ptrFuncionarioTemp->getCodigoFuncionario() != 0) {
-			
+			std::cout << "oi" << std::endl;
 			/* Aponta adequadamente para uma nova região de memória, dependendo de qual arquivo estamos lendo	*/
 			/* Toda vez que damos new, há alocação de memória em algum local e retorna seu endereço, armazenando em funcionario	*/
 			switch(tipoFuncionario) {
