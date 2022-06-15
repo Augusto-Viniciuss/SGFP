@@ -46,6 +46,8 @@ class Arquivo{
 			
 	private:
 		std::fstream arquivoFuncionarios[QUANTIA_ARQUIVOS];
+	
+
 		std::string nomeArquivos[QUANTIA_ARQUIVOS];
 		std::fstream arquivosEntradas[QUANTIA_ARQUIVOS];
 		// Arquivos para exclusao de dados
