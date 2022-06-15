@@ -6,7 +6,7 @@
 class Pessoa{
     public:
         Pessoa();
-        Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, std::string CEP);
+        Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, std::string CEP, int numeroResidencia);
         virtual ~Pessoa();
         
         /* Get */
