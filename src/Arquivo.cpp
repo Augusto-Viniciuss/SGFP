@@ -13,6 +13,7 @@ Arquivo::Arquivo(){
 
 	bool existe = true;
 
+	
 	for(int i = 0; i < QUANTIA_ARQUIVOS; i++) {
 		
 		arquivosEntradas[i].open(nomeArquivos[i], std::ios::in);
@@ -29,6 +30,7 @@ Arquivo::Arquivo(){
 	
 		// Cria os arquivos para cada setor
 		criaArquivo("Presidente.dat", "Diretor.dat", "Gerente.dat", "Operador.dat");
+		
 	}
 }
 
@@ -171,15 +173,19 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 	if(!arquivoFuncionarios[tipoFuncionario]) {
 		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
 	}
-
-	// Posiciona na posição para dar o get e pegar os dados
-	arquivoFuncionarios[tipoFuncionario].seekg((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
-	// Ler o que está contido no arquivo correspondente
-	arquivoFuncionarios[tipoFuncionario].read(reinterpret_cast < char * > (funcionario), sizeof(*funcionario));
+	
+	/* Devemos criar uma outra stream, ppara que não haja bug no posicionamente de ponteiro, LOGO: DEVEMOS CRIAR UMA STREAM PARA LEITURA E OUTRA PARA INSERÇÃO*/
+	/* Em uma determinada instancia	*/
+	std::fstream input;
+	input.open(nomeArquivos[tipoFuncionario], std::ios::in);
+	
+	input.seekg((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
+	input.read(reinterpret_cast<char*>(funcionario), sizeof(*funcionario));
 
 	// Indica que o funcionario já existe
 	if(funcionario->getCodigoFuncionario() != 0) {
 		funcionarioExiste = true;
+		
 	}
 
 	// Posiciona o ponteiro de arquivo put na localização que devemos colocar o funcionario correspondente ao arquivo que estamos abrindo
@@ -199,14 +205,17 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		historico.setModificacao(tipoFuncionario,"O usuario foi cadastrado");
 	}
 
+	
 	historico.setCodigo(tipoFuncionario, dadosFuncionario.getCodigoFuncionario());
 	historico.setNome(tipoFuncionario, dadosFuncionario.getNome());
 	historico.escreveArquivoModificacoes(tipoFuncionario);
 
 	
-
+	
 	// Fecha o arquivo após o tratamento
-	arquivoFuncionarios[tipoFuncionario].close();	
+	arquivoFuncionarios[tipoFuncionario].close();
+	input.close();	
+
 		
 }
 
@@ -475,7 +484,7 @@ void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec
 
 	for(int i = 0; i < funcionarioVec.size(); i++) {
 		outputCsv << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getDesignacaoInt()  << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
-		 << "," << funcionarioVec[i]->getFolhaSalarial(1).getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
+		 << "," << funcionarioVec[i]->getFolhaSalarial(1)->getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
 	}
 
 	outputCsv.close();
@@ -491,6 +500,6 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 	}
 
 	outputCsv << presidente->getCodigoFuncionario() << "," << presidente->getDesignacaoInt()  << ", " << presidente->getCPF() << ", " << presidente->getNome() << "," 
-		 << "," << presidente->getFolhaSalarial(1).getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
+		 << "," << presidente->getFolhaSalarial(1)->getSalarioBase() << "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
 
 }

@@ -29,7 +29,7 @@ int Interface::menu() {
 }
 
 Funcionario* Interface::lerAtributosFuncionario() {
-    Funcionario *funcionario;
+    Funcionario *funcionario = new Operador();
     int codigo, idade, designacao;
     std::string nome, CPF, telefone, CEP;
     int data[3];
@@ -39,15 +39,46 @@ Funcionario* Interface::lerAtributosFuncionario() {
     std::cout << "Digite o nome do funcionario:" << std::endl;
     std::cin.ignore();
     getline(std::cin, nome);
-    std::cout << "Digite o CPF do funcionario:" << std::endl;
-    getline(std::cin, CPF);
+    while(true) {
+        try {
+            std::cout << "Digite o CPF do funcionario:" << std::endl;
+            getline(std::cin, CPF);
+            funcionario->setCPF(CPF);
+            break;
+        }
+        catch(CPFException &cpfException) 
+        {
+            std::cerr << cpfException.what() << '\n';
+        }
+    }
     std::cout << "Digite a idade do funcionario:" << std::endl;
     std::cin >> idade;
     std::cin.ignore();
-    std::cout << "Digite o CEP do funcionario:" << std::endl;
-    getline(std::cin, CEP);
-    std::cout << "Digite o telefone para contato do funcionario:" << std::endl;
-    getline(std::cin, telefone);
+    while(true) {
+        try {
+            std::cout << "Digite o CEP do funcionario:" << std::endl;
+            getline(std::cin, CEP);
+            funcionario->setEndereco(CEP);
+            break;
+        }
+        catch(CEPException &CepException) 
+        {
+            std::cerr << CepException.what() << '\n';
+        }
+    }
+    while(true) {
+        try {
+            std::cout << "Digite o telefone para contato do funcionario:" << std::endl;
+            getline(std::cin, telefone);
+            funcionario->setTelefone(telefone);
+            break;
+        }
+        catch(TelefoneException &telefoneException) 
+        {
+            std::cerr << telefoneException.what() << '\n';
+        }
+    }
+    
     std::cout << "Digite a data de ingresso na empresa, na ordem dia, mes e ano separados por espacos:" << std::endl;
     std::cin >> data[0] >> data[1] >> data[2];
     std::cout << "Qual a designacao do funcionario:" << std::endl;

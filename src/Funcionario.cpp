@@ -10,8 +10,7 @@ Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idad
     setDesignacao(designacao);
 
     for(int i = 0; i < 12; i++) {
-        this->folhaSalarial[i] = FolhaSalarial(designacao);
-        std::cout << folhaSalarial[i].getSalarioBase() << std::endl;
+        this->folhaSalarial[i] =  new FolhaSalarial(designacao);
     }
 }
 
@@ -53,7 +52,7 @@ Data Funcionario::getDataIngresso(){
     return this->dataIngresso;
 }
 
-FolhaSalarial Funcionario::getFolhaSalarial(int mes) {
+FolhaSalarial* Funcionario::getFolhaSalarial(int mes) {
     return this->folhaSalarial[mes - 1];
 }
 /* Fim dos Get */

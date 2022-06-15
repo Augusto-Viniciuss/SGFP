@@ -2,6 +2,7 @@
 #define FOLHASALARIAL_H
 
 #include <vector>
+#include <iostream>
 
 class FolhaSalarial {
     public:

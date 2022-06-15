@@ -35,8 +35,7 @@ void FolhaSalarial::setSalarioBase(int designacao){
 }
 
 void FolhaSalarial::setSalarioLiquido(double salario) {
-    double  aux;
-
+    double aux;
     aux = salario;
     
     if (aux <= 1212.00) {
@@ -45,7 +44,7 @@ void FolhaSalarial::setSalarioLiquido(double salario) {
         aux -= aux * 0.09;
     } else if (aux >= 2427.36 and aux <= 3641.03) {
         aux -= aux * 0.12;
-    } else if (aux >= 3641.04 and aux <= 7087.22) {
+    } else if (aux >= 3641.04) {
         aux -= aux * 0.14;
     }
 
@@ -63,7 +62,7 @@ void FolhaSalarial::setSalarioLiquido(double salario) {
         aux -= aux * 0.2750;
     }
 
-    setDescontoImpostoRenda(aux - salario);
+    setDescontoImpostoRenda(salario - aux);
 
     this->salarioLiquido = salario - (getDescontoImpostoRenda() + getDescontoPrevidencia());
 }
