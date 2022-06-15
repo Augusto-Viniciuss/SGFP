@@ -1,6 +1,8 @@
 #include "Empresa.h"
 
-Empresa::Empresa() {}
+Empresa::Empresa() {
+    //dadosArquivos.carregaDados()
+}
 
 Empresa::~Empresa() {
     dadosArquivos.criaArquivoCsv(operadores);
@@ -153,6 +155,7 @@ void Empresa::exibirTodosFuncionarios() {
     
     if((this->qtdFuncionarios[0] == 0) and (this->qtdFuncionarios[1] == 0) and (this->qtdFuncionarios[2] == 0) and (this->qtdFuncionarios[3] == 0)) {
         std::cout << "Nao existem funcionarios cadastrados" << std::endl;
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
     } else {
         for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
             for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
@@ -325,7 +328,8 @@ void Empresa::imprimirFolhaSalarialFuncionario(int codigo) {
     if (funcionario != nullptr) {
 
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
-        std::cout << "Folha Salarial do Funcionario: " << funcionario->getNome() << " // Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
+        std::cout << "Folha salarial do funcionario: " << funcionario->getNome() << " // Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
 
         for(int meses = 1; meses < 13; meses++) {
             if(funcionario->getFolhaSalarial(meses)->getSalarioLiquido() != 0) {
@@ -349,7 +353,8 @@ void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
     if (funcionario != nullptr) {
 
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
-        std::cout << "Folha Salarial do Funcionario: " << funcionario->getNome() << " //////// Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
+        std::cout << "Folha salarial do funcionario: " << funcionario->getNome() << " // Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
 
         for(int meses = 1; meses < 13; meses++) {
             if(funcionario->getFolhaSalarial(meses)->getSalarioLiquido() != 0) {
@@ -370,7 +375,8 @@ void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
 void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
     if (opcao == 1) {
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
-        std::cout << "A folha salarial da empresa para os meses do ano calculados até agora eh: " << std::endl;
+        std::cout << "A folha salarial da empresa para os meses do ano calculados ate agora eh: " << std::endl;
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
 
         for(int meses = 1; meses < 13; meses++) {
 
