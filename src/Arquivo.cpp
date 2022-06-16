@@ -91,11 +91,8 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 	
 
 	for(int i = 0; i < 4; i++){
-		
 		switch(i){
-
 			case 3:
-
 				for(int j = 0; j < 100; j++){
 					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&presidentes), sizeof(Presidente));
 				}
