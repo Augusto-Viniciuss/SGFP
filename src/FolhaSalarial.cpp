@@ -1,6 +1,11 @@
 #include "FolhaSalarial.h"
 
-FolhaSalarial::FolhaSalarial() {}
+FolhaSalarial::FolhaSalarial() {
+    setSalarioBase(0);
+    setTaxaAumento(0);
+    setSalarioLiquido(0);
+
+}
 
 FolhaSalarial::FolhaSalarial(int designacao){
     setSalarioBase(designacao);

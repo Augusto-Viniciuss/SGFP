@@ -10,13 +10,15 @@ Empresa::Empresa() {
     dadosArquivos.carregaDados(diretores, 2);
     qtdFuncionarios[DIRETOR] = diretores.size();
     
-    /*
-    bool presidenteExiste = dadosArquivos.carregaPresidente(presidente);
     
-    if(presidenteExiste) {
-        qtdFuncionarios[PRESIDENTE] += 1;
+    presidente = dadosArquivos.carregaPresidente();
+    
+    if(presidente != nullptr) {
+        qtdFuncionarios[PRESIDENTE] = 1;
     }
-    */
+    
+    
+    
     
     
 }
@@ -59,8 +61,8 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
             std::cout << "Presidente já foi cadastrado" << std::endl;
         }
     }
-
-    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos  
+    std::cout << funcionario << std::endl;
+    dadosArquivos.salvarDadosFuncionario(funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos  
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
@@ -130,9 +132,9 @@ void Empresa::excluirFuncionario(int codigo) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     } 
     
-    //dadosArquivos.excluiDados(funcionario);
+    dadosArquivos.excluiDados(funcionario);
 
-    delete funcionario;
+    //delete funcionario;
     if(tipoFuncionario == 0) {
         this->operadores.erase(operadores.begin() + indice);
         qtdFuncionarios[tipoFuncionario] -= 1;

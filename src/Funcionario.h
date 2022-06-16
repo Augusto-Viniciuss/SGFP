@@ -40,7 +40,7 @@ class Funcionario: public Pessoa {
         int horasTrabalhadas;
         int codigoFuncionario;
         int designacao; /*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
-        FolhaSalarial *folhaSalarial[12];
+        FolhaSalarial *folhaSalarial[12] = {new FolhaSalarial()};
         Data dataIngresso;
        
 };

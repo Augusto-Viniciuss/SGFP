@@ -46,6 +46,7 @@ void Diretor::setAreaFormacao(std::string areaFormacao) {
 }
 
 void Diretor::calcularSalarioMensal(int mes){
+    
     //editar para cada função ter sua hora mínima
     setHorasTrabalhadas(gerarAleatorio(260));
 

@@ -25,7 +25,7 @@ class Arquivo{
 		Arquivo();
 
 		// A função salvarDadosFuncionario recebe os dados do funcionario e adiciona ao arquivo de dados dele
-		void salvarDadosFuncionario(Funcionario &, int);
+		void salvarDadosFuncionario(Funcionario *, int);
 		
 		// Criar arquivo irá jogar uma exception
 		// Função responsável por criar inicialmente os arquivos
@@ -38,7 +38,7 @@ class Arquivo{
 
 		void carregaDados(std::vector < Funcionario * > &funcionariosVec, int tipoFuncionario);
 
-		bool carregaPresidente(Funcionario *);
+		Funcionario * carregaPresidente();
 
 		void criaArquivoCsv(const std::vector < Funcionario *> &funcionariosVec);
 

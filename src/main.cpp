@@ -22,6 +22,7 @@ int main() {
     Interface interface;
     int opcaoMenu;
 
+
     while(true) {
         try {
             opcaoMenu = interface.menu();

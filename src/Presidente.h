@@ -14,12 +14,11 @@ class Presidente : public Funcionario {
 
         void setAreaFormacao(std::string areaFormacao);
         void setFormacaoMax(std::string formacaoMax);
-
         void calcularSalarioMensal(int mes);
     private:
         char areaFormacao[100];
         char formacaoMax[100];
-        const double HORA_EXTRA = 97.24;
+        const double HORA_EXTRA = 97.24; 
 };
 
 #endif

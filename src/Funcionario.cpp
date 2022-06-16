@@ -4,9 +4,11 @@
 
 Funcionario::Funcionario() {
     setCodigoFuncionario(0);
+    
 }
 
 Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string CEP, int numeroResidencia, std::string telefone, int *data, int designacao) : Pessoa(nome, telefone, CPF, idade, CEP, numeroResidencia) {
+    
     setCodigoFuncionario(codigo);
     setDataIngresso(data);
     setDesignacao(designacao);
@@ -14,6 +16,7 @@ Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idad
     for(int i = 0; i < 12; i++) {
         this->folhaSalarial[i] =  new FolhaSalarial(designacao);
     }
+    
 }
 
 Funcionario::~Funcionario() {}
@@ -57,6 +60,7 @@ Data Funcionario::getDataIngresso(){
 FolhaSalarial* Funcionario::getFolhaSalarial(int mes) {
     return this->folhaSalarial[mes - 1];
 }
+
 /* Fim dos Get */
 
 /* Inicio dos Set */
