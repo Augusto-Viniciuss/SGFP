@@ -1,12 +1,20 @@
 #include "Empresa.h"
 
 Empresa::Empresa() {
-    dadosArquivos.carregaDados(operadores, OPERADOR);
-    dadosArquivos.carregaDados(gerentes, GERENTE);
-    dadosArquivos.carregaDados(diretores, DIRETOR);
+    
+    
+    dadosArquivos.carregaDados(operadores, 0);
+    qtdFuncionarios[0] = operadores.size();
+    dadosArquivos.carregaDados(gerentes, 1);
+    qtdFuncionarios[1] = gerentes.size();
+    dadosArquivos.carregaDados(diretores, 2);
+    qtdFuncionarios[2] = diretores.size();
+    
+
 }
 
 Empresa::~Empresa() {
+    
     dadosArquivos.criaArquivoCsv(operadores);
     dadosArquivos.criaArquivoCsv(diretores);
     dadosArquivos.criaArquivoCsv(gerentes);
@@ -14,6 +22,7 @@ Empresa::~Empresa() {
     if(qtdFuncionarios[PRESIDENTE] != 0) {
         dadosArquivos.adicionaArquivoCsv(presidente);
     }
+    
 }
 
 int Empresa::getQtdFuncionarios(int tipo) {

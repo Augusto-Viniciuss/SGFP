@@ -45,14 +45,15 @@ class Arquivo{
 		void adicionaArquivoCsv(Funcionario *); //armazena somente do presidente
 			
 	private:
-		std::fstream arquivoFuncionarios[QUANTIA_ARQUIVOS];
+	
+		std::ofstream arquivoFuncionariosSaida[QUANTIA_ARQUIVOS];
 	
 
 		std::string nomeArquivos[QUANTIA_ARQUIVOS];
-		std::fstream arquivosEntradas[QUANTIA_ARQUIVOS];
+		std::ifstream arquivosEntradas[QUANTIA_ARQUIVOS];
 		// Arquivos para exclusao de dados
 		std::ifstream exclusaoDados[QUANTIA_ARQUIVOS];
-
+	
 		std::ofstream outputCsv; // saida de dados apenas para o arquivo csv
 
 		// Histórico do arquivo

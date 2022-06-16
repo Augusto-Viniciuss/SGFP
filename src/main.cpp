@@ -20,6 +20,10 @@ int main() {
     Funcionario *funcionario;
     Interface interface;
     int opcaoMenu;
+    std::cout << "Operador: " << sizeof(Operador) << std::endl;
+    std::cout << "Funcionario: " << sizeof(Funcionario) << std::endl;
+    std::cout << "Gerente: "  << sizeof(Gerente) << std::endl;
+    std::cout << "Diretor: "  << sizeof(Diretor) << std::endl;
 
     while(true) {
         try {

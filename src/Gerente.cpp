@@ -1,7 +1,7 @@
 #include "Gerente.h"
 
 Gerente::Gerente() {
-    /* ... */
+    Funcionario::setCodigoFuncionario(0);
 }
 
 Gerente::Gerente(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao, std::string areaSupervisao) : Funcionario(codigo, nome, CPF, idade, endereco, telefone, data, designacao) {
@@ -25,6 +25,7 @@ void Gerente::setAreaSupervisao(std::string areaSupervisao) {
         this->areaSupervisao[areaSupervisao.size()] = '\0';
     }
 }
+
 
 void Gerente::calcularSalarioMensal(int mes){
     setHorasTrabalhadas(gerarAleatorio(260));
