@@ -92,7 +92,7 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 
 	for(int i = 0; i < 4; i++){
 	
-		/*
+		
 		for(int j = 0; j < 100; j++) {
 			
 			switch(i) {
@@ -113,7 +113,7 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 			
 		
 		}
-		*/
+		
 	
 		arquivoFuncionariosSaida[i].close();
 		
@@ -416,6 +416,7 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 					break;
 			}
 			
+			std::cout << "oi" << std::endl;
 			// Cópia de memoria
 			memcpy(funcionario, ptrFuncionarioTemp, tamanhoDados);
 			funcionariosVec.push_back(funcionario);								
@@ -464,7 +465,7 @@ Funcionario *Arquivo::carregaPresidente() {
 	arquivosEntradas[3].seekg(0);
 
 	
-	arquivosEntradas[3].read(reinterpret_cast < char*  > ((Presidente*)ptrFuncionarioTemp), sizeof(Presidente));
+	arquivosEntradas[3].read(reinterpret_cast < char*  > (ptrFuncionarioTemp), sizeof(Presidente));
 	/* Ler todos os dados até achar um usuário válido	*/
 	
 	while(!arquivosEntradas[3].eof()) {	
@@ -474,7 +475,7 @@ Funcionario *Arquivo::carregaPresidente() {
 			funcionario = new Presidente();
 			
 			// Cópia de memoria
-			memcpy((Presidente *)funcionario,(Presidente *)ptrFuncionarioTemp, sizeof(Presidente));
+			memcpy(funcionario,ptrFuncionarioTemp, sizeof(Presidente));
 			arquivosEntradas[3].close();
 			return funcionario;							
 		}

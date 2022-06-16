@@ -24,7 +24,28 @@ Empresa::Empresa() {
 }
 
 Empresa::~Empresa() {
-    
+
+
+    for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+        
+        for(int i = 0; i < qtdFuncionarios[tipoFuncionario]; i++) {
+
+            if(tipoFuncionario == OPERADOR) {
+                dadosArquivos.salvarDadosFuncionario(operadores[i], operadores[i]->getDesignacaoInt());
+            }
+            if(tipoFuncionario == GERENTE) {
+                dadosArquivos.salvarDadosFuncionario(gerentes[i], gerentes[i]->getDesignacaoInt());
+            }
+            if(tipoFuncionario == DIRETOR) {
+                dadosArquivos.salvarDadosFuncionario(diretores[i], diretores[i]->getDesignacaoInt());
+            }
+            if(tipoFuncionario == PRESIDENTE) {
+                dadosArquivos.salvarDadosFuncionario(presidente, presidente->getDesignacaoInt());
+            }
+        }
+        
+        
+    } 
     dadosArquivos.criaArquivoCsv(operadores);
     dadosArquivos.criaArquivoCsv(diretores);
     dadosArquivos.criaArquivoCsv(gerentes);
@@ -33,6 +54,7 @@ Empresa::~Empresa() {
         dadosArquivos.adicionaArquivoCsv(presidente);
     }
     
+   
 }
 
 int Empresa::getQtdFuncionarios(int tipo) {
@@ -62,7 +84,7 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
         }
     }
     std::cout << funcionario << std::endl;
-    dadosArquivos.salvarDadosFuncionario(funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos  
+    //dadosArquivos.salvarDadosFuncionario(funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos  
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
@@ -131,23 +153,25 @@ void Empresa::excluirFuncionario(int codigo) {
     if (funcionario == nullptr) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     } 
-    
+    std::cout << "estou aqui" << std::endl;
+   
     dadosArquivos.excluiDados(funcionario);
 
-    //delete funcionario;
+   
     if(tipoFuncionario == 0) {
         this->operadores.erase(operadores.begin() + indice);
         qtdFuncionarios[tipoFuncionario] -= 1;
     } else if(tipoFuncionario == 1) {
-        this->gerentes.erase(operadores.begin() + indice);
+        this->gerentes.erase(gerentes.begin() + indice);
         qtdFuncionarios[tipoFuncionario] -= 1;
     } else if(tipoFuncionario == 2) {
-        this->diretores.erase(operadores.begin() + indice);
+        this->diretores.erase(diretores.begin() + indice);
         qtdFuncionarios[tipoFuncionario] -= 1;
     } else if(tipoFuncionario == 3) {
         qtdFuncionarios[tipoFuncionario] -= 1;
     }
-    
+    delete funcionario;
+   
     std::cout << "Funcionario excluido dos registros." << std::endl;
     
     
@@ -342,19 +366,23 @@ void Empresa::calcularFolhaSalarial(int mes) {
             if(tipoFuncionario == OPERADOR) {
                 if(this->operadores[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
                     this->operadores[i]->calcularSalarioMensal(mes);
+                    
                 }
             } else if(tipoFuncionario == GERENTE) {
                 if(this->gerentes[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
                     this->gerentes[i]->calcularSalarioMensal(mes);
+                    
                 }
             } else if(tipoFuncionario == DIRETOR) {
                 if(this->diretores[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
                     this->diretores[i]->calcularSalarioMensal(mes);
+                
                 }
             } else if(tipoFuncionario == PRESIDENTE) {
                 if(this->presidente->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
                     this->presidente->calcularSalarioMensal(mes);
                 }
+                
             }
         }
     }
