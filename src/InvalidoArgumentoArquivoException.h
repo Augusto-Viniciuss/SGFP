@@ -5,10 +5,10 @@
 #include <stdexcept>
 
 // Função exception que invalida a alteração do presidente
-class InvalidoArgumento : public std::invalid_argument {
+class InvalidoArgumentoArquivoExcept : public std::invalid_argument {
 
     public:
-        InvalidoArgumento()
+        InvalidoArgumentoArquivoExcept()
         :invalid_argument("Nao eh possivel alterar o presidente.\n") {}
 };
 

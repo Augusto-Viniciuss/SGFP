@@ -150,7 +150,7 @@ int main() {
         } catch(TentativaAbrirArquivo &ProblemaArquivo) {
             
             std::cout << "Não foi possivel criar o arquivo, ou abri-lo, verifique se ele existe na pasta do programa" << std::endl;    
-        } catch(InvalidoArgumento &TentativaExcluirPresidente) {
+        } catch(InvalidoArgumentoArquivoExcept &TentativaExcluirPresidente) {
             std::cout << "Voce fez uma operação inválida, tentar excluir o presidente." << std::endl;
             int codigo;
             

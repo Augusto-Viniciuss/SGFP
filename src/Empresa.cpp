@@ -593,18 +593,18 @@ void Empresa::buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal)
                     std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
                     std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
                 } else if(this->operadores[i]->getDataIngresso().getAno() == dataInicial[2] or this->operadores[i]->getDataIngresso().getAno() == dataFinal[2]) {
-                    if(this->operadores[i]->getDataIngresso().getAno() > dataInicial[1] and this->operadores[i]->getDataIngresso().getAno() < dataFinal[1]) {
+                    if(this->operadores[i]->getDataIngresso().getMes() > dataInicial[1] and this->operadores[i]->getDataIngresso().getMes() < dataFinal[1]) {
                         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                         std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
                         std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
                         std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
-                    } else if(this->operadores[i]->getDataIngresso().getAno() == dataInicial[0] or this->operadores[i]->getDataIngresso().getAno() == dataFinal[1]) {
-                        if(this->operadores[i]->getDataIngresso().getAno() >= dataInicial[0]) {
+                    } else if(this->operadores[i]->getDataIngresso().getMes() == dataInicial[1] or this->operadores[i]->getDataIngresso().getMes() == dataFinal[1]) {
+                        if(this->operadores[i]->getDataIngresso().getDia() >= dataInicial[0]) {
                             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                             std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
                             std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
                             std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
-                        } else if(this->operadores[i]->getDataIngresso().getAno() <= dataFinal[0]) {
+                        } else if(this->operadores[i]->getDataIngresso().getDia() <= dataFinal[0]) {
                             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                             std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
                             std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
@@ -619,18 +619,18 @@ void Empresa::buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal)
                     std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
                     std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
                 } else if(this->gerentes[i]->getDataIngresso().getAno() == dataInicial[2] or this->gerentes[i]->getDataIngresso().getAno() == dataFinal[2]) {
-                    if(this->gerentes[i]->getDataIngresso().getAno() > dataInicial[1] and this->gerentes[i]->getDataIngresso().getAno() < dataFinal[1]) {
+                    if(this->gerentes[i]->getDataIngresso().getMes() > dataInicial[1] and this->gerentes[i]->getDataIngresso().getMes() < dataFinal[1]) {
                         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                         std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
                         std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
                         std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
-                    } else if(this->gerentes[i]->getDataIngresso().getAno() == dataInicial[0] or this->gerentes[i]->getDataIngresso().getAno() == dataFinal[1]) {
-                        if(this->gerentes[i]->getDataIngresso().getAno() >= dataInicial[0]) {
+                    } else if(this->gerentes[i]->getDataIngresso().getMes() == dataInicial[1] or this->gerentes[i]->getDataIngresso().getMes() == dataFinal[1]) {
+                        if(this->gerentes[i]->getDataIngresso().getDia() >= dataInicial[0]) {
                             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                             std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
                             std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
                             std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
-                        } else if(this->gerentes[i]->getDataIngresso().getAno() <= dataFinal[0]) {
+                        } else if(this->gerentes[i]->getDataIngresso().getDia() <= dataFinal[0]) {
                             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                             std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
                             std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
@@ -645,18 +645,18 @@ void Empresa::buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal)
                     std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
                     std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
                 } else if(this->diretores[i]->getDataIngresso().getAno() == dataInicial[2] or this->diretores[i]->getDataIngresso().getAno() == dataFinal[2]) {
-                    if(this->diretores[i]->getDataIngresso().getAno() > dataInicial[1] and this->diretores[i]->getDataIngresso().getAno() < dataFinal[1]) {
+                    if(this->diretores[i]->getDataIngresso().getMes() > dataInicial[1] and this->diretores[i]->getDataIngresso().getMes() < dataFinal[1]) {
                         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                         std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
                         std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
                         std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
-                    } else if(this->diretores[i]->getDataIngresso().getAno() == dataInicial[0] or this->diretores[i]->getDataIngresso().getAno() == dataFinal[1]) {
-                        if(this->diretores[i]->getDataIngresso().getAno() >= dataInicial[0]) {
+                    } else if(this->diretores[i]->getDataIngresso().getMes() == dataInicial[1] or this->diretores[i]->getDataIngresso().getMes() == dataFinal[1]) {
+                        if(this->diretores[i]->getDataIngresso().getDia() >= dataInicial[0]) {
                             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                             std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
                             std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
                             std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
-                        } else if(this->diretores[i]->getDataIngresso().getAno() <= dataFinal[0]) {
+                        } else if(this->diretores[i]->getDataIngresso().getDia() <= dataFinal[0]) {
                             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                             std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
                             std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
@@ -671,18 +671,18 @@ void Empresa::buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal)
                     std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
                     std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
                 } else if(this->presidente->getDataIngresso().getAno() == dataInicial[2] or this->presidente->getDataIngresso().getAno() == dataFinal[2]) {
-                    if(this->presidente->getDataIngresso().getAno() > dataInicial[1] and this->presidente->getDataIngresso().getAno() < dataFinal[1]) {
+                    if(this->presidente->getDataIngresso().getMes() > dataInicial[1] and this->presidente->getDataIngresso().getMes() < dataFinal[1]) {
                         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                         std::cout << "Nome: " << this->presidente->getNome() << std::endl;
                         std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
                         std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
-                    } else if(this->presidente->getDataIngresso().getAno() == dataInicial[0] or this->presidente->getDataIngresso().getAno() == dataFinal[1]) {
-                        if(this->presidente->getDataIngresso().getAno() >= dataInicial[0]) {
+                    } else if(this->presidente->getDataIngresso().getMes() == dataInicial[1] or this->presidente->getDataIngresso().getMes() == dataFinal[1]) {
+                        if(this->presidente->getDataIngresso().getDia() >= dataInicial[0]) {
                             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                             std::cout << "Nome: " << this->presidente->getNome() << std::endl;
                             std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
                             std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
-                        } else if(this->presidente->getDataIngresso().getAno() <= dataFinal[0]) {
+                        } else if(this->presidente->getDataIngresso().getDia() <= dataFinal[0]) {
                             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
                             std::cout << "Nome: " << this->presidente->getNome() << std::endl;
                             std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;

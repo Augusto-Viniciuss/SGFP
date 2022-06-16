@@ -11,7 +11,7 @@
 #include "HistoricoArquivo.h"
 #include <vector>
 #include "TentativaAbrirArquivo.h"
-#include "InvalidoArgumentoArquivo.h"
+#include "InvalidoArgumentoArquivoException.h"
 
 #define QUANTIA_ARQUIVOS 4
 
