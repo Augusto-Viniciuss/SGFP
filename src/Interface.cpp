@@ -25,12 +25,14 @@ int Interface::menu() {
         std::cin >> opcao;
     }
 
+    std::cout << std::endl;
+
     return opcao;
 }
 
 Funcionario* Interface::lerAtributosFuncionario() {
     Funcionario *funcionario = new Operador();
-    int codigo, idade, designacao;
+    int codigo, idade, designacao, numero;
     std::string nome, CPF, telefone, CEP;
     int data[3];
 
@@ -66,6 +68,9 @@ Funcionario* Interface::lerAtributosFuncionario() {
             std::cerr << CepException.what() << '\n';
         }
     }
+    std::cout << "Digite o número da residência do funcionário:" << std::endl;
+    std::cin >> numero;
+    std::cin.ignore();
     while(true) {
         try {
             std::cout << "Digite o telefone para contato do funcionario:" << std::endl;
@@ -88,7 +93,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
 
     switch (designacao) {
     case 0:
-        funcionario = new Operador(codigo, nome, CPF, idade, CEP, telefone, data, designacao);
+        funcionario = new Operador(codigo, nome, CPF, idade, CEP, numero, telefone, data, designacao);
         break;
     case 1:
         {
@@ -96,7 +101,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
 
             std::cout << "Digite a area de supervisao:" << std::endl;
             getline(std::cin, areaSupervisao);
-            funcionario = new Gerente(codigo, nome, CPF, idade, CEP, telefone, data, designacao, areaSupervisao);
+            funcionario = new Gerente(codigo, nome, CPF, idade, CEP, numero, telefone, data, designacao, areaSupervisao);
             break;
         }
     case 2:
@@ -107,7 +112,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
             getline(std::cin, areaSupervisao);
             std::cout << "Digite a area de formacao:" << std::endl;
             getline(std::cin, areaFormacao);
-            funcionario = new Diretor(codigo, nome, CPF, idade, CEP, telefone, data, designacao, areaSupervisao, areaFormacao);
+            funcionario = new Diretor(codigo, nome, CPF, idade, CEP, numero, telefone, data, designacao, areaSupervisao, areaFormacao);
             break;
         }
     case 3:
@@ -118,7 +123,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
             getline(std::cin, areaFormacao);
             std::cout << "Digite a formacao maxima:" << std::endl;
             getline(std::cin, formacaoMax);
-            funcionario = new Presidente(codigo, nome, CPF, idade, CEP, telefone, data, designacao, areaFormacao, formacaoMax);
+            funcionario = new Presidente(codigo, nome, CPF, idade, CEP, numero, telefone, data, designacao, areaFormacao, formacaoMax);
             break;
         }
     }
@@ -280,5 +285,55 @@ int Interface::lerOpcaoParaImprimirFolhaSalarialEmpresa() {
     std::cin >> opcao;
 
     return opcao;
+}
+
+int Interface::lerOpcaoParaBuscarFuncionario() {
+    int opcao;
+
+    std::cout << "Digite o tipo de busca, 1 por busca parcial, 2 por intervalo tempo: " << std::endl;
+    std::cin >> opcao;
+
+    if(opcao < 1 or opcao > 3) {
+        opcao = lerOpcaoParaBuscarFuncionario();
+    }
+
+    return opcao;
+}
+
+int Interface::lerTipoInformacaoStrParaBuscarFuncionario() {
+    int tipoInformacao;
+
+    std::cout << "Digite 1 para buscar por nome e 2 para buscar por CEP:" << std::endl;
+    std::cin >> tipoInformacao;
+
+    if(tipoInformacao < 1 or tipoInformacao > 2) {
+        tipoInformacao = lerTipoInformacaoStrParaBuscarFuncionario();
+    }
+
+    return tipoInformacao;
+}
+
+std::string Interface::lerInformacaoStrParaBuscarFuncionario(int tipoInformacao) {
+    std::string informacao;
+
+    if(tipoInformacao == 1) {
+        std::cout << "Digite o nome:" << std::endl;
+        std::cin.ignore();
+        std::getline(std::cin, informacao);
+    } else if(tipoInformacao == 2) {
+        std::cout << "Digite o CEP:" << std::endl;
+        std::cin.ignore();
+        std::getline(std::cin, informacao);
+    }
+
+    return informacao;
+}
+
+void Interface::lerDataParaBuscarFuncionario(int *dataInicial, int *dataFinal) {
+    std::cout << "Para buscar Funcionarios por intervalo de tempo digite." << std::endl;
+    std::cout << "Digite a data do inicio do intervalo, na ordem dia, mes e ano separados por espacos: " << std::endl;
+    std::cin >> dataInicial[0] >> dataInicial[1] >> dataInicial[2];
+    std::cout << "Digite a data do fim do intervalo, na ordem dia, mes e ano separados por espacos:" << std::endl;
+    std::cin >> dataFinal[0] >> dataFinal[1] >> dataFinal[2];
 }
 

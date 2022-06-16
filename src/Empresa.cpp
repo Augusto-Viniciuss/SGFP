@@ -33,7 +33,7 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
     Funcionario *func = buscarFuncionario(funcionario->getCodigoFuncionario());
 
     if(func != nullptr) {
-        throw FuncionarioJaCadastradoExcept();
+        throw FuncionarioJaCadastradoExcept("Funcionario já está cadastrado");
     } else if(tipoFuncionario == OPERADOR) {
         operadores.push_back(funcionario);
         qtdFuncionarios[tipoFuncionario] += 1;
@@ -52,8 +52,7 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
         }
     }
 
-    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
-    
+    dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos  
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
@@ -75,7 +74,7 @@ void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
             break;
         }
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
     //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
@@ -86,7 +85,7 @@ void Empresa::modificarFuncionario(int codigo, int *valor) {
     if (funcionario != nullptr) {
         funcionario->setDataIngresso(valor);
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 
     //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
@@ -105,23 +104,39 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
             break;
         }
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
     //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
 
 void Empresa::excluirFuncionario(int codigo) {
-    Funcionario *funcionario = buscarFuncionario(codigo);
+    int indice, tipoFuncionario;
+    int *p = &indice;
+    int *t = &tipoFuncionario;
+    Funcionario *funcionario = buscarFuncionario(codigo, p, t);
+    p = t = nullptr;
     // Colocado antes por conta do throw
     //dadosArquivos.excluiDados(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
 
     if (funcionario == nullptr) {
-        throw FuncionarioNaoEstaCadastradoExcept();
-    } else {
-        delete funcionario;
-        funcionario = nullptr;
-        std::cout << "Funcionario excluido dos registros." << std::endl;
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
+    } 
+    
+    delete funcionario;
+    if(tipoFuncionario == 0) {
+        this->operadores.erase(operadores.begin() + indice);
+        qtdFuncionarios[tipoFuncionario] -= 1;
+    } else if(tipoFuncionario == 1) {
+        this->gerentes.erase(operadores.begin() + indice);
+        qtdFuncionarios[tipoFuncionario] -= 1;
+    } else if(tipoFuncionario == 2) {
+        this->diretores.erase(operadores.begin() + indice);
+        qtdFuncionarios[tipoFuncionario] -= 1;
+    } else if(tipoFuncionario == 3) {
+        qtdFuncionarios[tipoFuncionario] -= 1;
     }
+    
+    std::cout << "Funcionario excluido dos registros." << std::endl;
 }
 
 void Empresa::exibirFuncionario(int codigo) {
@@ -157,7 +172,7 @@ void Empresa::exibirFuncionario(int codigo) {
         }
         std::cout << std::endl << "*******************************************************************" << std::endl;
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 }
 
@@ -166,6 +181,7 @@ void Empresa::exibirTodosFuncionarios() {
     
     if((this->qtdFuncionarios[0] == 0) and (this->qtdFuncionarios[1] == 0) and (this->qtdFuncionarios[2] == 0) and (this->qtdFuncionarios[3] == 0)) {
         std::cout << "Nao existem funcionarios cadastrados" << std::endl;
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
     } else {
         for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
             for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
@@ -333,12 +349,14 @@ void Empresa::calcularFolhaSalarial(int mes) {
 
 
 void Empresa::imprimirFolhaSalarialFuncionario(int codigo) {
+    
     Funcionario *funcionario = buscarFuncionario(codigo);
 
     if (funcionario != nullptr) {
 
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
-        std::cout << "Folha Salarial do Funcionario: " << funcionario->getNome() << " // Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
+        std::cout << "Folha salarial do funcionario: " << funcionario->getNome() << " // Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
 
         for(int meses = 1; meses < 13; meses++) {
             if(funcionario->getFolhaSalarial(meses)->getSalarioLiquido() != 0) {
@@ -352,17 +370,44 @@ void Empresa::imprimirFolhaSalarialFuncionario(int codigo) {
         }   
         
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 }
 
 void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
-    Funcionario *funcionario = buscarFuncionario(nome, BUSCAR_POR_NOME);
+    Funcionario *funcionario = nullptr;
+    
+    for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+        for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
+            if(tipoFuncionario == OPERADOR) {
+                if (this->operadores[i]->getNome().find(nome) != std::string::npos) {
+                    funcionario = operadores[i];
+                    tipoFuncionario = 4;
+                }
+            } else if(tipoFuncionario == GERENTE) {
+                if (this->gerentes[i]->getNome().find(nome) != std::string::npos) {
+                    funcionario = gerentes[i];
+                    tipoFuncionario = 4;
+                }
+            } else if(tipoFuncionario == DIRETOR) {
+                if (this->diretores[i]->getNome().find(nome) != std::string::npos) {
+                    funcionario = diretores[i];
+                    tipoFuncionario = 4;
+                }
+            } else if(tipoFuncionario == PRESIDENTE) {
+                if (this->presidente->getNome().find(nome) != std::string::npos) {
+                    funcionario = presidente;
+                    tipoFuncionario = 4;
+                }
+            }
+        }
+    }
 
     if (funcionario != nullptr) {
 
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
-        std::cout << "Folha Salarial do Funcionario: " << funcionario->getNome() << " //////// Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
+        std::cout << "Folha salarial do funcionario: " << funcionario->getNome() << " // Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
 
         for(int meses = 1; meses < 13; meses++) {
             if(funcionario->getFolhaSalarial(meses)->getSalarioLiquido() != 0) {
@@ -376,14 +421,15 @@ void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
         }   
         
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 }
 
 void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
     if (opcao == 1) {
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
-        std::cout << "A folha salarial da empresa para os meses do ano calculados até agora eh: " << std::endl;
+        std::cout << "A folha salarial da empresa para os meses do ano calculados ate agora eh: " << std::endl;
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
 
         for(int meses = 1; meses < 13; meses++) {
 
@@ -505,17 +551,33 @@ Funcionario* Empresa::buscarFuncionario(int codigo) {
     return nullptr;
 }
 
-Funcionario* Empresa::buscarFuncionario(int *data) {
+Funcionario* Empresa::buscarFuncionario(int codigo, int *indice, int *designacao) {
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
-                if (this->operadores[i]->getDataIngresso().comparaDatas(data)) return operadores[i];
+                if (this->operadores[i]->getCodigoFuncionario() == codigo) {
+                    *indice = i;
+                    *designacao = tipoFuncionario;
+                    return operadores[i];
+                }
             } else if(tipoFuncionario == GERENTE) {
-                if (this->gerentes[i]->getDataIngresso().comparaDatas(data)) return gerentes[i];
+                if (this->gerentes[i]->getCodigoFuncionario() == codigo) {
+                    *indice = i;
+                    *designacao = tipoFuncionario;
+                    return gerentes[i];
+                }
             } else if(tipoFuncionario == DIRETOR) {
-                if (this->diretores[i]->getDataIngresso().comparaDatas(data)) return diretores[i];
+                if (this->diretores[i]->getCodigoFuncionario() == codigo) {
+                    *indice = i;
+                    *designacao = tipoFuncionario;
+                    return diretores[i];
+                }
             } else if(tipoFuncionario == PRESIDENTE) {
-                if (this->presidente->getDataIngresso().comparaDatas(data)) return presidente;
+                if (this->presidente->getCodigoFuncionario() == codigo) {
+                    *indice = i;
+                    *designacao = tipoFuncionario;
+                    return presidente;
+                }
             }
         }
     }
@@ -523,49 +585,197 @@ Funcionario* Empresa::buscarFuncionario(int *data) {
     return nullptr;
 }
 
-Funcionario* Empresa::buscarFuncionario(std::string informacao, int opcao) {
+//primeiro ano
+//depois o dia só não pode ser menor no mes inicial
+//depois o dia só não pode ser maior no mes final
+//nos anos X tem que olhar o mes
+//nos meses Y tem que olhar o dia
+
+void Empresa::buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal) {
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
-                switch (opcao) {
-                case 5:
-                    if (this->operadores[i]->getNome().find(informacao) != std::string::npos) return operadores[i];
-                    break;
-                case 6:
-                    if (this->operadores[i]->getEndereco()->comparaEndereco(informacao)) return operadores[i];
-                    break;
+                if (this->operadores[i]->getDataIngresso().getAno() > dataInicial[2] and this->operadores[i]->getDataIngresso().getAno() < dataFinal[2]) {
+                    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                    std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
+                    std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
+                    std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
+                } else if(this->operadores[i]->getDataIngresso().getAno() == dataInicial[2] or this->operadores[i]->getDataIngresso().getAno() == dataFinal[2]) {
+                    if(this->operadores[i]->getDataIngresso().getMes() > dataInicial[1] and this->operadores[i]->getDataIngresso().getMes() < dataFinal[1]) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
+                    } else if(this->operadores[i]->getDataIngresso().getMes() == dataInicial[1] or this->operadores[i]->getDataIngresso().getMes() == dataFinal[1]) {
+                        if(this->operadores[i]->getDataIngresso().getDia() >= dataInicial[0]) {
+                            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                            std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
+                            std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
+                            std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
+                        } else if(this->operadores[i]->getDataIngresso().getDia() <= dataFinal[0]) {
+                            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                            std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
+                            std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
+                            std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
+                        }
+                    }
                 }
             } else if(tipoFuncionario == GERENTE) {
-                switch (opcao) {
-                case 5:
-                    if (this->gerentes[i]->getNome().find(informacao) != std::string::npos) return gerentes[i];
-                    break;
-                case 6:
-                    if (this->gerentes[i]->getEndereco()->comparaEndereco(informacao)) return gerentes[i];
-                    break;
+                if (this->gerentes[i]->getDataIngresso().getAno() > dataInicial[2] and this->gerentes[i]->getDataIngresso().getAno() < dataFinal[2]) {
+                    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                    std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
+                    std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
+                    std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
+                } else if(this->gerentes[i]->getDataIngresso().getAno() == dataInicial[2] or this->gerentes[i]->getDataIngresso().getAno() == dataFinal[2]) {
+                    if(this->gerentes[i]->getDataIngresso().getMes() > dataInicial[1] and this->gerentes[i]->getDataIngresso().getMes() < dataFinal[1]) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
+                    } else if(this->gerentes[i]->getDataIngresso().getMes() == dataInicial[1] or this->gerentes[i]->getDataIngresso().getMes() == dataFinal[1]) {
+                        if(this->gerentes[i]->getDataIngresso().getDia() >= dataInicial[0]) {
+                            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                            std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
+                            std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
+                            std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
+                        } else if(this->gerentes[i]->getDataIngresso().getDia() <= dataFinal[0]) {
+                            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                            std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
+                            std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
+                            std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
+                        }
+                    }
                 }
             } else if(tipoFuncionario == DIRETOR) {
-                switch (opcao) {
-                case 5:
-                    if (this->diretores[i]->getNome().find(informacao) != std::string::npos) return diretores[i];
-                    break;
-                case 6:
-                    if (this->diretores[i]->getEndereco()->comparaEndereco(informacao)) return diretores[i];
-                    break;
+                if (this->diretores[i]->getDataIngresso().getAno() > dataInicial[2] and this->diretores[i]->getDataIngresso().getAno() < dataFinal[2]) {
+                    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                    std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
+                    std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
+                    std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
+                } else if(this->diretores[i]->getDataIngresso().getAno() == dataInicial[2] or this->diretores[i]->getDataIngresso().getAno() == dataFinal[2]) {
+                    if(this->diretores[i]->getDataIngresso().getMes() > dataInicial[1] and this->diretores[i]->getDataIngresso().getMes() < dataFinal[1]) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
+                    } else if(this->diretores[i]->getDataIngresso().getMes() == dataInicial[1] or this->diretores[i]->getDataIngresso().getMes() == dataFinal[1]) {
+                        if(this->diretores[i]->getDataIngresso().getDia() >= dataInicial[0]) {
+                            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                            std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
+                            std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
+                            std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
+                        } else if(this->diretores[i]->getDataIngresso().getDia() <= dataFinal[0]) {
+                            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                            std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
+                            std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
+                            std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
+                        }
+                    }
                 }
             } else if(tipoFuncionario == PRESIDENTE) {
-                switch (opcao) {
-                case 5:
-                    if (this->presidente->getNome().find(informacao) != std::string::npos) return presidente;
-                    break;
-                case 6:
-                    if (this->presidente->getEndereco()->comparaEndereco(informacao)) return presidente;
-                    break;
+                if (this->presidente->getDataIngresso().getAno() > dataInicial[2] and this->presidente->getDataIngresso().getAno() < dataFinal[2]) {
+                    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                    std::cout << "Nome: " << this->presidente->getNome() << std::endl;
+                    std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
+                    std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
+                } else if(this->presidente->getDataIngresso().getAno() == dataInicial[2] or this->presidente->getDataIngresso().getAno() == dataFinal[2]) {
+                    if(this->presidente->getDataIngresso().getMes() > dataInicial[1] and this->presidente->getDataIngresso().getMes() < dataFinal[1]) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->presidente->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
+                    } else if(this->presidente->getDataIngresso().getMes() == dataInicial[1] or this->presidente->getDataIngresso().getMes() == dataFinal[1]) {
+                        if(this->presidente->getDataIngresso().getDia() >= dataInicial[0]) {
+                            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                            std::cout << "Nome: " << this->presidente->getNome() << std::endl;
+                            std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
+                            std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
+                        } else if(this->presidente->getDataIngresso().getDia() <= dataFinal[0]) {
+                            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                            std::cout << "Nome: " << this->presidente->getNome() << std::endl;
+                            std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
+                            std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
+                        }
+                    }
                 }
             }
         }
     }
 
-    return nullptr;
+    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
+}
+
+void Empresa::buscarFuncionariosParcial(std::string informacao, int opcao) {
+    for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+        for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
+            if(tipoFuncionario == OPERADOR) {
+                if(opcao == BUSCAR_POR_NOME) {
+                    if (this->operadores[i]->getNome().find(informacao) != std::string::npos) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
+                    }
+                } else if(opcao == BUSCAR_POR_ENDERECO) {
+                    if (this->operadores[i]->getEndereco()->comparaEndereco(informacao)) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->operadores[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->operadores[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->operadores[i]->getEndereco()->getInformacao() << std::endl;
+                    }
+                }
+            } else if(tipoFuncionario == GERENTE) {
+                if(opcao == BUSCAR_POR_NOME) {
+                    if (this->gerentes[i]->getNome().find(informacao) != std::string::npos) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
+                    }
+                } else if(opcao == BUSCAR_POR_ENDERECO) {
+                    if (this->gerentes[i]->getEndereco()->comparaEndereco(informacao)) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->gerentes[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->gerentes[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->gerentes[i]->getEndereco()->getInformacao() << std::endl;
+                    }
+                }
+            } else if(tipoFuncionario == DIRETOR) {
+                if(opcao == BUSCAR_POR_NOME) {
+                    if (this->diretores[i]->getNome().find(informacao) != std::string::npos) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
+                    }
+                } else if(opcao == BUSCAR_POR_ENDERECO) {
+                    if (this->diretores[i]->getEndereco()->comparaEndereco(informacao)) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->diretores[i]->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->diretores[i]->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->diretores[i]->getEndereco()->getInformacao() << std::endl;
+                    }
+                }
+            } else if(tipoFuncionario == PRESIDENTE) {
+                if(opcao == BUSCAR_POR_NOME) {
+                    if (this->presidente->getNome().find(informacao) != std::string::npos) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->presidente->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
+                    }
+                } else if(opcao == BUSCAR_POR_ENDERECO) {
+                    if (this->presidente->getEndereco()->comparaEndereco(informacao)) {
+                        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
+                        std::cout << "Nome: " << this->presidente->getNome() << std::endl;
+                        std::cout << "Data de ingresso: " << this->presidente->getDataIngresso().retornaStringData() << std::endl;
+                        std::cout << "Endereco: " << this->presidente->getEndereco()->getInformacao() << std::endl;
+                    }
+                }
+            }
+        }
+    }
+    
+    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
 }
 

@@ -7,7 +7,7 @@
 class Diretor : public Funcionario{
     public:
         Diretor();
-        Diretor(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao, std::string areaSupervisao, std::string areaFormacao);
+        Diretor(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, int numeroResidencia, std::string telefone, int *data, int designacao, std::string areaSupervisao, std::string areaFormacao);
         
         std::string getAreaSupervisao();
         std::string getAreaFormacao();
