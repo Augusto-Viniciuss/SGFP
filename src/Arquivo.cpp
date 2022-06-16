@@ -294,7 +294,7 @@ void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
 	//Throw tentativa falha de excluir o presidente
 	if (tipoFuncionario == 3)
 	{
-		throw InvalidoArgumento();
+		throw InvalidoArgumentoArquivoExcept("Não é possível alterar o presidente.\n");
 		tentaPresidenteExcluir = true;
 	}
 

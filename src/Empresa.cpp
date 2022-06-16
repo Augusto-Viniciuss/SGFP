@@ -25,7 +25,7 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
     Funcionario *func = buscarFuncionario(funcionario->getCodigoFuncionario());
 
     if(func != nullptr) {
-        throw FuncionarioJaCadastradoExcept();
+        throw FuncionarioJaCadastradoExcept("Funcionario já está cadastrado");
     } else if(tipoFuncionario == OPERADOR) {
         operadores.push_back(funcionario);
         qtdFuncionarios[tipoFuncionario] += 1;
@@ -66,7 +66,7 @@ void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
             break;
         }
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
     //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
@@ -77,7 +77,7 @@ void Empresa::modificarFuncionario(int codigo, int *valor) {
     if (funcionario != nullptr) {
         funcionario->setDataIngresso(valor);
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 
     //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
@@ -96,7 +96,7 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
             break;
         }
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
     //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
 }
@@ -111,7 +111,7 @@ void Empresa::excluirFuncionario(int codigo) {
     //dadosArquivos.excluiDados(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
 
     if (funcionario == nullptr) {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     } 
     
     delete funcionario;
@@ -164,7 +164,7 @@ void Empresa::exibirFuncionario(int codigo) {
         }
         std::cout << std::endl << "*******************************************************************" << std::endl;
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 }
 
@@ -362,7 +362,7 @@ void Empresa::imprimirFolhaSalarialFuncionario(int codigo) {
         }   
         
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 }
 
@@ -413,7 +413,7 @@ void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
         }   
         
     } else {
-        throw FuncionarioNaoEstaCadastradoExcept();
+        throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 }
 
