@@ -1,7 +1,14 @@
-#ifndef FUNCIONARIONAOESTACADASTRADOEXCEPT
-#define FUNCIONARIONAOESTACADASTRADOEXCEPT
+#ifndef FUNCIONARIONAOESTACADASTRADOEXCEPT_H
+#define FUNCIONARIONAOESTACADASTRADOEXCEPT_H
 
-class FuncionarioNaoEstaCadastradoExcept {
+#include <exception>
+
+class FuncionarioNaoEstaCadastradoExcept : public std::exception{
+    public:
+        FuncionarioNaoEstaCadastradoExcept(const char* e);
+        virtual const char* what();
+    protected:
+        char mensagem[100];
 };
 
 #endif

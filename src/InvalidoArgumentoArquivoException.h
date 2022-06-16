@@ -1,22 +1,15 @@
-#ifndef INVALIDOARGUMENTOARQUIVO_H
-#define INVALIDOARGUMENTOARQUIVO_H
+#ifndef INVALIDOARGUMENTOARQUIVOEXCEPTION_H
+#define INVALIDOARGUMENTOARQUIVOEXCEPTION_H
 
-
-#include <stdexcept>
+#include <exception>
 
 // Função exception que invalida a alteração do presidente
-class InvalidoArgumentoArquivoExcept : public std::invalid_argument {
-
+class InvalidoArgumentoArquivoExcept : public std::exception {
     public:
-        InvalidoArgumentoArquivoExcept()
-        :invalid_argument("Nao eh possivel alterar o presidente.\n") {}
+        InvalidoArgumentoArquivoExcept(const char* e);
+        virtual const char* what();
+    protected:
+        char mensagem[100];
 };
-
-
-
-
-
-
-
 
 #endif
