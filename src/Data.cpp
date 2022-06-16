@@ -75,6 +75,8 @@ std::string Data::retornaStringData() {
 		data = "0" + std::to_string(getDia()) + "/" + std::to_string(getMes()) + "/" + std::to_string(getAno());
 	} else if(getMes() < 10) {
 		data = std::to_string(getDia()) + "/0" + std::to_string(getMes()) + "/" + std::to_string(getAno());
+	} else {
+		data = std::to_string(getDia()) + "/" + std::to_string(getMes()) + "/" + std::to_string(getAno());
 	}
 
 	return data;

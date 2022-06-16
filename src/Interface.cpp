@@ -25,6 +25,8 @@ int Interface::menu() {
         std::cin >> opcao;
     }
 
+    std::cout << std::endl;
+
     return opcao;
 }
 
@@ -280,5 +282,55 @@ int Interface::lerOpcaoParaImprimirFolhaSalarialEmpresa() {
     std::cin >> opcao;
 
     return opcao;
+}
+
+int Interface::lerOpcaoParaBuscarFuncionario() {
+    int opcao;
+
+    std::cout << "Digite o tipo de busca, 1 por busca parcial, 2 por intervalo tempo: " << std::endl;
+    std::cin >> opcao;
+
+    if(opcao < 1 or opcao > 3) {
+        opcao = lerOpcaoParaBuscarFuncionario();
+    }
+
+    return opcao;
+}
+
+int Interface::lerTipoInformacaoStrParaBuscarFuncionario() {
+    int tipoInformacao;
+
+    std::cout << "Digite 1 para buscar por nome e 2 para buscar por CEP:" << std::endl;
+    std::cin >> tipoInformacao;
+
+    if(tipoInformacao < 1 or tipoInformacao > 2) {
+        tipoInformacao = lerTipoInformacaoStrParaBuscarFuncionario();
+    }
+
+    return tipoInformacao;
+}
+
+std::string Interface::lerInformacaoStrParaBuscarFuncionario(int tipoInformacao) {
+    std::string informacao;
+
+    if(tipoInformacao == 1) {
+        std::cout << "Digite o nome:" << std::endl;
+        std::cin.ignore();
+        std::getline(std::cin, informacao);
+    } else if(tipoInformacao == 2) {
+        std::cout << "Digite o CEP:" << std::endl;
+        std::cin.ignore();
+        std::getline(std::cin, informacao);
+    }
+
+    return informacao;
+}
+
+void Interface::lerDataParaBuscarFuncionario(int *dataInicial, int *dataFinal) {
+    std::cout << "Para buscar Funcionarios por intervalo de tempo digite." << std::endl;
+    std::cout << "Digite a data do inicio do intervalo, na ordem dia, mes e ano separados por espacos: " << std::endl;
+    std::cin >> dataInicial[0] >> dataInicial[1] >> dataInicial[2];
+    std::cout << "Digite a data do fim do intervalo, na ordem dia, mes e ano separados por espacos:" << std::endl;
+    std::cin >> dataFinal[0] >> dataFinal[1] >> dataFinal[2];
 }
 

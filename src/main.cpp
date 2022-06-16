@@ -12,6 +12,7 @@
 
 #define INT 1
 #define STR 2
+#define IMPRIMIR 3
 
 using namespace std;
 
@@ -103,53 +104,27 @@ int main() {
                 int tipoBusca;
                 Funcionario *funcionario;
                 std::string informacao;
-                int data[3], codigoFuncionario, tipoInformacao;
+                int dataInicial[3], dataFinal[3];
+                int tipoInformacao;
 
-
-                std::cout << "Digite o tipo de busca, 1 por informacao, 2 por data e 3 pelo codigo: ";
-                std::cin >> tipoBusca;
+                tipoBusca = interface.lerOpcaoParaBuscarFuncionario();
 
                 if(tipoBusca == 1) {
-                    std::cout << "Digite 1 para buscar por nome e 2 para buscar por localizacao.";
-                    std::cin >> tipoInformacao;
+                    tipoInformacao = interface.lerTipoInformacaoStrParaBuscarFuncionario();
+                    informacao = interface.lerInformacaoStrParaBuscarFuncionario(tipoInformacao);
                     switch (tipoInformacao) {
                     case 1:
-                        {
-                            std::cout << "Digite o nome:" << std::endl;
-                            std::cin.ignore();
-                            std::getline(std::cin, informacao);
-                            tipoInformacao = 5;
-                        }
+                        empresa.buscarFuncionariosParcial(informacao, 5);
                         break;
                     case 2:
-                        {
-                            std::cout << "Digite o CEP:" << std::endl;
-                            std::cin.ignore();
-                            std::getline(std::cin, informacao);
-                            tipoInformacao = 6;
-                        }
+                        empresa.buscarFuncionariosParcial(informacao, 6);
                         break;
                     }
-                    
-                    funcionario = empresa.buscarFuncionario(informacao, tipoInformacao);
                 } else if(tipoBusca == 2) {
-                    std::cout << "Digite a data de ingresso: ";
-                    std::cin >> data[0] >> data[1] >> data[2];
-                    funcionario = empresa.buscarFuncionario(data);
-                } else if(tipoBusca == 3) {
-                    std::cout << "Digite o codigo do funcionario: ";
-                    std::cin >> codigoFuncionario;
-                    funcionario = empresa.buscarFuncionario(codigoFuncionario);
+                    interface.lerDataParaBuscarFuncionario(dataInicial, dataFinal);
+                    empresa.buscarFuncionariosIntervaloTempo(dataInicial, dataFinal);
                 }
-                    
-                if(funcionario == nullptr) {
-                    std::cout << "Funcionario nao foi encontrado." << std::endl;
-                }
-                else {
-                    std::cout << funcionario->getNome() << " " << "encontrado." << std::endl;
-                }
-            }
-            
+            } 
         } catch(FuncionarioJaCadastradoExcept &funcionarioJaCadastrado) {
             int opcao;
             

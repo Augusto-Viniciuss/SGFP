@@ -41,8 +41,9 @@ class Empresa {
         void imprimirFolhaSalarialFuncionario(std::string nome);
         void imprimirFolhaSalarialEmpresa(int opcao);
         Funcionario* buscarFuncionario(int codigo);
-        Funcionario* buscarFuncionario(int *data);
-        Funcionario* buscarFuncionario(std::string informacao, int opcao);
+        Funcionario* buscarFuncionario(int codigo, int *indice, int *designacao);
+        void buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal);
+        void buscarFuncionariosParcial(std::string informacao, int opcao);
 
         /* DESTRUTOR */
         virtual ~Empresa();

@@ -27,6 +27,10 @@ class Interface {
         int lerCodigoParaImprimirFolhaSalarialFuncionario();
         int lerTipoAtributoParaImprimirFolhaSalarialFuncionario();
         int lerOpcaoParaImprimirFolhaSalarialEmpresa();
+        int lerOpcaoParaBuscarFuncionario();
+        int lerTipoInformacaoStrParaBuscarFuncionario();
+        std::string lerInformacaoStrParaBuscarFuncionario(int tipoInformacao);
+        void lerDataParaBuscarFuncionario(int *dataInicial, int *dataFinal);
 };
 
 #endif
