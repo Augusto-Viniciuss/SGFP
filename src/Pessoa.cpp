@@ -6,12 +6,13 @@ Pessoa::Pessoa(){
     /* ... */
 }
 
-Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, std::string CEP){
+Pessoa::Pessoa(std::string nome, std::string telefone, std::string CPF, int idade, std::string CEP, int numeroResidencia){
     setNome(nome);
     setTelefone(telefone);
     setCPF(CPF);
     setIdade(idade);
     setEndereco(CEP);
+    getEndereco()->setNumero(numeroResidencia);
 }
 
 Pessoa::~Pessoa(){

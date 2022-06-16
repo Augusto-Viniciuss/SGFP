@@ -114,7 +114,7 @@ void Endereco::validaCEP(std::string CEP){
 }
 
 std::string Endereco::getInformacao() {
-    return getRua() + ", " + getBairro() + ", " + getCidade() + ", " + getEstado() + ", " + getCEP();
+    return getRua() + ", " + getBairro() + ", " + getCidade() + ", " + getEstado() + ", " + getCEP() + ", Nº " + std::to_string(getNumero());
 }
 
 bool Endereco::comparaEndereco(std::string endereco) {

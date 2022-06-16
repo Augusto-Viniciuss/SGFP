@@ -32,7 +32,7 @@ int Interface::menu() {
 
 Funcionario* Interface::lerAtributosFuncionario() {
     Funcionario *funcionario = new Operador();
-    int codigo, idade, designacao;
+    int codigo, idade, designacao, numero;
     std::string nome, CPF, telefone, CEP;
     int data[3];
 
@@ -68,6 +68,9 @@ Funcionario* Interface::lerAtributosFuncionario() {
             std::cerr << CepException.what() << '\n';
         }
     }
+    std::cout << "Digite o número da residência do funcionário:" << std::endl;
+    std::cin >> numero;
+    std::cin.ignore();
     while(true) {
         try {
             std::cout << "Digite o telefone para contato do funcionario:" << std::endl;
@@ -90,7 +93,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
 
     switch (designacao) {
     case 0:
-        funcionario = new Operador(codigo, nome, CPF, idade, CEP, telefone, data, designacao);
+        funcionario = new Operador(codigo, nome, CPF, idade, CEP, numero, telefone, data, designacao);
         break;
     case 1:
         {
@@ -98,7 +101,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
 
             std::cout << "Digite a area de supervisao:" << std::endl;
             getline(std::cin, areaSupervisao);
-            funcionario = new Gerente(codigo, nome, CPF, idade, CEP, telefone, data, designacao, areaSupervisao);
+            funcionario = new Gerente(codigo, nome, CPF, idade, CEP, numero, telefone, data, designacao, areaSupervisao);
             break;
         }
     case 2:
@@ -109,7 +112,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
             getline(std::cin, areaSupervisao);
             std::cout << "Digite a area de formacao:" << std::endl;
             getline(std::cin, areaFormacao);
-            funcionario = new Diretor(codigo, nome, CPF, idade, CEP, telefone, data, designacao, areaSupervisao, areaFormacao);
+            funcionario = new Diretor(codigo, nome, CPF, idade, CEP, numero, telefone, data, designacao, areaSupervisao, areaFormacao);
             break;
         }
     case 3:
@@ -120,7 +123,7 @@ Funcionario* Interface::lerAtributosFuncionario() {
             getline(std::cin, areaFormacao);
             std::cout << "Digite a formacao maxima:" << std::endl;
             getline(std::cin, formacaoMax);
-            funcionario = new Presidente(codigo, nome, CPF, idade, CEP, telefone, data, designacao, areaFormacao, formacaoMax);
+            funcionario = new Presidente(codigo, nome, CPF, idade, CEP, numero, telefone, data, designacao, areaFormacao, formacaoMax);
             break;
         }
     }

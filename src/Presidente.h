@@ -7,7 +7,7 @@
 class Presidente : public Funcionario {
     public:
         Presidente();
-        Presidente(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, std::string telefone, int *data, int designacao, std::string areaFormacao, std::string formacaoMax);
+        Presidente(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, int numeroResidencia, std::string telefone, int *data, int designacao, std::string areaFormacao, std::string formacaoMax);
         
         virtual std::string getAreaFormacao();
         virtual std::string getFormacaoMax();
