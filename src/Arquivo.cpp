@@ -174,9 +174,10 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 	}
 
 	input.seekg(0);
-	input.seekg((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
 
+	input.seekg((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
 	input.read(reinterpret_cast<char*>(funcionario), sizeof(*funcionario));
+
 	// Indica que o funcionario já existe
 	if(funcionario->getCodigoFuncionario() != 0) {
 		funcionarioExiste = true;	
@@ -224,81 +225,22 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 		
 }
 
-
-
-void Arquivo::mostraDadosArquivos(int tipoFuncionario){
-
-
-	Presidente presidente;
-	Gerente gerente;
-	Diretor diretor;
-	Operador operador;
-	
-	Funcionario *funcionario;	
-
-	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
-	switch(tipoFuncionario){
-  
-        // Coloca-se na posição referente ao código
-        // Ler o que está contido
-        case 3:
-        	funcionario = &presidente;
-            break;
-  
-        case 2:
-            funcionario = &diretor;
-            break;
-  
-        case 1:
-            funcionario =  &gerente;
-            break;
-  
-        case 0:
-            funcionario = &operador;
-            break;
-  
-    }
-
-	// Abre o arquivo para entrada de dados	
-	arquivoFuncionariosSaida[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
-
-	if(!arquivoFuncionariosSaida[tipoFuncionario]) {
-		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
-	}
-	
-	// Posiciona no local para leitura de dados
-	//arquivoFuncionarios[tipoFuncionario].seekg(0);
-
-	while(!arquivoFuncionariosSaida[tipoFuncionario].eof())
-	{
-		//arquivoFuncionarios[tipoFuncionario].read(reinterpret_cast < char * > (funcionario), sizeof(*funcionario));
-
-		if(funcionario->getCodigoFuncionario() != 0) {
-			std::cout << funcionario->getCodigoFuncionario() << " " << funcionario->getNome() << " " << funcionario->getCodigoFuncionario() << std::endl;
-		}
-
-	}
-
-	arquivoFuncionariosSaida[tipoFuncionario].close();
-}
-
-
-void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
+void Arquivo::excluiDados(Funcionario *funcionario)
 {
 
 	// Cria os tipos filhos previamente
-	Diretor diretores[2];
-	Gerente gerentes[2];
-	Operador operadores[2];
+	Diretor diretores;
+	Gerente gerentes;
+	Operador operadores;
 	Presidente presidente;
 
 	Funcionario *funcionarios;
-	Funcionario *ptrLeitura;
+	
 	bool tentaPresidenteExcluir = false;
 	// variavel que indica se houve tentativa de exclusão do presidente
 
 	//Throw tentativa falha de excluir o presidente
-	if (tipoFuncionario == 3)
+	if (funcionario->getDesignacaoInt() == 3)
 	{
 
 		throw InvalidoArgumentoArquivoExcept("Não é possível alterar o presidente.\n");
@@ -308,66 +250,51 @@ void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
 
 	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 	// Verifica o tipo de funcionario e faz o ponteiro funcionarios apontar para aquele tipo
-	switch (tipoFuncionario)
+	switch (funcionario->getDesignacaoInt())
 	{
 		
-		case 3:
-			ptrLeitura = &presidente;
 		case 2:
-			funcionarios = &diretores[0];
-			ptrLeitura = &diretores[1];
+			funcionarios = &diretores;
 			break;
 		case 1:
-			funcionarios = &gerentes[0];
-			ptrLeitura = &gerentes[1];
+			funcionarios = &gerentes;
 			break;
 		case 0:
-			funcionarios = &operadores[0];
-			ptrLeitura = &operadores[1];
+			funcionarios = &operadores;
 			break;
 	}
 	
-	arquivoFuncionariosSaida[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::out | std::ios::in | std::ios::binary);
+	
+	arquivoFuncionariosSaida[funcionario->getDesignacaoInt()].open(path + nomeArquivos[funcionario->getDesignacaoInt()], std::ios::out | std::ios::in);
 
-	if(!arquivoFuncionariosSaida[tipoFuncionario]) {
-		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
+	if(!arquivoFuncionariosSaida[funcionario->getDesignacaoInt()]) {
+		throw TentativaAbrirArquivo(nomeArquivos[funcionario->getDesignacaoInt()]);
 	}
 
-	exclusaoDados[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
 
-	if(!exclusaoDados[tipoFuncionario]) {
-		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
-	}
 	// Posiciona o arquivo no local referente ao codigoFuncionario
-	arquivoFuncionariosSaida[tipoFuncionario].seekp((codigoFuncionario - 1) * sizeof(*funcionarios));
-
-	// Posiciona também o ponteiro de leitura
-	exclusaoDados[tipoFuncionario].seekg((codigoFuncionario - 1) * sizeof(*funcionarios));
+	arquivoFuncionariosSaida[funcionario->getDesignacaoInt()].seekp((funcionario->getCodigoFuncionario() - 1) * sizeof(*funcionarios));
 
 	// Coloca um funcionario zerado naquela posição
-	arquivoFuncionariosSaida[tipoFuncionario].write(reinterpret_cast<const char *>(funcionarios), sizeof(*funcionarios));
-	
-	// Faz a leitura do dado
-	exclusaoDados[tipoFuncionario].read(reinterpret_cast<char *>(ptrLeitura), sizeof(*ptrLeitura));
+	arquivoFuncionariosSaida[funcionario->getDesignacaoInt()].write(reinterpret_cast<const char *>(funcionarios), sizeof(*funcionarios));
 
 	if (tentaPresidenteExcluir)
 	{
 
-		historico.setModificacao(tipoFuncionario, "Tentaram excluir o presidente");
+		historico.setModificacao(funcionario->getDesignacaoInt(), "Tentaram excluir o presidente");
 	}
 
 	else
 	{
-		historico.setModificacao(tipoFuncionario, "O usuario foi excluido");
+		historico.setModificacao(funcionario->getDesignacaoInt(), "O usuario foi excluido");
 	}
 
-	historico.setDataModificacao(tipoFuncionario);
-	historico.setCodigo(tipoFuncionario, codigoFuncionario);
-	historico.setNome(tipoFuncionario, ptrLeitura->getNome());
-	historico.escreveArquivoModificacoes(tipoFuncionario);
+	historico.setDataModificacao(funcionario->getDesignacaoInt());
+	historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+	historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+	historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
 
-	arquivoFuncionariosSaida[tipoFuncionario].close();
-	exclusaoDados[tipoFuncionario].close();
+	arquivoFuncionariosSaida[funcionario->getDesignacaoInt()].close();
 }
 
 
@@ -491,8 +418,8 @@ void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec
 	}
 
 	for(int i = 0; i < funcionarioVec.size(); i++) {
-		outputCsv << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getDesignacaoInt()  << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
-		 << "," << funcionarioVec[i]->getFolhaSalarial(1)->getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
+		outputCsv << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getDesignacaoInt() << "," << funcionarioVec[i]->getDesignacaoStr() << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
+		<< funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
 	}
 
 	outputCsv.close();

@@ -32,10 +32,8 @@ class Arquivo{
 		void criaArquivo(std::string, std::string, std::string, std::string);
 		
 		// Função responsável por excluir dados, recebe o tipo de funcionario para excluir e seu código 
-		void excluiDados(int, int);
+		void excluiDados(Funcionario *);
 		
-		void mostraDadosArquivos(int);
-
 		void mostraHistorico(int tipoFuncionario, int codigo); 
 
 		void carregaDados(std::vector < Funcionario * > &funcionariosVec, int tipoFuncionario);
