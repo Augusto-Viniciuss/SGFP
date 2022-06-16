@@ -38,19 +38,20 @@ class Arquivo{
 
 		void carregaDados(std::vector < Funcionario * > &funcionariosVec, int tipoFuncionario);
 
+		bool carregaPresidente(Funcionario *);
+
 		void criaArquivoCsv(const std::vector < Funcionario *> &funcionariosVec);
 
 		void adicionaArquivoCsv(Funcionario *); //armazena somente do presidente
 			
 	private:
-	
+		/* Arquivos para saida de dados	*/
 		std::ofstream arquivoFuncionariosSaida[QUANTIA_ARQUIVOS];
 	
-
+		/* Contém os nomes dos arquivos	*/
 		std::string nomeArquivos[QUANTIA_ARQUIVOS];
+		/* Arquivos para entrada de dados	*/
 		std::ifstream arquivosEntradas[QUANTIA_ARQUIVOS];
-		// Arquivos para exclusao de dados
-		std::ifstream exclusaoDados[QUANTIA_ARQUIVOS];
 	
 		std::ofstream outputCsv; // saida de dados apenas para o arquivo csv
 
