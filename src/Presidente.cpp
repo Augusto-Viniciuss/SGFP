@@ -1,7 +1,7 @@
 #include "Presidente.h"
 
 Presidente::Presidente() {
-    /* ... */
+    Funcionario::setCodigoFuncionario(0);
 }
 
 Presidente::Presidente(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, int numeroResidencia, std::string telefone, int *data, int designacao, std::string areaFormacao, std::string formacaoMax) : Funcionario(codigo, nome, CPF, idade, endereco, numeroResidencia, telefone, data, designacao) {

@@ -16,7 +16,7 @@ Arquivo::Arquivo(){
 	
 	for(int i = 0; i < QUANTIA_ARQUIVOS; i++) {
 		
-		arquivosEntradas[i].open(nomeArquivos[i], std::ios::in);
+		arquivosEntradas[i].open((path + nomeArquivos[i]).c_str(), std::ios::in);
 
 		if(!arquivosEntradas[i]) {
 			existe = true;
@@ -26,7 +26,8 @@ Arquivo::Arquivo(){
 
 
 	// Só chamamos criaArquivo se os arquivos não existirem
-	if(!existe) {
+	if(existe) {
+		
 		// Cria os arquivos para cada setor
 		criaArquivo("Presidente.dat", "Diretor.dat", "Gerente.dat", "Operador.dat");
 		
@@ -45,21 +46,21 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 
 		switch(i){
 			case 3:
-				arquivoFuncionarios[i].open(path + nomeArquivoPresidente, std::ios::out | std::ios::binary);
+				arquivoFuncionariosSaida[i].open(path + nomeArquivoPresidente, std::ios::out);
 				break;
 			case 2:
-				arquivoFuncionarios[i].open(path + nomeArquivoDiretor, std::ios::out | std::ios::binary);
+				arquivoFuncionariosSaida[i].open(path + nomeArquivoDiretor, std::ios::out);
 				break;
 			case 1:
-				arquivoFuncionarios[i].open(path + nomeArquivoGerente, std::ios::out | std::ios::binary);
+				arquivoFuncionariosSaida[i].open(path + nomeArquivoGerente, std::ios::out);
 				break;
 			case 0:
-				arquivoFuncionarios[i].open(path + nomeArquivoOperador, std::ios::out | std::ios::binary);
+				arquivoFuncionariosSaida[i].open(path + nomeArquivoOperador, std::ios::out);
 				break;
 		}
 		
 		// Verifica se cada arquivo foi criado corretamente
-		if(!arquivoFuncionarios[i]){
+		if(!arquivoFuncionariosSaida[i]){
 			
 			switch(i){
 				case 3:
@@ -88,34 +89,32 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 	Diretor diretores;
 	Gerente gerentes;
 	Operador operadores;
-	
 
 	for(int i = 0; i < 4; i++){
-		switch(i){
-			case 3:
-				for(int j = 0; j < 100; j++){
-					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&presidentes), sizeof(Presidente));
-				}
-				break;
-			case 2:
-				for(int j = 0; j < 100; j++){
-					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&diretores), sizeof(Diretor));
-				}
-				break;
-			case 1:
-				for(int j = 0; j < 100; j++){
-					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&gerentes), sizeof(Gerente));
-				}
-				break;
-			case 0:
-				for(int j = 0; j < 100; j++){
-					arquivoFuncionarios[i].write(reinterpret_cast < const char *> (&operadores), sizeof(Operador));
-				}
-				break;
+		
+		for(int j = 0; j < 100; j++) {
+			
+			switch(i) {
+				
+				case 0:
+					arquivoFuncionariosSaida[i].write((const char *)(&operadores), sizeof(Operador));
+					break;
+				case 1:
+					arquivoFuncionariosSaida[i].write((const char *) (&gerentes), sizeof(Gerente));
+					break;
+				case 2:
+					arquivoFuncionariosSaida[i].write((const char *) (&diretores), sizeof(Diretor));
+					break;
+				case 3:
+					arquivoFuncionariosSaida[i].write((const char *) (&presidentes), sizeof(Presidente));
+					break;
+			}
+			arquivoFuncionariosSaida[i].close();
 		}
 
-		arquivoFuncionarios[i].close();
+		
 	}
+	
 
 }
 
@@ -161,34 +160,45 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
             break;
   
     }
-	// Vamos primeiro posicionar o ponteiro para a localização que corresponde ao codigo do funcionario
+	
 
-	// Abre o arquivo para saidas de dados e entrada
-	arquivoFuncionarios[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::out |std::ios::in |  std::ios::binary);
-	
-	if(!arquivoFuncionarios[tipoFuncionario]) {
-		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
-	}
-	
+
 	/* Devemos criar uma outra stream, ppara que não haja bug no posicionamente de ponteiro, LOGO: DEVEMOS CRIAR UMA STREAM PARA LEITURA E OUTRA PARA INSERÇÃO*/
 	/* Em uma determinada instancia	*/
-	std::fstream input;
-	input.open(nomeArquivos[tipoFuncionario], std::ios::in);
-	
+	// Vamos primeiro posicionar o ponteiro para a localização que corresponde ao codigo do funcionario
+	// Abre para entrada de dados //
+	std::ifstream input;
+	input.open(path + nomeArquivos[tipoFuncionario], std::ios::in);
+	if(!input) {
+		std::cout << "erro ao abrir" << std::endl;
+	}
+
+	input.seekg(0);
+
 	input.seekg((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
 	input.read(reinterpret_cast<char*>(funcionario), sizeof(*funcionario));
 
 	// Indica que o funcionario já existe
 	if(funcionario->getCodigoFuncionario() != 0) {
-		funcionarioExiste = true;
-		
+		funcionarioExiste = true;	
+	}
+	input.close();
+
+	// Deve-se abrir com in | out para que não haver sobreescrita
+	arquivoFuncionariosSaida[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario],  std::ios::in | std::ios::out);
+
+	if(!arquivoFuncionariosSaida[tipoFuncionario].is_open()) {
+		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
 	}
 
+	
 	// Posiciona o ponteiro de arquivo put na localização que devemos colocar o funcionario correspondente ao arquivo que estamos abrindo
-	arquivoFuncionarios[tipoFuncionario].seekp((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
+	arquivoFuncionariosSaida[tipoFuncionario].seekp((dadosFuncionario.getCodigoFuncionario() - 1) * sizeof(*funcionario));
 
 	// Escreve os dados no arquivo correspondente ao tipo de funcionário
-  	arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast <const char *> (&dadosFuncionario), sizeof(*funcionario));
+  	arquivoFuncionariosSaida[tipoFuncionario].write(reinterpret_cast <const char *> (&dadosFuncionario), sizeof(*funcionario));
+	
+	
 		
 		
 	historico.setDataModificacao(tipoFuncionario);
@@ -209,154 +219,82 @@ void Arquivo::salvarDadosFuncionario(Funcionario &dadosFuncionario, int tipoFunc
 	
 	
 	// Fecha o arquivo após o tratamento
-	arquivoFuncionarios[tipoFuncionario].close();
-	input.close();	
+	arquivoFuncionariosSaida[tipoFuncionario].close();
+	
 
 		
 }
 
-
-
-void Arquivo::mostraDadosArquivos(int tipoFuncionario){
-
-
-	Presidente presidente;
-	Gerente gerente;
-	Diretor diretor;
-	Operador operador;
-	
-	Funcionario *funcionario;	
-
-	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
-	switch(tipoFuncionario){
-  
-        // Coloca-se na posição referente ao código
-        // Ler o que está contido
-        case 3:
-        	funcionario = &presidente;
-            break;
-  
-        case 2:
-            funcionario = &diretor;
-            break;
-  
-        case 1:
-            funcionario =  &gerente;
-            break;
-  
-        case 0:
-            funcionario = &operador;
-            break;
-  
-    }
-
-	// Abre o arquivo para entrada de dados	
-	arquivoFuncionarios[tipoFuncionario].open(nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
-
-	if(!arquivoFuncionarios[tipoFuncionario]) {
-		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
-	}
-	
-	// Posiciona no local para leitura de dados
-	arquivoFuncionarios[tipoFuncionario].seekg(0);
-
-	while(!arquivoFuncionarios[tipoFuncionario].eof())
-	{
-		arquivoFuncionarios[tipoFuncionario].read(reinterpret_cast < char * > (funcionario), sizeof(*funcionario));
-
-		if(funcionario->getCodigoFuncionario() != 0) {
-			std::cout << funcionario->getCodigoFuncionario() << " " << funcionario->getNome() << " " << funcionario->getCodigoFuncionario() << std::endl;
-		}
-
-	}
-
-	arquivoFuncionarios[tipoFuncionario].close();
-}
-
-
-void Arquivo::excluiDados(int tipoFuncionario, int codigoFuncionario)
+void Arquivo::excluiDados(Funcionario *funcionario)
 {
 
 	// Cria os tipos filhos previamente
-	Diretor diretores[2];
-	Gerente gerentes[2];
-	Operador operadores[2];
+	Diretor diretores;
+	Gerente gerentes;
+	Operador operadores;
 	Presidente presidente;
 
 	Funcionario *funcionarios;
-	Funcionario *ptrLeitura;
+	
 	bool tentaPresidenteExcluir = false;
 	// variavel que indica se houve tentativa de exclusão do presidente
 
 	//Throw tentativa falha de excluir o presidente
-	if (tipoFuncionario == 3)
+	if (funcionario->getDesignacaoInt() == 3)
 	{
-		throw InvalidoArgumentoArquivoExcept();
+
+		throw InvalidoArgumentoArquivoExcept("Não é possível alterar o presidente.\n");
+
 		tentaPresidenteExcluir = true;
 	}
 
 	/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 	// Verifica o tipo de funcionario e faz o ponteiro funcionarios apontar para aquele tipo
-	switch (tipoFuncionario)
+	switch (funcionario->getDesignacaoInt())
 	{
 		
-		case 3:
-			ptrLeitura = &presidente;
 		case 2:
-			funcionarios = &diretores[0];
-			ptrLeitura = &diretores[1];
+			funcionarios = &diretores;
 			break;
 		case 1:
-			funcionarios = &gerentes[0];
-			ptrLeitura = &gerentes[1];
+			funcionarios = &gerentes;
 			break;
 		case 0:
-			funcionarios = &operadores[0];
-			ptrLeitura = &operadores[1];
+			funcionarios = &operadores;
 			break;
 	}
-	// Abre o arquivo
-	arquivoFuncionarios[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::out | std::ios::in | std::ios::binary);
+	
+	
+	arquivoFuncionariosSaida[funcionario->getDesignacaoInt()].open(path + nomeArquivos[funcionario->getDesignacaoInt()], std::ios::out | std::ios::in);
 
-	if(!arquivoFuncionarios[tipoFuncionario]) {
-		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
+	if(!arquivoFuncionariosSaida[funcionario->getDesignacaoInt()]) {
+		throw TentativaAbrirArquivo(nomeArquivos[funcionario->getDesignacaoInt()]);
 	}
 
-	exclusaoDados[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
 
-	if(!exclusaoDados[tipoFuncionario]) {
-		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
-	}
 	// Posiciona o arquivo no local referente ao codigoFuncionario
-	arquivoFuncionarios[tipoFuncionario].seekp((codigoFuncionario - 1) * sizeof(*funcionarios));
-
-	// Posiciona também o ponteiro de leitura
-	exclusaoDados[tipoFuncionario].seekg((codigoFuncionario - 1) * sizeof(*funcionarios));
+	arquivoFuncionariosSaida[funcionario->getDesignacaoInt()].seekp((funcionario->getCodigoFuncionario() - 1) * sizeof(*funcionarios));
 
 	// Coloca um funcionario zerado naquela posição
-	arquivoFuncionarios[tipoFuncionario].write(reinterpret_cast<const char *>(funcionarios), sizeof(*funcionarios));
-	
-	// Faz a leitura do dado
-	exclusaoDados[tipoFuncionario].read(reinterpret_cast<char *>(ptrLeitura), sizeof(*ptrLeitura));
+	arquivoFuncionariosSaida[funcionario->getDesignacaoInt()].write(reinterpret_cast<const char *>(funcionarios), sizeof(*funcionarios));
 
 	if (tentaPresidenteExcluir)
 	{
 
-		historico.setModificacao(tipoFuncionario, "Tentaram excluir o presidente");
+		historico.setModificacao(funcionario->getDesignacaoInt(), "Tentaram excluir o presidente");
 	}
 
 	else
 	{
-		historico.setModificacao(tipoFuncionario, "O usuario foi excluido");
+		historico.setModificacao(funcionario->getDesignacaoInt(), "O usuario foi excluido");
 	}
 
-	historico.setDataModificacao(tipoFuncionario);
-	historico.setCodigo(tipoFuncionario, codigoFuncionario);
-	historico.setNome(tipoFuncionario, ptrLeitura->getNome());
-	historico.escreveArquivoModificacoes(tipoFuncionario);
+	historico.setDataModificacao(funcionario->getDesignacaoInt());
+	historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+	historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+	historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
 
-	arquivoFuncionarios[tipoFuncionario].close();
-	exclusaoDados[tipoFuncionario].close();
+	arquivoFuncionariosSaida[funcionario->getDesignacaoInt()].close();
 }
 
 
@@ -393,7 +331,7 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 	/* Feito isso, copiamos o conteudo de ptrFuncionarioTemp para Funcionario e então, coloca-se esse endereço no vector		*/
 	
 
-	arquivosEntradas[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::in | std::ios::binary);
+	arquivosEntradas[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario], std::ios::in);
 
 	if(!arquivosEntradas[tipoFuncionario]) {
 		throw TentativaAbrirArquivo(nomeArquivos[tipoFuncionario]);
@@ -427,13 +365,13 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 	/* Posiciona o ponteiro no inicio	*/
 	arquivosEntradas[tipoFuncionario].seekg(0);
 
+	
+	arquivosEntradas[tipoFuncionario].read(reinterpret_cast < char*  > (ptrFuncionarioTemp), sizeof(*ptrFuncionarioTemp));
 	/* Ler todos os dados até achar um usuário válido	*/
 	while(!arquivosEntradas[tipoFuncionario].eof()) {
-			
-		arquivosEntradas[tipoFuncionario].read(reinterpret_cast < char*  > (ptrFuncionarioTemp), sizeof(*ptrFuncionarioTemp));
 		
 		if(ptrFuncionarioTemp->getCodigoFuncionario() != 0) {
-			std::cout << "oi" << std::endl;
+			std::cout << ptrFuncionarioTemp->getNome() << std::endl;
 			/* Aponta adequadamente para uma nova região de memória, dependendo de qual arquivo estamos lendo	*/
 			/* Toda vez que damos new, há alocação de memória em algum local e retorna seu endereço, armazenando em funcionario	*/
 			switch(tipoFuncionario) {
@@ -456,14 +394,15 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 			
 			// Cópia de memoria
 			memcpy(funcionario, ptrFuncionarioTemp, sizeof(*ptrFuncionarioTemp));
-			funcionariosVec.push_back(funcionario);
-											
+			funcionariosVec.push_back(funcionario);								
 		}
+		arquivosEntradas[tipoFuncionario].read(reinterpret_cast < char*  > (ptrFuncionarioTemp), sizeof(*ptrFuncionarioTemp));
 		
-			
 	}
 	/* Fecha o arquivo após ler os dados	*/
 	arquivosEntradas[tipoFuncionario].close();
+	
+
 
 
 }
@@ -479,8 +418,8 @@ void Arquivo::criaArquivoCsv(const std::vector < Funcionario * > &funcionarioVec
 	}
 
 	for(int i = 0; i < funcionarioVec.size(); i++) {
-		outputCsv << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getDesignacaoInt()  << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
-		 << "," << funcionarioVec[i]->getFolhaSalarial(1)->getSalarioBase() << "," << funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
+		outputCsv << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getDesignacaoInt() << "," << funcionarioVec[i]->getDesignacaoStr() << ", " << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
+		<< funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "\n";
 	}
 
 	outputCsv.close();

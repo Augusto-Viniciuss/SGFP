@@ -1,7 +1,7 @@
 #include "Diretor.h"
 
 Diretor::Diretor(){
-    /* ... */
+    Funcionario::setCodigoFuncionario(0);
 }
 
 Diretor::Diretor(int codigo, std::string nome, std::string CPF, int idade, std::string endereco, int numeroResidencia, std::string telefone, int *data, int designacao, std::string areaSupervisao, std::string areaFormacao) : Funcionario(codigo, nome, CPF, idade, endereco, numeroResidencia, telefone, data, designacao) {

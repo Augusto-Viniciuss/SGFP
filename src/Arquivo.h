@@ -32,10 +32,8 @@ class Arquivo{
 		void criaArquivo(std::string, std::string, std::string, std::string);
 		
 		// Função responsável por excluir dados, recebe o tipo de funcionario para excluir e seu código 
-		void excluiDados(int, int);
+		void excluiDados(Funcionario *);
 		
-		void mostraDadosArquivos(int);
-
 		void mostraHistorico(int tipoFuncionario, int codigo); 
 
 		void carregaDados(std::vector < Funcionario * > &funcionariosVec, int tipoFuncionario);
@@ -45,14 +43,15 @@ class Arquivo{
 		void adicionaArquivoCsv(Funcionario *); //armazena somente do presidente
 			
 	private:
-		std::fstream arquivoFuncionarios[QUANTIA_ARQUIVOS];
+	
+		std::ofstream arquivoFuncionariosSaida[QUANTIA_ARQUIVOS];
 	
 
 		std::string nomeArquivos[QUANTIA_ARQUIVOS];
-		std::fstream arquivosEntradas[QUANTIA_ARQUIVOS];
+		std::ifstream arquivosEntradas[QUANTIA_ARQUIVOS];
 		// Arquivos para exclusao de dados
 		std::ifstream exclusaoDados[QUANTIA_ARQUIVOS];
-
+	
 		std::ofstream outputCsv; // saida de dados apenas para o arquivo csv
 
 		// Histórico do arquivo
