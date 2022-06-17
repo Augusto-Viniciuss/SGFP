@@ -1,8 +1,6 @@
 #include "Empresa.h"
 
 Empresa::Empresa() {
-    
-    
     dadosArquivos.carregaDados(operadores, 0);
     qtdFuncionarios[OPERADOR] = operadores.size();
     dadosArquivos.carregaDados(gerentes, 1);
@@ -16,11 +14,6 @@ Empresa::Empresa() {
     if(presidente != nullptr) {
         qtdFuncionarios[PRESIDENTE] = 1;
     }
-    
-    
-    
-    
-    
 }
 
 Empresa::~Empresa() {

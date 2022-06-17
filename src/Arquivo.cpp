@@ -91,10 +91,7 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 	Operador operadores;
 
 	for(int i = 0; i < 4; i++){
-	
-		
-		for(int j = 0; j < 100; j++) {
-			
+		/*for(int j = 0; j < 100; j++) {	
 			switch(i) {
 				
 				case 0:
@@ -112,7 +109,7 @@ void Arquivo::criaArquivo(std::string nomeArquivoPresidente, std::string nomeArq
 			}
 			
 		
-		}
+		}*/
 		
 	
 		arquivoFuncionariosSaida[i].close();
@@ -364,12 +361,6 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 	Como para cada um deles, o tamanho dos dados são diferentes, o ponteiro irá apontar para cada um adequadamente
 	*/
 	switch(tipoFuncionario) {
-			
-		case 3:
-			ptrFuncionarioTemp = &presidenteBuffer;
-			tamanhoDados = sizeof(Presidente);
-			break;
-
 		case 2:
 			ptrFuncionarioTemp = &diretorBuffer;
 			tamanhoDados = sizeof(Diretor);
@@ -399,10 +390,6 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 			/* Aponta adequadamente para uma nova região de memória, dependendo de qual arquivo estamos lendo	*/
 			/* Toda vez que damos new, há alocação de memória em algum local e retorna seu endereço, armazenando em funcionario	*/
 			switch(tipoFuncionario) {
-				case 3:
-					funcionario = new Presidente();
-					break;
-
 				case 2:
 					funcionario = new Diretor();
 					break;
@@ -426,10 +413,6 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 	}
 	/* Fecha o arquivo após ler os dados	*/
 	arquivosEntradas[tipoFuncionario].close();
-	
-
-
-
 }
 
 

@@ -7,12 +7,9 @@
 #include "Interface.h"
 #include "FuncionarioJaCadastradoExcept.h"
 #include "FuncionarioNaoEstaCadastradoExcept.h"
-#include "Arquivo.h"
-#include "HistoricoArquivo.h"
 
 #define INT 1
 #define STR 2
-#define IMPRIMIR 3
 
 using namespace std;
 
