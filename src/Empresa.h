@@ -15,6 +15,14 @@
 #include "Arquivo.h"
 #include "HistoricoArquivo.h"
 
+#define OPERADOR 0
+#define GERENTE 1
+#define DIRETOR 2
+#define PRESIDENTE 3
+#define BUSCAR_POR_NOME 5
+#define BUSCAR_POR_ENDERECO 6
+#define QTD_DE_TIPOS 4
+
 class Empresa {
     public:
         /* CONSTRUTOR*/
@@ -54,13 +62,7 @@ class Empresa {
         std::vector<Funcionario*> gerentes;
         std::vector<Funcionario*> diretores;
         Funcionario *presidente;
-        const int OPERADOR = 0;
-        const int GERENTE = 1;
-        const int DIRETOR = 2;
-        const int PRESIDENTE = 3;
-        const int BUSCAR_POR_NOME = 5;
-        const int BUSCAR_POR_ENDERECO = 6;
-        const int QTD_DE_TIPOS = 4;
+        
         Arquivo dadosArquivos; // Banco de dados
 };
 

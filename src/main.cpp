@@ -146,17 +146,13 @@ int main() {
                 empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
             }
         } catch(TentativaAbrirArquivo &ProblemaArquivo) {
-            
             std::cout << "Não foi possivel criar o arquivo, ou abri-lo, verifique se ele existe na pasta do programa" << std::endl;    
         } catch(InvalidoArgumentoArquivoExcept &TentativaExcluirPresidente) {
             std::cout << "Voce fez uma operação inválida, tentar excluir o presidente." << std::endl;
             int codigo;
             
-            std::cout << "Digite um novo codigo: ";
-            std::cin >> codigo;
-            
-
             codigo = interface.lerCodigoParaExcluirFuncionario();
+            empresa.excluirFuncionario(codigo);
         }
 
 

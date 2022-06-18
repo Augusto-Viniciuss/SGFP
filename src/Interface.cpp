@@ -1,19 +1,20 @@
 #include "Interface.h"
 
 int Interface::menu() {
-    std::cout << "       MENU        " << std::endl << std::endl;
-    std::cout << "Digite 1 para cadastrar um novo funcionario na empresa." << std::endl;
-    std::cout << "Digite 2 para modificar o registro de um funcionario ja cadastrado." << std::endl;
-    std::cout << "Digite 3 para excluir o registro de um funcionario." << std::endl;
-    std::cout << "Digite 4 para exibir o registro de um funcionario." << std::endl;
-    std::cout << "Digite 5 para exibir o registro de todos os funcionarios." << std::endl;
-    std::cout << "Digite 6 para exibir o registro de todos os funcionarios de um tipo." << std::endl;
-    std::cout << "Digite 7 para Conceder um aumento de salario para os funcionarios." << std::endl;
-    std::cout << "Digite 8 para calcular a folha salarial da empresa para um determinado mes." << std::endl;
-    std::cout << "Digite 9 para imprimir a folha de salario de um funcionario." << std::endl;
-    std::cout << "Digite 10 para imprimir a folha salarial da empresa." << std::endl;
-    std::cout << "Digite 11 para buscar um funcionario." << std::endl;
-    std::cout << "Digite 0 para sair do programa." << std::endl;
+    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
+    std::cout << "                        Menu       " << std::endl << std::endl;
+    std::cout << "[1] para cadastrar um novo funcionario na empresa." << std::endl;
+    std::cout << "[2] para modificar o registro de um funcionario ja cadastrado." << std::endl;
+    std::cout << "[3] para excluir o registro de um funcionario." << std::endl;
+    std::cout << "[4] para exibir o registro de um funcionario." << std::endl;
+    std::cout << "[5] para exibir o registro de todos os funcionarios." << std::endl;
+    std::cout << "[6] para exibir o registro de todos os funcionarios de um tipo." << std::endl;
+    std::cout << "[7] para Conceder um aumento de salario para os funcionarios." << std::endl;
+    std::cout << "[8] para calcular a folha salarial da empresa para um determinado mes." << std::endl;
+    std::cout << "[9] para imprimir a folha de salario de um funcionario." << std::endl;
+    std::cout << "[10] para imprimir a folha salarial da empresa." << std::endl;
+    std::cout << "[11] para buscar um funcionario." << std::endl;
+    std::cout << "[0] para sair do programa." << std::endl;
 
     int opcao;
 
@@ -90,6 +91,8 @@ Funcionario* Interface::lerAtributosFuncionario() {
     std::cout << "Digite 0 para operador" << std::endl << "Digite 1 para gerente" << std::endl << "Digite 2 para diretor" << std::endl << "Digite 3 para presidente" << std::endl;
     std::cin >> designacao;
     std::cin.ignore();
+
+    delete funcionario;
 
     switch (designacao) {
     case 0:

@@ -178,31 +178,7 @@ void Arquivo::salvarDadosFuncionario(Funcionario *dadosFuncionario, int tipoFunc
 	
 	
 	
-	std::cout << "tamanhoDados: " << tamanhoDados << std::endl;
-	std::cout << "tamanhoPedido: " << sizeof(dadosFuncionario) << std::endl;
-	std::cout << &dadosFuncionario << std::endl;
-	/* Devemos criar uma outra stream, ppara que não haja bug no posicionamente de ponteiro, LOGO: DEVEMOS CRIAR UMA STREAM PARA LEITURA E OUTRA PARA INSERÇÃO*/
-	/* Em uma determinada instancia	*/
-	// Vamos primeiro posicionar o ponteiro para a localização que corresponde ao codigo do funcionario
-	// Abre para entrada de dados //
 	
-	std::ifstream input;
-	input.open(path + nomeArquivos[tipoFuncionario], std::ios::in);
-	if(!input) {
-		std::cout << "erro ao abrir" << std::endl;
-	}
-
-	input.seekg(0);
-
-	input.seekg((dadosFuncionario->getCodigoFuncionario() - 1) * tamanhoDados);
-	input.read((char*)(funcionario), tamanhoDados);
-	
-	// Indica que o funcionario já existe
-	if(funcionario->getCodigoFuncionario() != 0) {
-		funcionarioExiste = true;	
-	}
-	input.close();
-
 	// Deve-se abrir com in | out para que não haver sobreescrita
 	arquivoFuncionariosSaida[tipoFuncionario].open(path + nomeArquivos[tipoFuncionario],  std::ios::in | std::ios::out);
 
@@ -218,7 +194,7 @@ void Arquivo::salvarDadosFuncionario(Funcionario *dadosFuncionario, int tipoFunc
 		arquivoFuncionariosSaida[tipoFuncionario].seekp(0);
 	}
 	// Escreve os dados no arquivo correspondente ao tipo de funcionário
-  	arquivoFuncionariosSaida[tipoFuncionario].write((const char *) (dadosFuncionario), tamanhoDados);
+  	arquivoFuncionariosSaida[tipoFuncionario].write(reinterpret_cast <const char *> (dadosFuncionario), tamanhoDados);
 	
 	
 		
@@ -362,17 +338,17 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 	*/
 	switch(tipoFuncionario) {
 		case 2:
-			ptrFuncionarioTemp = &diretorBuffer;
+			ptrFuncionarioTemp = new Diretor();
 			tamanhoDados = sizeof(Diretor);
 			break;
 				
 		case 1:
-			ptrFuncionarioTemp =  &gerenteBuffer;
+			ptrFuncionarioTemp = new Gerente();
 			tamanhoDados = sizeof(Gerente);
 			break;
 				
 		case 0:
-			ptrFuncionarioTemp = &operadorBuffer;
+			ptrFuncionarioTemp = new Operador();
 			tamanhoDados = sizeof(Operador);
 			break;
 	}
@@ -403,7 +379,7 @@ void Arquivo::carregaDados(std::vector < Funcionario * > &funcionariosVec, int t
 					break;
 			}
 			
-			std::cout << "oi" << std::endl;
+			//*funcionario = *ptrFuncionarioTemp;
 			// Cópia de memoria
 			memcpy(funcionario, ptrFuncionarioTemp, tamanhoDados);
 			funcionariosVec.push_back(funcionario);								
@@ -504,3 +480,4 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 		<< "," << presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "\n";
 
 }
+
