@@ -21,18 +21,25 @@ class Arquivo{
 	
 	public:
 		
-		// O construtor irá inicializar o arquivo recebendo o nome dos 4 tipo de arquivos
+		// O construtor irá inicializar o arquivo de Dados inicialmente
 		Arquivo();
 
-		void mostraHistorico(int tipoFuncionario, int codigo); 
-
+		// Cria o arquivo Csv
 		void criaArquivoCsv(std::vector < Funcionario *> &funcionariosVec);
-
+		
+		// Adiciona um usuario no arquivo Csv
 		void adicionaArquivoCsv(Funcionario *); //armazena somente do presidente
 
+		// Cria a base de dados csv com todos os dados do vector de funcionario
 		void criaBaseDadosCsv(const std::vector < Funcionario * >&funcionariosVec);
+		
+		// Adiciona presidente na base de dados com um ponteiro para funcionario
 		void addPresidenteBaseDadosCsv(Funcionario *);
+		
+		// Cria a base de dados zerada
 		void criaArquivoBaseDadosZerado();
+		
+		// Carrega todos os dados e adiciona nos vector de operadores, gerentes, diretores e para um ponteiro do tipo funcionario
 		void carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario **presidente);
 			
 	private:

@@ -21,7 +21,6 @@ Arquivo::Arquivo(){
 }
 
 
-
 void Arquivo::criaArquivoCsv(std::vector < Funcionario * > &funcionarioVec) {
 
 	
