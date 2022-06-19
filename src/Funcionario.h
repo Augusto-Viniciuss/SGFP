@@ -6,6 +6,7 @@
 #include "FolhaSalarial.h"
 #include <string>
 #include "Data.h"
+#include "CadastrarFuncionarioException.h"
 
 class Funcionario: public Pessoa {
     public:
@@ -30,8 +31,11 @@ class Funcionario: public Pessoa {
         /* Set */
         void setHorasTrabalhadas(int horas);
         void setDesignacao(int designacao);
+        int validaDesignacao(std::string designacaoStr);
         void setDataIngresso(int *data);
+        void validaDataIngresso(std::string dataStr, int* dataInt);
         void setCodigoFuncionario(int codigo);
+        int validaCodigoFuncionario(std::string codigoStr);
         
     protected:
         int gerarAleatorio(int intervaloMax);

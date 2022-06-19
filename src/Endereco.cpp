@@ -12,6 +12,24 @@ void Endereco::setEndereco(std::string CEP) {
 void Endereco::setNumero(int numero){
     this->numero = numero;
 }
+
+int Endereco::validaNumero(std::string numeroStr){
+    int numeroAux;
+
+    for(int i = 0; i < numeroStr.size(); i++){
+        if(numeroStr[i] < '0' || numeroStr[i] > '9'){
+            throw CadastrarFuncionarioException("Caracter inválido digitado");
+        }
+    }
+
+    numeroAux = std::stoi(numeroStr);
+
+    if(numeroAux <= 0){
+        throw CadastrarFuncionarioException("Número de residência inválido");
+    }
+
+    return numeroAux;
+}
         
 std::string Endereco::getRua(){
     return rua;

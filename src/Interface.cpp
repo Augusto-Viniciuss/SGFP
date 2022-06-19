@@ -34,14 +34,35 @@ int Interface::menu() {
 Funcionario* Interface::lerAtributosFuncionario() {
     Funcionario *funcionario = new Operador();
     int codigo, idade, designacao, numero;
-    std::string nome, CPF, telefone, CEP;
+    std::string nome, CPF, telefone, CEP, aux;
     int data[3];
 
-    std::cout << "Digite o codigo do funcionario:" << std::endl;
-    std::cin >> codigo;
-    std::cout << "Digite o nome do funcionario:" << std::endl;
     std::cin.ignore();
-    getline(std::cin, nome);
+    while(true){
+        try{
+            std::cout << "Digite o codigo do funcionario:" << std::endl;
+            getline(std::cin, aux);
+            codigo = funcionario->validaCodigoFuncionario(aux);
+            break;
+        }
+        catch(CadastrarFuncionarioException &cadastrarException){
+            std::cerr << cadastrarException.what() << '\n';
+        }
+    }
+
+    while(true){
+        try{
+            std::cout << "Digite o nome do funcionario:" << std::endl;
+            getline(std::cin, nome);
+
+            funcionario->setNome(nome);
+            break;
+        }
+        catch(CadastrarFuncionarioException &cadastrarException){
+            std::cerr << cadastrarException.what() << '\n';
+        }
+    }
+    
     while(true) {
         try {
             std::cout << "Digite o CPF do funcionario:" << std::endl;
@@ -54,9 +75,20 @@ Funcionario* Interface::lerAtributosFuncionario() {
             std::cerr << cpfException.what() << '\n';
         }
     }
-    std::cout << "Digite a idade do funcionario:" << std::endl;
-    std::cin >> idade;
-    std::cin.ignore();
+
+    while(true){
+        try{
+            std::cout << "Digite a idade do funcionario:" << std::endl;
+            getline(std::cin, aux);
+            idade = funcionario->validaIdade(aux);
+
+            break;
+        }
+        catch(CadastrarFuncionarioException &cadastrarException){
+            std::cerr << cadastrarException.what() << '\n';
+        }
+    }
+    
     while(true) {
         try {
             std::cout << "Digite o CEP do funcionario:" << std::endl;
@@ -69,9 +101,20 @@ Funcionario* Interface::lerAtributosFuncionario() {
             std::cerr << CepException.what() << '\n';
         }
     }
-    std::cout << "Digite o número da residência do funcionário:" << std::endl;
-    std::cin >> numero;
-    std::cin.ignore();
+
+    while(true){
+        try{
+            std::cout << "Digite o número da residência do funcionário:" << std::endl;
+            getline(std::cin, aux);
+            numero = funcionario->getEndereco()->validaNumero(aux);
+
+            break;
+        }
+        catch(CadastrarFuncionarioException &cadastrarException){
+            std::cerr << cadastrarException.what() << '\n';
+        }
+    }
+    
     while(true) {
         try {
             std::cout << "Digite o telefone para contato do funcionario:" << std::endl;
@@ -84,13 +127,34 @@ Funcionario* Interface::lerAtributosFuncionario() {
             std::cerr << telefoneException.what() << '\n';
         }
     }
+
+    while(true){
+        try{
+            std::cout << "Digite a data de ingresso na empresa, na ordem dia, mes e ano separados por espacos:" << std::endl;
+            getline(std::cin, aux);
+            funcionario->validaDataIngresso(aux, data);
+
+            break;
+        }
+        catch(CadastrarFuncionarioException &cadastrarException){
+            std::cerr << cadastrarException.what() << '\n';
+        }
+    }
     
-    std::cout << "Digite a data de ingresso na empresa, na ordem dia, mes e ano separados por espacos:" << std::endl;
-    std::cin >> data[0] >> data[1] >> data[2];
-    std::cout << "Qual a designacao do funcionario:" << std::endl;
-    std::cout << "Digite 0 para operador" << std::endl << "Digite 1 para gerente" << std::endl << "Digite 2 para diretor" << std::endl << "Digite 3 para presidente" << std::endl;
-    std::cin >> designacao;
-    std::cin.ignore();
+    while(true){
+        try{
+            std::cout << "Qual a designacao do funcionario:" << std::endl;
+            std::cout << "Digite 0 para operador" << std::endl << "Digite 1 para gerente" << std::endl << "Digite 2 para diretor" << std::endl << "Digite 3 para presidente" << std::endl;
+            getline(std::cin, aux);
+            designacao = funcionario->validaDesignacao(aux);
+
+            break;    
+        }
+        catch(CadastrarFuncionarioException &cadastrarException){
+            std::cerr << cadastrarException.what() << '\n';
+        }
+        
+    }
 
     delete funcionario;
 

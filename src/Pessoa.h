@@ -2,6 +2,7 @@
 #define PESSOA_H
 
 #include "Endereco.h"
+#include "CadastrarFuncionarioException.h"
 
 class Pessoa{
     public:
@@ -18,9 +19,11 @@ class Pessoa{
 
         /* Set */
         void setNome(std::string nome);
+        void validaNome(std::string nome);
         void setTelefone(std::string telefone);
         void setCPF(std::string CPF);
         void setIdade(int idade);
+        int validaIdade(std::string idadeStr);
         void setEndereco(std::string endereco);
 
     private:
