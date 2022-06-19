@@ -1,24 +1,27 @@
 #include "Interface.h"
 
 int Interface::menu() {
-    menuTexto();
     int opcao;
     std::string opcaoStr;
 
+    /* O loop só termina quando uma opção correta é digitada */
     while(true){
         try{
+            /* Chama a função de exibir o texto do menu */
+            menuTexto();
             getline(std::cin, opcaoStr);
+            /* A variável 'opcao' recebe o resultado do tratamento da resposta do usuário */
             opcao = validaInteiro(opcaoStr);
             
+            /* Lança uma exceção caso a opção esteja fora do intervalo de 0 a 11 */
             if(opcao > 11 or opcao < 0){
-                    //std::cout << std::endl << "Opcao invalida, por favor escolha uma opcao valida." << std::endl << std::endl;
                     throw OpcaoInvalidaException("\nOpcao invalida, por favor escolha uma opção válida.\n");
             }
             break;
         }
         catch(OpcaoInvalidaException &opcaoInvalida){
+            /* Exibição da mensagem de erro */
             std::cerr << opcaoInvalida.what() << '\n';
-            menuTexto();
         }
     }
 
@@ -27,6 +30,7 @@ int Interface::menu() {
     return opcao;
 }
 
+/* Texto usado no Menu principal do sistema */
 void Interface::menuTexto(){
     std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
     std::cout << "                        Menu       " << std::endl << std::endl;
@@ -50,124 +54,150 @@ Funcionario* Interface::lerAtributosFuncionario() {
     std::string nome, CPF, telefone, CEP, aux;
     int data[3];
 
+    /* O loop só termina quando um código válido é digitado */
     while(true){
         try{
             std::cout << "Digite o codigo do funcionario:" << std::endl;
             getline(std::cin, aux);
+            /* 'codigo' recebe o resultado do tratamento da resposta do usuário */
             codigo = funcionario->validaCodigoFuncionario(aux);
             break;
         }
         catch(CadastrarFuncionarioException &cadastrarException){
+            /* Exibição da mensagem de erro */
             std::cerr << cadastrarException.what() << '\n';
         }
     }
 
+    /* O loop só termina quando um nome válido é digitado */
     while(true){
         try{
             std::cout << "Digite o nome do funcionario:" << std::endl;
             getline(std::cin, nome);
 
+            /* O nome é validado enviando ele para o método set */
             funcionario->setNome(nome);
             break;
         }
         catch(CadastrarFuncionarioException &cadastrarException){
+            /* Exibição da mensagem de erro */
             std::cerr << cadastrarException.what() << '\n';
         }
     }
     
+    /* O loop só termina quando um CPF válido é digitado */
     while(true) {
         try {
             std::cout << "Digite o CPF do funcionario:" << std::endl;
             getline(std::cin, CPF);
+
+            /* O CPF é validado enviando ele para o método set */
             funcionario->setCPF(CPF);
             break;
         }
-        catch(CPFException &cpfException) 
-        {
+        catch(CPFException &cpfException) {
+            /* Exibição da mensagem de erro */
             std::cerr << cpfException.what() << '\n';
         }
     }
 
+    /* O loop só termina quando uma idade válida é digitada */
     while(true){
         try{
             std::cout << "Digite a idade do funcionario:" << std::endl;
             getline(std::cin, aux);
+            /* 'idade' recebe o resultado do tratamento da resposta do usuário */
             idade = funcionario->validaIdade(aux);
 
             break;
         }
         catch(CadastrarFuncionarioException &cadastrarException){
+            /* Exibição da mensagem de erro */
             std::cerr << cadastrarException.what() << '\n';
         }
     }
     
+    /* O loop só termina quando um CEP válido é digitado */
     while(true) {
         try {
             std::cout << "Digite o CEP do funcionario:" << std::endl;
             getline(std::cin, CEP);
+            /* O CEP é validado enviando ele para o método set */
             funcionario->setEndereco(CEP);
             break;
         }
-        catch(CEPException &CepException) 
-        {
+        catch(CEPException &CepException) {
+            /* Exibição da mensagem de erro */
             std::cerr << CepException.what() << '\n';
         }
     }
 
+    /* O loop só termina quando um número residencial válido é digitado */
     while(true){
         try{
             std::cout << "Digite o número da residência do funcionário:" << std::endl;
             getline(std::cin, aux);
+            /* 'numero' recebe o resultado do tratamento da resposta do usuário */
             numero = funcionario->getEndereco()->validaNumero(aux);
 
             break;
         }
         catch(CadastrarFuncionarioException &cadastrarException){
+            /* Exibição da mensagem de erro */
             std::cerr << cadastrarException.what() << '\n';
         }
     }
     
+    /* O loop só termina quando um telefone válido é digitado */
     while(true) {
         try {
             std::cout << "Digite o telefone para contato do funcionario:" << std::endl;
             getline(std::cin, telefone);
+            /* O telefone é validado enviando ele para o método set */
             funcionario->setTelefone(telefone);
             break;
         }
-        catch(TelefoneException &telefoneException) 
-        {
+        catch(TelefoneException &telefoneException) {
+            /* Exibição da mensagem de erro */
             std::cerr << telefoneException.what() << '\n';
         }
     }
 
+    /* O loop só termina quando uma data válida é digitada */
     while(true){
         try{
             std::cout << "Digite a data de ingresso na empresa, na ordem dia, mes e ano separados por espacos:" << std::endl;
             getline(std::cin, aux);
+            /* A data é validada enviando ela para o método de validar data */
             funcionario->validaDataIngresso(aux, data);
 
             break;
         }
         catch(CadastrarFuncionarioException &cadastrarException){
+            /* Exibição da mensagem de erro */
             std::cerr << cadastrarException.what() << '\n';
         }
     }
     
+    /* O loop só termina quando uma designação válida é digitada */
     while(true){
         try{
             std::cout << "Qual a designacao do funcionario:" << std::endl;
             std::cout << "Digite 0 para operador" << std::endl << "Digite 1 para gerente" << std::endl << "Digite 2 para diretor" << std::endl << "Digite 3 para presidente" << std::endl;
             getline(std::cin, aux);
+            /* A designação é validada enviando ela para o método set */
             designacao = funcionario->validaDesignacao(aux);
 
             break;    
         }
         catch(CadastrarFuncionarioException &cadastrarException){
+            /* Exibição da mensagem de erro */
             std::cerr << cadastrarException.what() << '\n';
         }
         
     }
 
+    /* *funcionario só serve para ajudar na validação, então ele é deletado depois */
     delete funcionario;
 
     switch (designacao) {
@@ -214,19 +244,23 @@ int Interface::lerCodigoParaModificarFuncionario() {
     std::string codigoStr;
     int codigo;
 
+    /* O loop só termina quando um codigo válido é digitado */
     while(true){
         try{
             std::cout << "Digite o codigo do funcionario que deseja modificar:" <<  std::endl;
             getline(std::cin, codigoStr);
 
+            /* 'codigo' recebe o resultado do tratamento da resposta do usuário */
             codigo = validaInteiro(codigoStr);
             break;
         }
         catch(OpcaoInvalidaException &opcaoInvalida){
+            /* Exibição da mensagem de erro */
             std::cerr << opcaoInvalida.what() << '\n';
         }
     }
 
+    /* Retorna o código tratado */
     return codigo;
 }
 
@@ -234,17 +268,22 @@ int Interface::lerOpcaoParaModificarFuncionario() {
     int opcao;
     std::string opcaoStr;
 
+    /* O loop só termina quando uma opção válida é digitada */
     while(true){
         try{
+            /* exibindo o texto de modificar funcionário */
             opcaoParaModificarFuncionarioTexto();
             getline(std::cin, opcaoStr);
+            /* 'opcao' recebe o resultado do tratamento da resposta do usuário */
             opcao = validaInteiro(opcaoStr);
             if((opcao < 1) or (opcao > 8)) {
+                /* Envia mensagem de erro caso esteja fora do intervalo de 1 a 8 */
                 throw OpcaoInvalidaException("Opção inválida, por favor escolha uma opção válida.\n");
             }
             break;
         }
         catch(OpcaoInvalidaException &opcaoInvalida){
+            /* Exibe a mensagem de erro */
             std::cerr << opcaoInvalida.what() << '\n';
         }
     }
@@ -252,6 +291,7 @@ int Interface::lerOpcaoParaModificarFuncionario() {
     return opcao;
 }
 
+/* Texto exibido para a modificação do funcionário */
 void Interface::opcaoParaModificarFuncionarioTexto(){
     std::cout << "Digite 1 para modificar a idade" << std::endl;
     std::cout << "Digite 2 para modificar o designacao" << std::endl;
