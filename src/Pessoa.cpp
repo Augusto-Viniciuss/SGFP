@@ -42,6 +42,9 @@ Endereco *Pessoa::getEndereco(){
 
 /* Set */
 void Pessoa::setNome(std::string nome){
+    if(nome.size() < 3){
+        throw CadastrarFuncionarioException("Quantidade inválida de caracteres");
+    }
     if(nome.size() > 99){
         for(int i = 0; i < 98; i++){
             if(nome[i] >= '0' && nome[i] <= '9'){
@@ -52,6 +55,9 @@ void Pessoa::setNome(std::string nome){
         this->nome[99] = '\0';
     }else{
         for(int i = 0; i < nome.size(); i++){
+            if(nome[i] >= '0' && nome[i] <= '9'){
+                throw CadastrarFuncionarioException("Caracter inválido digitado");
+            }
             this->nome[i] = nome[i];
         }
         this->nome[nome.size()] = '\0';
