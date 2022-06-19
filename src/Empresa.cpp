@@ -1,6 +1,15 @@
 #include "Empresa.h"
 
 Empresa::Empresa() {
+    dadosArquivos.carregaDadosCsv(operadores, gerentes, diretores, presidente);
+    qtdFuncionarios[OPERADOR] = operadores.size();
+    qtdFuncionarios[GERENTE] = gerentes.size();
+    qtdFuncionarios[DIRETOR] = diretores.size();
+    if(presidente != nullptr) {
+        qtdFuncionarios[PRESIDENTE] = 1;
+    }
+    dadosArquivos.criaArquivoBaseDadosZerado();
+    /*
     dadosArquivos.carregaDados(operadores, OPERADOR);
     qtdFuncionarios[OPERADOR] = operadores.size();
     dadosArquivos.carregaDados(gerentes, GERENTE);
@@ -14,11 +23,12 @@ Empresa::Empresa() {
     if(presidente != nullptr) {
         qtdFuncionarios[PRESIDENTE] = 1;
     }
+    */
 }
 
 Empresa::~Empresa() {
 
-
+    /*
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         
         for(int i = 0; i < qtdFuncionarios[tipoFuncionario]; i++) {
@@ -38,14 +48,23 @@ Empresa::~Empresa() {
         }
         
         
-    } 
+    }
+    */ 
     dadosArquivos.criaArquivoCsv(operadores);
-    dadosArquivos.criaArquivoCsv(diretores);
     dadosArquivos.criaArquivoCsv(gerentes);
-
+    dadosArquivos.criaArquivoCsv(diretores);
+    
     if(qtdFuncionarios[PRESIDENTE] != 0) {
         dadosArquivos.adicionaArquivoCsv(presidente);
+        dadosArquivos.addPresidenteBaseDadosCsv(presidente);
     } 
+
+    dadosArquivos.criaBaseDadosCsv(operadores);
+    dadosArquivos.criaBaseDadosCsv(diretores);
+    dadosArquivos.criaBaseDadosCsv(gerentes);
+    
+
+   
 }
 
 int Empresa::getQtdFuncionarios(int tipo) {

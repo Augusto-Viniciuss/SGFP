@@ -40,9 +40,14 @@ class Arquivo{
 
 		Funcionario * carregaPresidente();
 
-		void criaArquivoCsv(const std::vector < Funcionario *> &funcionariosVec);
+		void criaArquivoCsv(std::vector < Funcionario *> &funcionariosVec);
 
 		void adicionaArquivoCsv(Funcionario *); //armazena somente do presidente
+
+		void criaBaseDadosCsv(const std::vector < Funcionario * >&funcionariosVec);
+		void addPresidenteBaseDadosCsv(Funcionario *);
+		void criaArquivoBaseDadosZerado();
+		void carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario *presidente);
 			
 	private:
 		/* Arquivos para saida de dados	*/
@@ -53,7 +58,6 @@ class Arquivo{
 		/* Arquivos para entrada de dados	*/
 		std::ifstream arquivosEntradas[QUANTIA_ARQUIVOS];
 	
-		std::ofstream outputCsv; // saida de dados apenas para o arquivo csv
 
 		// Histórico do arquivo
 		HistoricoArquivo historico;
