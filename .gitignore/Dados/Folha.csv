@@ -1,4 +1,1 @@
-Codigo,Designação,CPF,Nome,Telefone,Idade,Data Ingresso, Rua,Bairro,Cidade, Estado, CEP,Numero, Area de Supervisão, Area de formacao, Formação máxima,Salario Base
-12,Operador,118.196.924-77,      leandro,(83)98790-4642,24, 27/04/2002,Rua Doutor Ephigênio Barbosa da Silva, Jardim Cidade Universitária, João Pessoa, PB, 58052-310, Nº 83,Nenhuma,Nenhuma,Nenhuma,1212
-13,Gerente,118.196.924-77,      renata,(83)98790-4642,24, 27/04/2002,Rua Doutor Ephigênio Barbosa da Silva, Jardim Cidade Universitária, João Pessoa, PB, 58052-310, Nº 83,medicina,Nenhuma,Nenhuma,3454
-15,Diretor,917.149.904-00,      vasco,(83)98790-4642,26, 27/04/2002,Rua Doutor Ephigênio Barbosa da Silva, Jardim Cidade Universitária, João Pessoa, PB, 58052-310, Nº 83,medicina,formacao,Nenhuma,6256
+22,Presidente,118.196.924-77, leandro,(83)98790-4642,24, 27/04/2002,Rua Doutor Ephigênio Barbosa da Silva, Jardim Cidade Universitária, João Pessoa, PB, 58052-310, Nº 83,Nenhuma,medicina,pedra,9432

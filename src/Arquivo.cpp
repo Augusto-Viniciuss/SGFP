@@ -556,9 +556,6 @@ void Arquivo::addPresidenteBaseDadosCsv(Funcionario *presidente) {
 	}
 
 	
-	
-	std::cout << "oi" << std::endl;
-	
 	outputCsv << presidente->getDesignacaoInt() << "," << presidente->getCodigoFuncionario() << "," << presidente->getCPF() << ", " << presidente->getNome() << "," 
 	<< presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "," << presidente->getEndereco()->getCEP()<< "," <<
 	presidente->getEndereco()->getNumero()<< "," << "Nenhuma" << "," <<((Presidente *)presidente)->getAreaFormacao() << "," << ((Presidente*)presidente)->getFormacaoMax() << "," << presidente->getFolhaSalarial(1)->getSalarioBase() << "\n";
@@ -569,7 +566,7 @@ void Arquivo::addPresidenteBaseDadosCsv(Funcionario *presidente) {
 	outputCsv.close();
 }
 
-void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario *presidente) {
+void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario **presidente) {
 	std::ifstream inputCsv((path + "Dados.csv").c_str(), std::ios::in);
 
 	if(!inputCsv) {
@@ -594,7 +591,7 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 	int codigo, idade, numero;
 	bool existePresida = false;
 	
-	std::cout << "oi" << std::endl;
+	
 	while(1) {
 		
 		getline(inputCsv, linha);
@@ -621,6 +618,7 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 		
 		std::string cpfBuffer;
 		std::string cepBuffer;
+		int primeiraLetraNome = 0;
 		for(int i = 1; i < palavras.size(); i++) {
 
 			switch(i) {
@@ -641,7 +639,20 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 					cpf = cpfBuffer;
 					break;
 				case 3:
+					
+					
 					nome = palavras[i];
+					// Caso eu tenha 4 espaços e leandro devo apagar tudo até leandro
+					for(int j = 0; j < palavras[i].size(); j++) {
+						if(palavras[i][j] != ' ') {
+							if(j != 0) {
+								nome.erase(nome.begin(), nome.begin() + j);
+							}
+							
+							break;
+						}
+						
+					}
 					break;
 				case 4:
 					telefone = palavras[i];
@@ -703,9 +714,7 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 					break;
 			}
 		}
-		std::cout << telefone << std::endl;
-		std::cout << cpf << std::endl;
-		std::cout << cep << std::endl;
+		
 
 		if(stoi(palavras[0]) == 0) {
 			funcionario = new Operador(codigo, nome, cpf, idade, cep, numero, telefone, data, 0);
@@ -722,7 +731,7 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 			diretores.push_back(funcionario);
 		}
 		else if(stoi(palavras[0]) == 3){
-			presidente = new Presidente(codigo, nome, cpf, idade, cep, numero, telefone, data, 3, areaFormacao, formacaMaxima);
+			*presidente = new Presidente(codigo, nome, cpf, idade, cep, numero, telefone, data, 3, areaFormacao, formacaMaxima);
 			existePresida = true;
 		}
 		palavras.clear();

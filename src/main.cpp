@@ -22,7 +22,9 @@ int main() {
 
 
     while(true) {
+        
         try {
+            
             opcaoMenu = interface.menu();
 
             if (opcaoMenu == 0) {
@@ -163,14 +165,15 @@ int main() {
                 empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
             }
         } catch(TentativaAbrirArquivo &ProblemaArquivo) {
-            std::cout << "Não foi possivel criar o arquivo, ou abri-lo, verifique se ele existe na pasta do programa" << std::endl;    
+            ProblemaArquivo.what();
+               
         } catch(InvalidoArgumentoArquivoExcept &TentativaExcluirPresidente) {
             std::cout << "Voce fez uma operação inválida, tentar excluir o presidente." << std::endl;
             int codigo;
             
             codigo = interface.lerCodigoParaExcluirFuncionario();
             empresa.excluirFuncionario(codigo);
-        }
+        } 
 
 
     }

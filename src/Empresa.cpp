@@ -1,55 +1,29 @@
 #include "Empresa.h"
 
 Empresa::Empresa() {
-    dadosArquivos.carregaDadosCsv(operadores, gerentes, diretores, presidente);
+    
+    try {
+        dadosArquivos.carregaDadosCsv(operadores, gerentes, diretores, &presidente);
+    }catch(TentativaAbrirArquivo &problemaArquivo) {
+        problemaArquivo.what();
+    }
+    
     qtdFuncionarios[OPERADOR] = operadores.size();
     qtdFuncionarios[GERENTE] = gerentes.size();
     qtdFuncionarios[DIRETOR] = diretores.size();
+   
+    
     if(presidente != nullptr) {
         qtdFuncionarios[PRESIDENTE] = 1;
     }
+    
     dadosArquivos.criaArquivoBaseDadosZerado();
-    /*
-    dadosArquivos.carregaDados(operadores, OPERADOR);
-    qtdFuncionarios[OPERADOR] = operadores.size();
-    dadosArquivos.carregaDados(gerentes, GERENTE);
-    qtdFuncionarios[GERENTE] = gerentes.size();
-    dadosArquivos.carregaDados(diretores, DIRETOR);
-    qtdFuncionarios[DIRETOR] = diretores.size();
-    
-    
-    presidente = dadosArquivos.carregaPresidente();
-    
-    if(presidente != nullptr) {
-        qtdFuncionarios[PRESIDENTE] = 1;
-    }
-    */
+  
 }
 
 Empresa::~Empresa() {
 
-    /*
-    for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
-        
-        for(int i = 0; i < qtdFuncionarios[tipoFuncionario]; i++) {
 
-            if(tipoFuncionario == OPERADOR) {
-                dadosArquivos.salvarDadosFuncionario(operadores[i], operadores[i]->getDesignacaoInt());
-            }
-            if(tipoFuncionario == GERENTE) {
-                dadosArquivos.salvarDadosFuncionario(gerentes[i], gerentes[i]->getDesignacaoInt());
-            }
-            if(tipoFuncionario == DIRETOR) {
-                dadosArquivos.salvarDadosFuncionario(diretores[i], diretores[i]->getDesignacaoInt());
-            }
-            if(tipoFuncionario == PRESIDENTE) {
-                dadosArquivos.salvarDadosFuncionario(presidente, presidente->getDesignacaoInt());
-            }
-        }
-        
-        
-    }
-    */ 
     dadosArquivos.criaArquivoCsv(operadores);
     dadosArquivos.criaArquivoCsv(gerentes);
     dadosArquivos.criaArquivoCsv(diretores);
@@ -62,8 +36,27 @@ Empresa::~Empresa() {
     dadosArquivos.criaBaseDadosCsv(operadores);
     dadosArquivos.criaBaseDadosCsv(diretores);
     dadosArquivos.criaBaseDadosCsv(gerentes);
-    
 
+    for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+        
+        for(int i = 0; i < qtdFuncionarios[tipoFuncionario]; i++) {
+
+            if(tipoFuncionario == OPERADOR) {
+                delete operadores[i];
+            }
+            else if(tipoFuncionario == GERENTE) {
+                delete gerentes[i];
+            }
+            else if(tipoFuncionario == DIRETOR) {
+                delete diretores[i];
+            }
+            else if(tipoFuncionario == PRESIDENTE) {
+                delete presidente;
+            }
+        }
+ 
+    }
+    
    
 }
 
@@ -94,7 +87,7 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
         }
     }
     std::cout << funcionario << std::endl;
-    //dadosArquivos.salvarDadosFuncionario(funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos  
+    
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {

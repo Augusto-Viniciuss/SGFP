@@ -47,7 +47,7 @@ class Arquivo{
 		void criaBaseDadosCsv(const std::vector < Funcionario * >&funcionariosVec);
 		void addPresidenteBaseDadosCsv(Funcionario *);
 		void criaArquivoBaseDadosZerado();
-		void carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario *presidente);
+		void carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario **presidente);
 			
 	private:
 		/* Arquivos para saida de dados	*/
