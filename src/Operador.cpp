@@ -2,20 +2,30 @@
 
 Operador::Operador() {
     Funcionario::setCodigoFuncionario(0);
+    /*
+        Para facilitar na leitura dos arquivos
+        os códigos são inicializados como 0
+    */
 }
 
+/*
+    Operador não tem nenhuma variável própria,
+    então passa tudo direto pro construtor de funcionario
+*/
 Operador::Operador(int codigo, std::string nome, std::string CPF, int idade, std::string CEP, int numeroResidencia, std::string telefone, int *data, int designacao) : Funcionario(codigo, nome, CPF, idade, CEP, numeroResidencia, telefone, data, designacao) {}
 
 void Operador::calcularSalarioMensal(int mes){
-    //editar para cada função ter sua hora mínima
+    /* As horas trabalhadas são geradas aleatóriamente até o máximo de 260 horas */
     setHorasTrabalhadas(gerarAleatorio(260));
     
-
     double salarioLiquido;
 
+    /* A partir de 172 horas trabalhadas no mês, é considerado hora extra */
     if (getHorasTrabalhadas() > 172) {
+        /* Se trabalhar mais do que 172, o diretor recebe por suas horas extras */
         salarioLiquido = getFolhaSalarial(mes)->getSalarioBase() + ((getHorasTrabalhadas() - 172) * HORA_EXTRA);
     } else {
+        /* Se trabalhar menos do que 172 recebe apenas seu salário base */
         salarioLiquido = getFolhaSalarial(mes)->getSalarioBase();
     }
    

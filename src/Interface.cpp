@@ -12,7 +12,7 @@ int Interface::menu() {
             
             if(opcao > 11 or opcao < 0){
                     //std::cout << std::endl << "Opcao invalida, por favor escolha uma opcao valida." << std::endl << std::endl;
-                    throw OpcaoInvalidaException("\nOpcao invalida, por favor escolha uma opcao valida.\n");
+                    throw OpcaoInvalidaException("\nOpcao invalida, por favor escolha uma opção válida.\n");
             }
             break;
         }
@@ -240,7 +240,7 @@ int Interface::lerOpcaoParaModificarFuncionario() {
             getline(std::cin, opcaoStr);
             opcao = validaInteiro(opcaoStr);
             if((opcao < 1) or (opcao > 8)) {
-                throw OpcaoInvalidaException("Opção Inválida");
+                throw OpcaoInvalidaException("Opção inválida, por favor escolha uma opção válida.\n");
             }
             break;
         }
@@ -437,7 +437,7 @@ int Interface::lerTipoParaExibirFuncionarios() {
             tipo = validaInteiro(tipoStr);
 
             if(tipo < 0 or tipo > 3) {
-                throw OpcaoInvalidaException("Opção inválida");
+                throw OpcaoInvalidaException("Opção inválida, por favor escolha uma opção válida.\n");
             }
             break;
         }
@@ -511,7 +511,7 @@ int Interface::lerTipoAtributoParaImprimirFolhaSalarialFuncionario() {
             tipo = validaInteiro(tipoStr);
 
             if(tipo < 1 || tipo > 2){
-                throw OpcaoInvalidaException("Opção inválida");
+                throw OpcaoInvalidaException("Opção inválida, por favor escolha uma opção válida.\n");
             }
             break;
         }
@@ -535,7 +535,7 @@ int Interface::lerOpcaoParaImprimirFolhaSalarialEmpresa() {
 
             opcao = validaInteiro(opcaoStr);
             if(opcao < 1 || opcao > 2){
-                throw OpcaoInvalidaException("Opção inválida");
+                throw OpcaoInvalidaException("Opção inválida, por favor escolha uma opção válida.\n");
             }
             break;
         }
@@ -559,7 +559,7 @@ int Interface::lerOpcaoParaBuscarFuncionario() {
             opcao = validaInteiro(opcaoStr);
 
             if(opcao < 1 or opcao > 3) {
-                throw OpcaoInvalidaException("Opção inválida");
+                throw OpcaoInvalidaException("Opção inválida, por favor escolha uma opção válida.\n");
             }
             break;
         }
@@ -583,7 +583,7 @@ int Interface::lerTipoInformacaoStrParaBuscarFuncionario() {
             tipoInformacao = validaInteiro (tipoStr);
 
             if(tipoInformacao < 1 or tipoInformacao > 2) {
-                throw OpcaoInvalidaException("Opção inválida");
+                throw OpcaoInvalidaException("Opção inválida, por favor escolha uma opção válida.\n");
             }
             break;
         }
@@ -661,14 +661,14 @@ int Interface::validaMes(std::string mes){
 
     for(int i = 0; i < mes.size(); i++){
         if(mes[i] < '0' || mes[i] > '9'){
-            throw OpcaoInvalidaException("Atributo inválido digitado");
+            throw OpcaoInvalidaException("Atributo inválido digitado\nDigite apenas números");
         }
     }
 
     mesInt = std::stoi(mes);
     
     if(mesInt < 1 || mesInt > 12){
-        throw OpcaoInvalidaException("Mês inválido digitado");
+        throw OpcaoInvalidaException("Mês inválido digitado\nDigite um mês entre 1 a 12");
     }
 
     return mesInt;
@@ -677,7 +677,7 @@ int Interface::validaMes(std::string mes){
 int Interface::validaInteiro(std::string texto){
     for(int i = 0; i < texto.size(); i++){
         if(texto[i] < '0' || texto[i] > '9'){
-            throw OpcaoInvalidaException("Caracter inválido digitado");
+            throw OpcaoInvalidaException("Caracter inválido digitado\nDigite apenas números");
         }
     }
 
