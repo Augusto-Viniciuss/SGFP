@@ -18,14 +18,14 @@ int Endereco::validaNumero(std::string numeroStr){
 
     for(int i = 0; i < numeroStr.size(); i++){
         if(numeroStr[i] < '0' || numeroStr[i] > '9'){
-            throw CadastrarFuncionarioException("Caracter inválido digitado");
+            throw CadastrarFuncionarioException("Caracter inválido digitado\nDigite apenas números");
         }
     }
 
     numeroAux = std::stoi(numeroStr);
 
     if(numeroAux <= 0){
-        throw CadastrarFuncionarioException("Número de residência inválido");
+        throw CadastrarFuncionarioException("Número de residência inválido\nDigite apenas números acima de 0");
     }
 
     return numeroAux;
@@ -59,7 +59,7 @@ void Endereco::validaCEP(std::string CEP){
     if(CEP.size() == 8){
         for(int i = 0; i < 8; i++){
             if(CEP[i] < '0' || CEP[i] > '9'){
-                throw CEPException("Caracter inválido digitado");
+                throw CEPException("Caracter inválido digitado\nDigite apenas números no padrão XXXXXXXX (8 digitos)");
             }
         }
         
@@ -84,7 +84,7 @@ void Endereco::validaCEP(std::string CEP){
                         case 1:
                             i = texto.find("erro");
                             if(i != -1){
-                                throw CEPException("CEP digitado inválido");
+                                throw CEPException("CEP digitado inválido\nNão foi possível achar a localização");
                             }
                             for(i = 0; i < tamanho && i < 9; i++){
                                 this->CEP[i] = texto[posicao++];
@@ -120,14 +120,14 @@ void Endereco::validaCEP(std::string CEP){
                 contador++;
             }
         }else{
-            throw CEPException("Erro ao abrir o arquivo");
+            throw CEPException("Erro ao abrir o arquivo\nVerifique sua rede");
         }
 
         arq.close();
 
         remove("ValidaCEP.json");
     }else{
-        throw CEPException("Quantidade inválida de caracteres");
+        throw CEPException("Quantidade inválida de caracteres\nDigite apenas números no padrão XXXXXXXX (8 digitos)");
     }
 }
 
