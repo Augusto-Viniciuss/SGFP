@@ -72,12 +72,94 @@ void Funcionario::setDesignacao(int designacao){
     this->designacao = designacao;
 }
 
+int Funcionario::validaDesignacao(std::string designacaoStr){
+    int desiginacaoInt;
+    for(int i = 0; i < designacaoStr.size(); i++){
+        if(designacaoStr[i] < '0' || designacaoStr[i] > '9'){
+            throw CadastrarFuncionarioException("Caracter inválido digitado");
+        }
+    }
+
+    desiginacaoInt = std::stoi(designacaoStr);
+
+    if(desiginacaoInt < 0 || desiginacaoInt > 3){
+        throw CadastrarFuncionarioException("Opção inválida digitada");
+    }
+
+    return desiginacaoInt;
+}
+
 void Funcionario::setDataIngresso(int *data){
     this->dataIngresso = Data(data[0], data[1], data[2]);
 }
 
+void Funcionario::validaDataIngresso(std::string dataStr, int* dataInt){
+    if(dataStr.size() > 10){
+        throw CadastrarFuncionarioException("Quantidade inválida de caracteres");
+    }else{
+        int dataAux[3];
+        int diasMeses[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        std::string dataStrAux;
+        //21 05 2002
+        //0123456789
+        int j = 0;
+        for(int i = 0; i < dataStr.size(); i++){
+            if(i == 2 || i == 5){
+                if(dataStr[i] != ' '){
+                    throw CadastrarFuncionarioException("Caracter inválido digitado");
+                }else{
+                    dataAux[j++] = stoi(dataStrAux);
+                    dataStrAux.clear();
+                    continue;
+                }
+            }
+
+            if(dataStr[i] < '0' || dataStr[i] > '9'){
+                throw CadastrarFuncionarioException("Data inválida");
+            }else{
+                dataStrAux.push_back(dataStr[i]);
+            }
+        }
+        dataAux[j] = stoi(dataStrAux);
+
+        //cout << dataAux[0] << "/" << dataAux[1] << "/" << dataAux[2] << endl;
+
+        if(dataAux[1] < 1 || dataAux[1] > 12){
+            throw CadastrarFuncionarioException("Mês digitado inválido");
+        }else if(dataAux[0] > diasMeses[dataAux[1]]){
+            throw CadastrarFuncionarioException("Quantidade de dias incompativeis com o mês digitado");
+        }
+
+        if(dataAux[2] < 1000 || dataAux[2] > 9999){
+            throw CadastrarFuncionarioException("Ano digitado inválido");
+        }
+
+        dataInt[0] = dataAux[0];
+        dataInt[1] = dataAux[1];
+        dataInt[2] = dataAux[2];
+    }
+}
+
 void Funcionario::setCodigoFuncionario(int codigo){
     this->codigoFuncionario = codigo;
+}
+
+int Funcionario::validaCodigoFuncionario(std::string codigoStr){
+    int codigoAux;
+
+    for(int i = 0; i < codigoStr.size(); i++){
+        if(codigoStr[i] < '0' || codigoStr[i] > '9'){
+            throw CadastrarFuncionarioException("Caracter inválido digitado");
+        }
+    }
+
+    codigoAux = std::stoi(codigoStr);
+
+    if(codigoAux <= 0){
+        throw CadastrarFuncionarioException("Permitido apenas código acima de 0");
+    }
+
+    return codigoAux;
 }
 
 /* Fim dos Set */

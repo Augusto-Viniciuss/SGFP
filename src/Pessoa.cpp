@@ -44,6 +44,9 @@ Endereco *Pessoa::getEndereco(){
 void Pessoa::setNome(std::string nome){
     if(nome.size() > 99){
         for(int i = 0; i < 98; i++){
+            if(nome[i] >= '0' && nome[i] <= '9'){
+                throw CadastrarFuncionarioException("Caracter inválido digitado");
+            }
             this->nome[i] = nome[i];
         }
         this->nome[99] = '\0';
@@ -148,6 +151,27 @@ void Pessoa::setCPF(std::string CPF){
 
 void Pessoa::setIdade(int idade){
     this->idade = idade;
+}
+
+int Pessoa::validaIdade(std::string idadeStr){
+    int idadeAux;
+    for(int i = 0; i < idadeStr.size(); i++){
+        if(idadeStr[i] < '0' || idadeStr[i] > '9'){
+            throw CadastrarFuncionarioException("Caracter inválido digitado");
+        }
+    }
+
+    idadeAux = std::stoi(idadeStr);
+
+    if(idadeAux < 18){
+        throw CadastrarFuncionarioException("Não é permitido cadastrar funcionário menor de idade");
+    }
+
+    if(idadeAux > 100){
+        throw CadastrarFuncionarioException("Não é permitido cadastrar funcionário acima de 100 anos");
+    }
+
+    return idadeAux;
 }
 
 void Pessoa::setEndereco(std::string endereco) {

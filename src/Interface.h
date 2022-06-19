@@ -9,6 +9,7 @@
 #include "TelefoneException.h"
 #include "CPFException.h"
 #include "CEPException.h"
+#include "CadastrarFuncionarioException.h"
 
 class Interface {
     public:

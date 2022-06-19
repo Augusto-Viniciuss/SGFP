@@ -2,6 +2,7 @@
 #define ENDERECO_H
 
 #include <iostream>
+#include "CadastrarFuncionarioException.h"
 
 class Endereco{
     public:
@@ -9,6 +10,7 @@ class Endereco{
         
         /* Set */
         void setNumero(int numero);
+        int validaNumero(std::string numeroStr);
         void setEndereco(std::string CEP);
 
         /* Get */
