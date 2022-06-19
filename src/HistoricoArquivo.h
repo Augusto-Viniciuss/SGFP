@@ -29,6 +29,7 @@ class HistoricoArquivo{
 		void printaModificacao(int ,int);
 		
 		void escreveArquivoModificacoes(int);
+		
 		virtual ~HistoricoArquivo();
 
 	private:

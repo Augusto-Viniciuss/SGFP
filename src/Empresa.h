@@ -64,6 +64,9 @@ class Empresa {
         Funcionario *presidente = nullptr;
         
         Arquivo dadosArquivos; // Banco de dados
+        
+        // Histórico do arquivo
+		HistoricoArquivo historico;
 };
 
 #endif

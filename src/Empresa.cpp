@@ -86,7 +86,13 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
             std::cout << "Presidente já foi cadastrado" << std::endl;
         }
     }
-    std::cout << funcionario << std::endl;
+
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario cadastrado");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+   
     
 }
 
@@ -111,7 +117,13 @@ void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
     } else {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
-    //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
+
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+   
 }
 
 void Empresa::modificarFuncionario(int codigo, int *valor) {
@@ -123,7 +135,11 @@ void Empresa::modificarFuncionario(int codigo, int *valor) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 
-    //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
@@ -141,7 +157,13 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
     } else {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
-    //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
+
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    
 }
 
 void Empresa::excluirFuncionario(int codigo) {
@@ -156,10 +178,8 @@ void Empresa::excluirFuncionario(int codigo) {
     if (funcionario == nullptr) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     } 
-    std::cout << "estou aqui" << std::endl;
    
-    dadosArquivos.excluiDados(funcionario);
-
+   
    
     if(tipoFuncionario == 0) {
         this->operadores.erase(operadores.begin() + indice);
@@ -173,10 +193,16 @@ void Empresa::excluirFuncionario(int codigo) {
     } else if(tipoFuncionario == 3) {
         qtdFuncionarios[tipoFuncionario] -= 1;
     }
-    delete funcionario;
+    
    
     std::cout << "Funcionario excluido dos registros." << std::endl;
-    
+
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi excluido");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    delete funcionario;
     
 }
 
