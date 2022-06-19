@@ -1,51 +1,63 @@
 #include "Empresa.h"
 
 Empresa::Empresa() {
-    dadosArquivos.carregaDados(operadores, OPERADOR);
+    
+    try {
+        dadosArquivos.carregaDadosCsv(operadores, gerentes, diretores, &presidente);
+    }catch(TentativaAbrirArquivo &problemaArquivo) {
+        problemaArquivo.what();
+    }
+    
     qtdFuncionarios[OPERADOR] = operadores.size();
-    dadosArquivos.carregaDados(gerentes, GERENTE);
     qtdFuncionarios[GERENTE] = gerentes.size();
-    dadosArquivos.carregaDados(diretores, DIRETOR);
     qtdFuncionarios[DIRETOR] = diretores.size();
-    
-    
-    presidente = dadosArquivos.carregaPresidente();
+   
     
     if(presidente != nullptr) {
         qtdFuncionarios[PRESIDENTE] = 1;
     }
+    
+    dadosArquivos.criaArquivoBaseDadosZerado();
+  
 }
 
 Empresa::~Empresa() {
 
+
+    dadosArquivos.criaArquivoCsv(operadores);
+    dadosArquivos.criaArquivoCsv(gerentes);
+    dadosArquivos.criaArquivoCsv(diretores);
+    
+    if(qtdFuncionarios[PRESIDENTE] != 0) {
+        dadosArquivos.adicionaArquivoCsv(presidente);
+        dadosArquivos.addPresidenteBaseDadosCsv(presidente);
+    } 
+
+    dadosArquivos.criaBaseDadosCsv(operadores);
+    dadosArquivos.criaBaseDadosCsv(diretores);
+    dadosArquivos.criaBaseDadosCsv(gerentes);
 
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         
         for(int i = 0; i < qtdFuncionarios[tipoFuncionario]; i++) {
 
             if(tipoFuncionario == OPERADOR) {
-                dadosArquivos.salvarDadosFuncionario(operadores[i], operadores[i]->getDesignacaoInt());
+                delete operadores[i];
             }
-            if(tipoFuncionario == GERENTE) {
-                dadosArquivos.salvarDadosFuncionario(gerentes[i], gerentes[i]->getDesignacaoInt());
+            else if(tipoFuncionario == GERENTE) {
+                delete gerentes[i];
             }
-            if(tipoFuncionario == DIRETOR) {
-                dadosArquivos.salvarDadosFuncionario(diretores[i], diretores[i]->getDesignacaoInt());
+            else if(tipoFuncionario == DIRETOR) {
+                delete diretores[i];
             }
-            if(tipoFuncionario == PRESIDENTE) {
-                dadosArquivos.salvarDadosFuncionario(presidente, presidente->getDesignacaoInt());
+            else if(tipoFuncionario == PRESIDENTE) {
+                delete presidente;
             }
         }
-        
-        
-    } 
-    dadosArquivos.criaArquivoCsv(operadores);
-    dadosArquivos.criaArquivoCsv(diretores);
-    dadosArquivos.criaArquivoCsv(gerentes);
-
-    if(qtdFuncionarios[PRESIDENTE] != 0) {
-        dadosArquivos.adicionaArquivoCsv(presidente);
-    } 
+ 
+    }
+    
+   
 }
 
 int Empresa::getQtdFuncionarios(int tipo) {
@@ -74,8 +86,14 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
             std::cout << "Presidente já foi cadastrado" << std::endl;
         }
     }
-    std::cout << funcionario << std::endl;
-    //dadosArquivos.salvarDadosFuncionario(funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos  
+
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario cadastrado");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+   
+    
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
@@ -99,7 +117,13 @@ void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
     } else {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
-    //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
+
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+   
 }
 
 void Empresa::modificarFuncionario(int codigo, int *valor) {
@@ -111,7 +135,11 @@ void Empresa::modificarFuncionario(int codigo, int *valor) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 
-    //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
@@ -129,7 +157,13 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
     } else {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
-    //dadosArquivos.salvarDadosFuncionario(*funcionario, funcionario->getDesignacaoInt()); // Adiciona ele aos arquivos
+
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    
 }
 
 void Empresa::excluirFuncionario(int codigo) {
@@ -144,10 +178,8 @@ void Empresa::excluirFuncionario(int codigo) {
     if (funcionario == nullptr) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     } 
-    std::cout << "estou aqui" << std::endl;
    
-    dadosArquivos.excluiDados(funcionario);
-
+   
    
     if(tipoFuncionario == 0) {
         this->operadores.erase(operadores.begin() + indice);
@@ -161,10 +193,16 @@ void Empresa::excluirFuncionario(int codigo) {
     } else if(tipoFuncionario == 3) {
         qtdFuncionarios[tipoFuncionario] -= 1;
     }
-    delete funcionario;
+    
    
     std::cout << "Funcionario excluido dos registros." << std::endl;
-    
+
+    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi excluido");
+    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    historico.setDataModificacao(funcionario->getDesignacaoInt());
+    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    delete funcionario;
     
 }
 

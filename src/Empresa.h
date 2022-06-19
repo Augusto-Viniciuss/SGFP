@@ -61,9 +61,12 @@ class Empresa {
         std::vector<Funcionario*> operadores;
         std::vector<Funcionario*> gerentes;
         std::vector<Funcionario*> diretores;
-        Funcionario *presidente;
+        Funcionario *presidente = nullptr;
         
         Arquivo dadosArquivos; // Banco de dados
+        
+        // Histórico do arquivo
+		HistoricoArquivo historico;
 };
 
 #endif

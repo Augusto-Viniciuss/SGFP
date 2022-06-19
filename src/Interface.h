@@ -9,13 +9,17 @@
 #include "TelefoneException.h"
 #include "CPFException.h"
 #include "CEPException.h"
+#include "CadastrarFuncionarioException.h"
+#include "OpcaoInvalidaException.h"
 
 class Interface {
     public:
         int menu();
+        void menuTexto();
         Funcionario* lerAtributosFuncionario();
         int lerCodigoParaModificarFuncionario();
         int lerOpcaoParaModificarFuncionario();
+        void opcaoParaModificarFuncionarioTexto();
         std::string lerNovoAtributoStrParaModificarFuncionario(int opcao);
         int lerNovoAtributoIntParaModificarFuncionario(int opcao);
         void lerNovaDataParaModificarFuncionario(int *data);
@@ -31,6 +35,8 @@ class Interface {
         int lerTipoInformacaoStrParaBuscarFuncionario();
         std::string lerInformacaoStrParaBuscarFuncionario(int tipoInformacao);
         void lerDataParaBuscarFuncionario(int *dataInicial, int *dataFinal);
+        int validaMes(std::string mes);
+        int validaInteiro(std::string texto);
 };
 
 #endif

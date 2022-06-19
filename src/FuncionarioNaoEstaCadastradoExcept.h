@@ -3,6 +3,12 @@
 
 #include <exception>
 
+/*
+    Exception personalizado criado para reconhecer e
+    informar ao usuário na hora de utilizar algum método
+    que exija a existência de um funcionário
+*/
+
 class FuncionarioNaoEstaCadastradoExcept : public std::exception{
     public:
         FuncionarioNaoEstaCadastradoExcept(const char* e);

@@ -24,8 +24,8 @@ HistoricoArquivo::HistoricoArquivo() {
 /* SetData modificação, recebe o tipo de funcionario que está sendo modificado e então	*/
 /* Cria um obj tipo Data para salvar em um vetor a data do computador que foi feita a mudança	*/
 void HistoricoArquivo::setDataModificacao(int tipoFuncionario){
-	Data *objData = new Data();
-	datasModificacoes[tipoFuncionario] = objData->retornaDataComputador();
+	Data objData;
+	datasModificacoes[tipoFuncionario] = objData.retornaDataComputador();
 }
 
 /* A função seta o tipo de modificação que foi realizada	*/

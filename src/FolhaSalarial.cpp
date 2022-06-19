@@ -1,12 +1,19 @@
 #include "FolhaSalarial.h"
 
+/*
+    Para o bom funcionamento do código, algumas variáveis
+    tem que ser inicializadas com 0
+*/
 FolhaSalarial::FolhaSalarial() {
     setSalarioBase(0);
     setTaxaAumento(0);
     setSalarioLiquido(0);
-
 }
 
+/*
+    Após receberem a designação, é possível instanciar o
+    salário base e a taxa de aumento
+*/
 FolhaSalarial::FolhaSalarial(int designacao){
     setSalarioBase(designacao);
     setTaxaAumento(designacao);
@@ -16,6 +23,7 @@ FolhaSalarial::FolhaSalarial(int designacao){
 FolhaSalarial::~FolhaSalarial() {}
 
 void FolhaSalarial::setTaxaAumento(int designacao) {
+    /* As taxas são de acordo com a designação do funcionário */
     if(designacao == 0) {
         this->taxaAumento = 0.05;
     } else if(designacao == 1) {
@@ -28,6 +36,7 @@ void FolhaSalarial::setTaxaAumento(int designacao) {
 }
 
 void FolhaSalarial::setSalarioBase(int designacao){
+    /* O salário base é de acordo com a designação do funcionário */
     if(designacao == 0) {
         this->salarioBase = 1212;
     } else if(designacao == 1) {
@@ -43,6 +52,7 @@ void FolhaSalarial::setSalarioLiquido(double salario) {
     double aux;
     aux = salario;
     
+    /* Desconto da previdência 2022 */
     if (aux <= 1212.00) {
         aux -= aux * 0.075;
     } else if (aux >= 1212.01 and aux <= 2427.35) {
@@ -57,6 +67,7 @@ void FolhaSalarial::setSalarioLiquido(double salario) {
 
     aux = salario;
 
+    /* Desconto do imposto de renda 2022 */
     if (aux >= 1903.99 and aux <= 2826.65) {
         aux -= aux * 0.075;
     } else if (aux >= 2826.66 and aux <= 3751.05) {
@@ -68,7 +79,8 @@ void FolhaSalarial::setSalarioLiquido(double salario) {
     }
 
     setDescontoImpostoRenda(salario - aux);
-
+    
+    /* O salário líquido sendo instanciado de acordo com os impostos */
     this->salarioLiquido = salario - (getDescontoImpostoRenda() + getDescontoPrevidencia());
 }
 

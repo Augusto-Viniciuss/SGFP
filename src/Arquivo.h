@@ -21,28 +21,26 @@ class Arquivo{
 	
 	public:
 		
-		// O construtor irá inicializar o arquivo recebendo o nome dos 4 tipo de arquivos
+		// O construtor irá inicializar o arquivo de Dados inicialmente
 		Arquivo();
 
-		// A função salvarDadosFuncionario recebe os dados do funcionario e adiciona ao arquivo de dados dele
-		void salvarDadosFuncionario(Funcionario *, int);
+		// Cria o arquivo Csv
+		void criaArquivoCsv(std::vector < Funcionario *> &funcionariosVec);
 		
-		// Criar arquivo irá jogar uma exception
-		// Função responsável por criar inicialmente os arquivos
-		void criaArquivo(std::string, std::string, std::string, std::string);
-		
-		// Função responsável por excluir dados, recebe o tipo de funcionario para excluir e seu código 
-		void excluiDados(Funcionario *);
-		
-		void mostraHistorico(int tipoFuncionario, int codigo); 
-
-		void carregaDados(std::vector < Funcionario * > &funcionariosVec, int tipoFuncionario);
-
-		Funcionario * carregaPresidente();
-
-		void criaArquivoCsv(const std::vector < Funcionario *> &funcionariosVec);
-
+		// Adiciona um usuario no arquivo Csv
 		void adicionaArquivoCsv(Funcionario *); //armazena somente do presidente
+
+		// Cria a base de dados csv com todos os dados do vector de funcionario
+		void criaBaseDadosCsv(const std::vector < Funcionario * >&funcionariosVec);
+		
+		// Adiciona presidente na base de dados com um ponteiro para funcionario
+		void addPresidenteBaseDadosCsv(Funcionario *);
+		
+		// Cria a base de dados zerada
+		void criaArquivoBaseDadosZerado();
+		
+		// Carrega todos os dados e adiciona nos vector de operadores, gerentes, diretores e para um ponteiro do tipo funcionario
+		void carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario **presidente);
 			
 	private:
 		/* Arquivos para saida de dados	*/
@@ -53,10 +51,8 @@ class Arquivo{
 		/* Arquivos para entrada de dados	*/
 		std::ifstream arquivosEntradas[QUANTIA_ARQUIVOS];
 	
-		std::ofstream outputCsv; // saida de dados apenas para o arquivo csv
 
-		// Histórico do arquivo
-		HistoricoArquivo historico;
+		
 		/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
 
 		std::string path = "../.gitignore/Dados/"; // path de armazenamento

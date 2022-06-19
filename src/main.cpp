@@ -7,6 +7,7 @@
 #include "Interface.h"
 #include "FuncionarioJaCadastradoExcept.h"
 #include "FuncionarioNaoEstaCadastradoExcept.h"
+#include "OpcaoInvalidaException.h"
 
 #define INT 1
 #define STR 2
@@ -21,7 +22,9 @@ int main() {
 
 
     while(true) {
+        
         try {
+            
             opcaoMenu = interface.menu();
 
             if (opcaoMenu == 0) {
@@ -125,9 +128,17 @@ int main() {
             } 
         } catch(FuncionarioJaCadastradoExcept &funcionarioJaCadastrado) {
             int opcao;
+            std::string opcaoStr;
             
             std::cout << "Funcionario ja esta cadastrado, digite 1 se deseja atualiza-lo ou 2 se nao desejar:" << std::endl;
-            std::cin >> opcao;
+            try{
+                getline(std::cin, opcaoStr);
+
+                opcao = interface.validaInteiro(opcaoStr);
+            }
+            catch(OpcaoInvalidaException &opcaoInvalida){
+                std::cerr << opcaoInvalida.what() << '\n';
+            }
 
             if (opcao == 1) {
                 funcionario = interface.lerAtributosFuncionario();
@@ -136,9 +147,17 @@ int main() {
             }
         } catch(FuncionarioNaoEstaCadastradoExcept &funcionarioNaoEstaCadastrado) {
             int opcao;
+            std::string opcaoStr;
 
             std::cout << "Funcionario nao esta cadastrado, digite 1 se deseja cadastra-lo e 2 se nao desejar:" << std::endl;
-            std::cin >> opcao;
+            try{
+                getline(std::cin, opcaoStr);
+
+                opcao = interface.validaInteiro(opcaoStr);
+            }
+            catch(OpcaoInvalidaException &opcaoInvalida){
+                std::cerr << opcaoInvalida.what() << '\n';
+            }
 
             if(opcao == 1) {
                 funcionario = interface.lerAtributosFuncionario();
@@ -146,14 +165,15 @@ int main() {
                 empresa.addFuncionario(funcionario, funcionario->getDesignacaoInt());
             }
         } catch(TentativaAbrirArquivo &ProblemaArquivo) {
-            std::cout << "Não foi possivel criar o arquivo, ou abri-lo, verifique se ele existe na pasta do programa" << std::endl;    
+            ProblemaArquivo.what();
+               
         } catch(InvalidoArgumentoArquivoExcept &TentativaExcluirPresidente) {
             std::cout << "Voce fez uma operação inválida, tentar excluir o presidente." << std::endl;
             int codigo;
             
             codigo = interface.lerCodigoParaExcluirFuncionario();
             empresa.excluirFuncionario(codigo);
-        }
+        } 
 
 
     }
