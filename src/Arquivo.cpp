@@ -570,7 +570,7 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 	std::ifstream inputCsv((path + "Dados.csv").c_str(), std::ios::in);
 
 	if(!inputCsv) {
-		std::cout << "O arquivo será criado sem nenhum dado, por favor rode o porgrama novamente" << std::endl;
+		std::cout << "Arquivos zerados. Nenhum funcionário cadastrado" << std::endl;
 		std::ifstream inputCsv((path + "Dados.csv").c_str(), std::ios::app);
 		inputCsv.close();
 

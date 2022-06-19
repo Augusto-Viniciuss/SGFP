@@ -76,14 +76,14 @@ int Funcionario::validaDesignacao(std::string designacaoStr){
     int desiginacaoInt;
     for(int i = 0; i < designacaoStr.size(); i++){
         if(designacaoStr[i] < '0' || designacaoStr[i] > '9'){
-            throw CadastrarFuncionarioException("Caracter inválido digitado");
+            throw CadastrarFuncionarioException("Caracter inválido digitado\nDigite apenas números");
         }
     }
 
     desiginacaoInt = std::stoi(designacaoStr);
 
     if(desiginacaoInt < 0 || desiginacaoInt > 3){
-        throw CadastrarFuncionarioException("Opção inválida digitada");
+        throw CadastrarFuncionarioException("Opção inválida digitada\nDigite a designação entre 0 a 3");
     }
 
     return desiginacaoInt;
@@ -95,7 +95,7 @@ void Funcionario::setDataIngresso(int *data){
 
 void Funcionario::validaDataIngresso(std::string dataStr, int* dataInt){
     if(dataStr.size() > 10){
-        throw CadastrarFuncionarioException("Quantidade inválida de caracteres");
+        throw CadastrarFuncionarioException("Quantidade inválida de caracteres\nDigite a data no padrão XX XX XXXX (com 0 na frente dos números menores do que 10)");
     }else{
         int dataAux[3];
         int diasMeses[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -106,7 +106,7 @@ void Funcionario::validaDataIngresso(std::string dataStr, int* dataInt){
         for(int i = 0; i < dataStr.size(); i++){
             if(i == 2 || i == 5){
                 if(dataStr[i] != ' '){
-                    throw CadastrarFuncionarioException("Caracter inválido digitado");
+                    throw CadastrarFuncionarioException("Caracter inválido digitado\nDigite a data no padrão XX XX XXXX (com 0 na frente dos números menores do que 10)");
                 }else{
                     dataAux[j++] = stoi(dataStrAux);
                     dataStrAux.clear();
@@ -115,7 +115,7 @@ void Funcionario::validaDataIngresso(std::string dataStr, int* dataInt){
             }
 
             if(dataStr[i] < '0' || dataStr[i] > '9'){
-                throw CadastrarFuncionarioException("Data inválida");
+                throw CadastrarFuncionarioException("Data inválida\nDigite a data no padrão XX XX XXXX (com 0 na frente dos números menores do que 10)");
             }else{
                 dataStrAux.push_back(dataStr[i]);
             }
@@ -125,13 +125,13 @@ void Funcionario::validaDataIngresso(std::string dataStr, int* dataInt){
         //cout << dataAux[0] << "/" << dataAux[1] << "/" << dataAux[2] << endl;
 
         if(dataAux[1] < 1 || dataAux[1] > 12){
-            throw CadastrarFuncionarioException("Mês digitado inválido");
+            throw CadastrarFuncionarioException("Mês digitado inválido\nDigite um mês entre 1 a 12");
         }else if(dataAux[0] > diasMeses[dataAux[1]]){
             throw CadastrarFuncionarioException("Quantidade de dias incompativeis com o mês digitado");
         }
 
         if(dataAux[2] < 1000 || dataAux[2] > 9999){
-            throw CadastrarFuncionarioException("Ano digitado inválido");
+            throw CadastrarFuncionarioException("Ano digitado inválido\nDigite um ano com 4 digitos significativos");
         }
 
         dataInt[0] = dataAux[0];
@@ -149,14 +149,14 @@ int Funcionario::validaCodigoFuncionario(std::string codigoStr){
 
     for(int i = 0; i < codigoStr.size(); i++){
         if(codigoStr[i] < '0' || codigoStr[i] > '9'){
-            throw CadastrarFuncionarioException("Caracter inválido digitado");
+            throw CadastrarFuncionarioException("Caracter inválido digitado\nDigite apenas números");
         }
     }
 
     codigoAux = std::stoi(codigoStr);
 
     if(codigoAux <= 0){
-        throw CadastrarFuncionarioException("Permitido apenas código acima de 0");
+        throw CadastrarFuncionarioException("Código inválido\nPermitido apenas código acima de 0");
     }
 
     return codigoAux;

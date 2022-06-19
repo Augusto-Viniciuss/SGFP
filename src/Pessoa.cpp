@@ -43,12 +43,12 @@ Endereco *Pessoa::getEndereco(){
 /* Set */
 void Pessoa::setNome(std::string nome){
     if(nome.size() < 3){
-        throw CadastrarFuncionarioException("Quantidade inválida de caracteres");
+        throw CadastrarFuncionarioException("Quantidade inválida de caracteres\nDigite um nome com pelo menos 3 dígitos");
     }
     if(nome.size() > 99){
         for(int i = 0; i < 98; i++){
             if(nome[i] >= '0' && nome[i] <= '9'){
-                throw CadastrarFuncionarioException("Caracter inválido digitado");
+                throw CadastrarFuncionarioException("Caracter inválido digitado\nNão é permitido cadastrar um nome com números");
             }
             this->nome[i] = nome[i];
         }
@@ -56,7 +56,7 @@ void Pessoa::setNome(std::string nome){
     }else{
         for(int i = 0; i < nome.size(); i++){
             if(nome[i] >= '0' && nome[i] <= '9'){
-                throw CadastrarFuncionarioException("Caracter inválido digitado");
+                throw CadastrarFuncionarioException("Caracter inválido digitado\nNão é permitido cadastrar um nome com números");
             }
             this->nome[i] = nome[i];
         }
@@ -68,7 +68,7 @@ void Pessoa::setTelefone(std::string telefone){
     if(telefone.size() == 11){
         for(int i = 0; i < 11; i++){
             if(telefone[i] < '0' || telefone[i] > '9'){
-                throw TelefoneException("Número inválido digitado");
+                throw TelefoneException("Número inválido digitado\nDigite no padrão (XX)XXXXX-XXXX somente com números\nEx: XXXXXXXXXXX (11 dígitos)");
             }
         }
         int j = 0;
@@ -90,7 +90,7 @@ void Pessoa::setTelefone(std::string telefone){
         this->telefone[14] = '\0';
         
     }else{
-        throw TelefoneException("Quantidade inválida de caracteres");
+        throw TelefoneException("Quantidade inválida de caracteres\nDigite no padrão (XX)XXXXX-XXXX somente com números\nEx: XXXXXXXXXXX (11 dígitos)");
     }
 }
 
@@ -102,7 +102,7 @@ void Pessoa::setCPF(std::string CPF){
 
         for(int i = 0; i < 11; i++){
             if(CPF[i] < '0' || CPF[i] > '9'){
-                throw CPFException("Caracter inválido digitado");
+                throw CPFException("Caracter inválido digitado\nDigite apenas números no padrão XXXXXXXXXXX (11 dígitos)");
             }
             cpfaux[i] = static_cast<int>(CPF[i] - 48);
         }
@@ -150,7 +150,7 @@ void Pessoa::setCPF(std::string CPF){
             throw CPFException("CPF inválido");
         }
     }else{
-        throw CPFException("Quantidade inválida de caracteres");
+        throw CPFException("Quantidade inválida de caracteres\nDigite apenas números no padrão XXXXXXXXXXX (11 dígitos)");
     }
     
 }
@@ -163,7 +163,7 @@ int Pessoa::validaIdade(std::string idadeStr){
     int idadeAux;
     for(int i = 0; i < idadeStr.size(); i++){
         if(idadeStr[i] < '0' || idadeStr[i] > '9'){
-            throw CadastrarFuncionarioException("Caracter inválido digitado");
+            throw CadastrarFuncionarioException("Caracter inválido digitado\nDigite apenas números");
         }
     }
 
