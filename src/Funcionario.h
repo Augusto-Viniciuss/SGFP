@@ -19,7 +19,10 @@ class Funcionario: public Pessoa {
         
         /* ESPECIFICAÇÕES */
         virtual void calcularSalarioMensal(int mes) = 0;
-
+        int validaDesignacao(std::string designacaoStr);
+        void validaDataIngresso(std::string dataStr, int* dataInt);
+        int validaCodigoFuncionario(std::string codigoStr);
+        
         /* Get */
         int getHorasTrabalhadas();
         int getCodigoFuncionario();
@@ -31,13 +34,11 @@ class Funcionario: public Pessoa {
         /* Set */
         void setHorasTrabalhadas(int horas);
         void setDesignacao(int designacao);
-        int validaDesignacao(std::string designacaoStr);
         void setDataIngresso(int *data);
-        void validaDataIngresso(std::string dataStr, int* dataInt);
         void setCodigoFuncionario(int codigo);
-        int validaCodigoFuncionario(std::string codigoStr);
         
     protected:
+        /* Protected para apenas ser acessado por um funcionário */
         int gerarAleatorio(int intervaloMax);
 
     private:
