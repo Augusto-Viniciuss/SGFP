@@ -642,7 +642,12 @@ void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
     }
 }
 
+// Função responsável por retornar um endereço de funcinário correspondente ao codigo de entrada
 Funcionario* Empresa::buscarFuncionario(int codigo) {
+    
+    /* Entra no primeiro loop correspondente a quantia de tipos funcionários, após isso entra em outro loop */
+    /* Que corresponde a quantia daquele tipo existente na empresa  */
+    /* Para cada tipo, realiza a comparação e caso achado o código, retorna o endereço  */
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
@@ -660,7 +665,14 @@ Funcionario* Empresa::buscarFuncionario(int codigo) {
     return nullptr;
 }
 
+// Função responsável por buscar o funcinário por código, recebe seu indice e designação
 Funcionario* Empresa::buscarFuncionario(int codigo, int *indice, int *designacao) {
+
+    /* Entra em um for que corresponde a quantidade de tipos, após isso entra em um segundo que se refere */
+    /* A quantidade de funcionários daquele tipo e dependendo do tipo que for, realiza a comparação do codigo com o que é retornado */
+    /* pelo getCodigoFuncionario()  */
+    /* Armazena o valor do índice em uma região de memória, além do tipo de funcionário */
+    /* Após achado, retorna o endereço daquele funcionário  */
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
@@ -851,9 +863,15 @@ void Empresa::buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal)
     }
 }
 
+// Função responsável por buscar o funcionario parcialmente, por uma string que contém a informação
 void Empresa::buscarFuncionariosParcial(std::string informacao, int opcao) {
     bool funcionarioEncontrado = false;
 
+    /* Entra primeiro no for que corresponde aos tipos de funcionario */
+    /* Após isso, entra em um segundo for referente a quantidade de funcionários do tipo    */
+    /* Dependendo do tipo de funcionário, realiza a busca por nome, caso seja != std::string::npos foi porque o funcionário foi achado  */
+    /* Após ser achado printa todas as informações e seta a flag de que o funcinário existe  */
+    /* Depenendendo da opção, a busca pode ser por nome ou endereço   */
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
@@ -939,7 +957,7 @@ void Empresa::buscarFuncionariosParcial(std::string informacao, int opcao) {
             }
         }
     }
-
+    // Caso o funcionário não exista, printa que ele não foi encontrado
     if(!funcionarioEncontrado) {
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;  
         std::cout << "Nenhum funcionario foi encontrado para os parametros de busca" << std::endl;
