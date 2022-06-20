@@ -14,23 +14,41 @@ Arquivo::Arquivo(){
 	}
 	outputCsv << "Codigo" << "," << "Designação," << "CPF," << "Nome," << "Telefone," << "Idade," << "Data Ingresso, " << "Rua," << "Bairro," << "Cidade, " << "Estado, " << "CEP," << "Numero, " << "Area de Supervisão, "
 	<< "Area de formacao, " << "Formação máxima," << "Salario Base" << "\n";
-	outputCsv.close();
+	outputCsv.close(); // Fecha o arquivo
 
 
 
 }
 
 
-void Arquivo::criaArquivoCsv(std::vector < Funcionario * > &funcionarioVec) {
+/***
+ * atualizaArquivoFolha: Função responsável por criar o arquivo Csv
+ * 
+ * Parãmetros:
+ * 					std::vector < Funcionario * > : vetor contendo os dados dos usuários para serem armazenados
+ * 
+ * 
+ * Retorno:
+ * 					Nenhuma
+ * 
+ * Função responsável por adicionar no fim do arquivo todos os dados importantes dos funcionarios
+ ****/
 
-	
+void Arquivo::atualizaArquivoFolha(std::vector < Funcionario * > &funcionarioVec) {
+
+	/*	Abertura do arquivo para colocar no fim 	*/	
 	std::ofstream outputCsv((path + "Folha.csv").c_str(), std::ios::app);
 	if(!outputCsv) {
 		throw TentativaAbrirArquivo("Dados.csv");
 	}
 
+	/*	Strings de armazenamento temporário	*/
 	std::string areaSupervisao, areaFormacao, formacaoMaxima;
 	
+	/* Caso ele for um operário ele não tem nenhuma das trẽs strings	*/
+	/* Caso ele seja Gerente tem somente areaSupervisão	*/
+	/* Caso seja Diretor possui as duas áreas, área supervisão e formação */
+	/* Presidente possui somente área formação e formação maxima	*/
 	for(int i = 0; i < funcionarioVec.size(); i++) {
 
 		if(funcionarioVec[i]->getDesignacaoInt() == 0 ) {
@@ -49,7 +67,7 @@ void Arquivo::criaArquivoCsv(std::vector < Funcionario * > &funcionarioVec) {
 			formacaoMaxima = "Nenhuma";
 		}
 
-		
+		/* Realiza a escrita em outputCsv	*/
 		outputCsv << funcionarioVec[i]->getCodigoFuncionario() << ","  << funcionarioVec[i]->getDesignacaoStr() << "," << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
 		<< funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "," << funcionarioVec[i]->getEndereco()->getInformacao() << ","
 		<< areaSupervisao << "," << areaFormacao << "," << formacaoMaxima << "," << funcionarioVec[i]->getFolhaSalarial(1)->getSalarioBase() << "\n";
@@ -57,16 +75,28 @@ void Arquivo::criaArquivoCsv(std::vector < Funcionario * > &funcionarioVec) {
 
 	}
 
+	/* Fecha o arquivo	*/
 	outputCsv.close();
 }
 
-
-void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
+/***
+ * atualizaArquivoFolha(): Função responsável por adicionamente somente um funcionario em arquivo
+ * 
+ * Parâmetros:
+ * 						Funcionario * : ponteiro para o tipo funcionario, região que pega os dados para inserção
+ * 
+ * Retorno:
+ * 						nenhum
+ ****/
+void Arquivo::atualizaArquivoFolha(Funcionario *presidente) {
+	
+	// Abertura do arquivo
 	std::fstream outputCsv((path + "Folha.csv").c_str(), std::ios::out);
 	if(!outputCsv) {
 		throw TentativaAbrirArquivo("Dados.csv");
 	}
-
+	
+	// Inserção do arquivo
 	outputCsv << presidente->getCodigoFuncionario() << ","  << presidente->getDesignacaoStr() << "," << presidente->getCPF() << ", " << presidente->getNome() << "," 
 		<< presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "," << presidente->getEndereco()->getInformacao() << ","
 		<< "Nenhuma" << "," << ((Presidente *)presidente)->getAreaFormacao() << "," << ((Presidente*)presidente)->getFormacaoMax() << "," << presidente->getFolhaSalarial(1)->getSalarioBase() << "\n";
@@ -74,17 +104,42 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 	outputCsv.close();
 }
 
+/***
+ * CriaArquivoBaseDadosZerado() : Função responsável por criar a base de dados zeradas
+ * 
+ * 
+ * Parãmetros: 				
+ * 								nenhum
+ * 
+ * Retorno:
+ * 								nenhum
+ ****/
 void Arquivo::criaArquivoBaseDadosZerado() {
 	
+	// Abre o arquivo de modo de saida e para apagar os dados
 	std::ofstream outputCsv((path + "Dados.csv").c_str(), std::ios::out);
 	if(!outputCsv) {
 		throw TentativaAbrirArquivo("Dados.csv");
 	}
+	// Fecha o arquivo
 	outputCsv.close();
 }
 
-void Arquivo::criaBaseDadosCsv(const std::vector < Funcionario *> &funcionarioVec) {
+
+
+/***
+ * AtualizaBaseDadosCsv(): Função responsável por criar as bases de dados no Csv
+ * 
+ * Parâmetros:
+ * 						const std::vector < Funcionario *> : Possui os dados para cadastramando nas bases de dados
+ * 
+ * 
+ * Retorno:
+ * 						nenhum
+ ****/
+void Arquivo::AtualizaBaseDadosCsv(const std::vector < Funcionario *> &funcionarioVec) {
 	
+	// Abre o arquivo para adicionar no fim dele	*/
 	std::ofstream outputCsv;
 	outputCsv.open((path + "Dados.csv"), std::ios::app);
 
@@ -92,8 +147,10 @@ void Arquivo::criaBaseDadosCsv(const std::vector < Funcionario *> &funcionarioVe
 		throw TentativaAbrirArquivo("Dados.csv");
 	}
 
+	// Strings para trẽs áreas de supervisã
 	std::string areaSupervisao, areaFormacao, formacaoMaxima;
 	
+	//Percorre cada  vector e insere no final do arquiv
 	for(int i = 0; i < funcionarioVec.size(); i++) {
 		
 		
@@ -123,7 +180,19 @@ void Arquivo::criaBaseDadosCsv(const std::vector < Funcionario *> &funcionarioVe
 
 }
 
+/***
+ * addPresidenteBaseDadosCsv(): Função responsável por adicionar somente o presidente na base de dados
+ * 
+ * Parâmetros:
+ * 						Funcionario * : Possui os dados para cadastramando nas bases de dados
+ * 
+ * 
+ * Retorno:
+ * 						nenhum
+ ****/
 void Arquivo::addPresidenteBaseDadosCsv(Funcionario *presidente) {
+
+	// Abre  o arquivo para colocar no fim do arquivo
 	std::ofstream outputCsv;
 	outputCsv.open((path + "Dados.csv"), std::ios::app);
 
@@ -131,20 +200,29 @@ void Arquivo::addPresidenteBaseDadosCsv(Funcionario *presidente) {
 		throw TentativaAbrirArquivo("Dados.csv");
 	}
 
-	
+	/* Inserção de todos os dados como designação, codigo, cpf, nome, telefone, idade, data de ingresso, cep, numero, area de supervisão, formação e formação máxima	*/
 	outputCsv << presidente->getDesignacaoInt() << "," << presidente->getCodigoFuncionario() << "," << presidente->getCPF() << ", " << presidente->getNome() << "," 
 	<< presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "," << presidente->getEndereco()->getCEP()<< "," <<
 	presidente->getEndereco()->getNumero()<< "," << "Nenhuma" << "," <<((Presidente *)presidente)->getAreaFormacao() << "," << ((Presidente*)presidente)->getFormacaoMax() << "," << presidente->getFolhaSalarial(1)->getSalarioBase() << "\n";
 		
-
-	
-
+	// Fechamento do arquivo
 	outputCsv.close();
 }
 
+/***
+ * carregaDadosCsv: Carrega os dados do csv
+ * 
+ * 
+ * Parâmetros:
+ * 				std::vector < Funcionario * >& : 3 vector para a inserção de dados que recebe como referencia
+ * 				Funcionario **: aponta para uma variavel do tipo funcionario
+ ***/
+
 void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario **presidente) {
+	// Abre os arquivos para entrada de dados
 	std::ifstream inputCsv((path + "Dados.csv").c_str(), std::ios::in);
 
+	// Verifica se o arquivo existia, caso não avisa ao usuario e cria o arquivo do zero
 	if(!inputCsv) {
 		std::cout << "Arquivos zerados. Nenhum funcionário cadastrado" << std::endl;
 		std::ifstream inputCsv((path + "Dados.csv").c_str(), std::ios::app);
@@ -153,59 +231,68 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 		throw TentativaAbrirArquivo("Dados.csv");
 	}
 
-	std::string linha, buffer;
-	std::vector < std::string > palavras;
-	std::string dataBuffer;
-	char *doubleBuffer;
+	std::string linha, buffer;	// linha é responsável por ler a linha de dadosCsv e bufffer responsável por armazenar cada palavra entre vírgulas
+	std::vector < std::string > palavras; // Contém um vector de palavras que são as palavras entre cada vírgulas
+	std::string dataBuffer;				// Responsável por armazenar o buffer do tratamento de data
+	char *doubleBuffer;					// Armazena o buffer da leitura de um valor double
 	
 	
-	Funcionario *funcionario;
-	int data[3];
+	Funcionario *funcionario;	// Ponteiro que inicializar a memória do tipo
+	int data[3];				// Array que contém a data de inserção do usuario
 
-	std::string nome, cpf, telefone, cep, areaSupervisao, areaFormacao, formacaMaxima;
+	std::string nome, cpf, telefone, cep, areaSupervisao, areaFormacao, formacaMaxima; // Dados responsáveis para inicialização dos funcionarios
+	
+	/* Outros dados do funcionario	*/
 	double salarioBase;
 	int codigo, idade, numero;
-	bool existePresida = false;
+	bool existePresida = false; // Variavel que indica se o presidente existe ou não
 	
-	
+	// Loop responsável pela leitura do arquivo
 	while(1) {
 		
+		// Pega-se a linha
 		getline(inputCsv, linha);
+		// Verifica se já chegou no fim do arquivo
 		if(inputCsv.eof()) {
 			break;
 		}
-
+		// Armazena a linha em uma stream de string
 		std::stringstream dados(linha);
-
+		
+		// Toda vez que eu achar uma "," armazena em buffer e por fim adiciona a palavra no vector de strings
 		while(getline(dados, buffer,',')) {
 			palavras.push_back(buffer);
-			std::cout << buffer << " ";
 			
 		}
 
-		// Vamos verificar seu tipo e percorrer os dados na seguinte ordem
+		
+		
+		int indice = 0; // Indice do array de data
+
+		
+		std::string cpfBuffer; // Armazena o cpf temporariamente
+		std::string cepBuffer; // Armazena o cep temporariamente
+
+		
+		
+		// Agora percorre o vector, que contém todas as palavras daquela linha
+
+		//Vamos verificar seu tipo e percorrer os dados na seguinte ordem
 		//Codigo, cpf, nome, telefone, idade, data de entrada, cep, numero
 		//Area de supervisao, area de formacao, formacao maxima e salario base 
-		int indice = 0;
-
-		for(int i = 0; i < palavras[i].size(); i++) {
-			std::cout << palavras[i] << " ";
-		}
-		
-		std::string cpfBuffer;
-		std::string cepBuffer;
-		int primeiraLetraNome = 0;
 		for(int i = 1; i < palavras.size(); i++) {
-
+			
 			switch(i) {
 				
 				case 1:
-					codigo = stoi(palavras[i]);
+					codigo = stoi(palavras[i]); // Converte o nome
 					break;
 				case 2:
-					// Temos o seguindo cpf: 118.196.924-77
-					cpfBuffer.clear();
 
+					// Temos o seguindo cpf: 118.196.924-77
+					cpfBuffer.clear(); // Limpa o buffer
+
+					// Percorre o cpf e tudo que for diferente de "." e "-" adiciona ao cpf
 					for(int j = 0; j < palavras[i].size(); j++) {
 						
 						if(palavras[i][j] != '.' && palavras[i][j] != '-') {
@@ -218,7 +305,9 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 					
 					
 					nome = palavras[i];
-					// Caso eu tenha 4 espaços e leandro devo apagar tudo até leandro
+
+					// Caso a palavra possuia o caractere " " antes do nome, aqui ele será retirada
+					// Percorre a string até achar uma letra e exclui tudo do nome até essa posição de letra
 					for(int j = 0; j < palavras[i].size(); j++) {
 						if(palavras[i][j] != ' ') {
 							if(j != 0) {
@@ -231,12 +320,13 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 					}
 					break;
 				case 4:
+					// Função responsável por trata (83) no telefone
 					telefone = palavras[i];
-					//Temos (83)
+					
 					telefone.erase(telefone.begin(), telefone.begin() + 1);
-					// Temos 83)
+					
 					telefone.erase(telefone.begin() + 2, telefone.begin() + 3);
-					// temos 8398790-
+					// Necessita retirar - da string telefone
 					telefone.erase(telefone.begin() + 7, telefone.begin() + 8);
 					break;
 				case 5:
@@ -244,10 +334,13 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 					break;
 				case 6:
 
-					dataBuffer.clear();
+					dataBuffer.clear(); // Limpa o buffer de data
 					
+					// Função responsável por ler a data no formato 27/04/2002
+					// E retirar o dia, mes e ano certos
+					// Tudo que ler e for diferente de / é um numero
+					// e para o ultimo numero utiliza-se a posição de j para indicar que pegamos todo o valor
 					for(int j = 0; j < palavras[i].size(); j++) {
-						//27/04/2002
 						
 						if(palavras[i][j] != '/') {
 							dataBuffer.push_back(palavras[i][j]);
@@ -261,7 +354,6 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 						else if (palavras[i][j] == '/'){
 							data[indice] = stoi(dataBuffer);
 							indice++;
-							std::cout << dataBuffer << std::endl;
 							dataBuffer.clear();
 						}
 					}
@@ -270,10 +362,12 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 				case 7:
 					// Temos 58052-310
 					cep = palavras[i];
+					// Necessário retirar o - utilizando erase
 					cep.erase(cep.begin() + 5, cep.begin() + 6);
 					break;
 				
 				case 8:
+					/* Conversão da palavra em inteiro	*/
 					numero = stoi(palavras[i]);
 					break;
 				case 9:
@@ -286,12 +380,13 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 					formacaMaxima = palavras[i];
 					break;
 				case 12:
+					/* Conversão da palavra em double e joga no buffer	*/
 					salarioBase = strtod(palavras[i].c_str(), &doubleBuffer);
 					break;
 			}
 		}
 		
-
+		/* Inicialização dependendo do tipo e armazena no vetor	*/
 		if(stoi(palavras[0]) == 0) {
 			funcionario = new Operador(codigo, nome, cpf, idade, cep, numero, telefone, data, 0);
 			operadores.push_back(funcionario);
@@ -313,8 +408,9 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 		palavras.clear();
 
 	}
+	// Caso o presidente não existe, atribui nullptr a ele
 	if(!existePresida) {
-		presidente = nullptr;
+		*presidente = nullptr;
 	}
 
 }

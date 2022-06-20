@@ -52,6 +52,7 @@ class Empresa {
         Funcionario* buscarFuncionario(int codigo, int *indice, int *designacao);
         void buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal);
         void buscarFuncionariosParcial(std::string informacao, int opcao);
+        
 
         /* DESTRUTOR */
         virtual ~Empresa();
@@ -64,7 +65,7 @@ class Empresa {
         Funcionario *presidente = nullptr;
         
         Arquivo dadosArquivos; // Banco de dados
-        
+
         // Histórico do arquivo
 		HistoricoArquivo historico;
 };

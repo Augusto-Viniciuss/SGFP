@@ -33,53 +33,28 @@ void HistoricoArquivo::setModificacao(int tipoFuncionario,std::string modificaca
 	modificacoes[tipoFuncionario] = modificacao;
 }
 
-
+/* Seta o codigo	*/
 void HistoricoArquivo::setCodigo(int tipoFuncionario, int codigo) {
 	this->codigos[tipoFuncionario] = codigo;
 }
 
-
+/* Retorna o codigo	*/
 int HistoricoArquivo::getCodigo(int tipoFuncionario) {
 	return this->codigos[tipoFuncionario];
 }
 
-
+/* Seta o nome	*/
 void HistoricoArquivo::setNome(int tipoFuncionario, std::string nomeValor) {
 	nome[tipoFuncionario] = nomeValor;
 }
-
+/* Retorna o nome	*/
 std::string HistoricoArquivo::getNome(int tipoFuncionario) {
 
 	return this->nome[tipoFuncionario];
 }
 
-/* Printa modificaçao recebe o tipoFuncionario e o codigo dele, e então abre o arquivo .csv	*/
-/* E tenta procurar a linha correspondente ao tipo e codigo do usuario	*/
-void HistoricoArquivo::printaModificacao(int tipoFuncionario,int codigoFuncionario){
-	entradaHistorico.open(path + "Historico.csv", std::ios::in);
 
-	if(!entradaHistorico) {
-		throw TentativaAbrirArquivo("Historico.csv");
-	}
-
-	
-	int tipoEntrada, codigoEntrada;
-	std::string linha;
-
-	while(!entradaHistorico.eof()) {
-
-		std::getline(entradaHistorico, linha);
-		if(linha.find(std::to_string(tipoFuncionario)) != -1 && linha.find(std::to_string(codigoFuncionario)) != -1)
-		{
-			std::cout << linha << std::endl;
-		}
-
-	}
-
-	entradaHistorico.close();
-
-}
-
+// Função responsável por escrever a modificação
 void HistoricoArquivo::escreveArquivoModificacoes(int tipoFuncionario) {
 	
 	saidaHistorico.open(path + "Historico.csv", std::ios::app);

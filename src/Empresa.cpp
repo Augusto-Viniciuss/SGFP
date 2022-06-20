@@ -24,18 +24,18 @@ Empresa::Empresa() {
 Empresa::~Empresa() {
 
 
-    dadosArquivos.criaArquivoCsv(operadores);
-    dadosArquivos.criaArquivoCsv(gerentes);
-    dadosArquivos.criaArquivoCsv(diretores);
+    dadosArquivos.atualizaArquivoFolha(operadores);
+    dadosArquivos.atualizaArquivoFolha(gerentes);
+    dadosArquivos.atualizaArquivoFolha(diretores);
     
     if(qtdFuncionarios[PRESIDENTE] != 0) {
-        dadosArquivos.adicionaArquivoCsv(presidente);
+        dadosArquivos.atualizaArquivoFolha(presidente);
         dadosArquivos.addPresidenteBaseDadosCsv(presidente);
     } 
 
-    dadosArquivos.criaBaseDadosCsv(operadores);
-    dadosArquivos.criaBaseDadosCsv(diretores);
-    dadosArquivos.criaBaseDadosCsv(gerentes);
+    dadosArquivos.AtualizaBaseDadosCsv(operadores);
+    dadosArquivos.AtualizaBaseDadosCsv(diretores);
+    dadosArquivos.AtualizaBaseDadosCsv(gerentes);
 
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
         
