@@ -8,6 +8,9 @@
 #include "FuncionarioJaCadastradoExcept.h"
 #include "FuncionarioNaoEstaCadastradoExcept.h"
 #include "OpcaoInvalidaException.h"
+#include <locale.h>
+
+
 
 #define INT 1
 #define STR 2
@@ -20,6 +23,7 @@ int main() {
     Interface interface;
     int opcaoMenu;
 
+    setlocale(LC_ALL, NULL);
 
     while(true) {
         

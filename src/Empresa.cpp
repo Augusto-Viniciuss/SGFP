@@ -1,46 +1,48 @@
 #include "Empresa.h"
 
 Empresa::Empresa() {
-    
+    //Aqui será lido o banco de dados para o preenchimento dos vectors, e se ele não encontrar o arquivo ou não conseguir abrilo o programa vai lançar uma exceção
     try {
         dadosArquivos.carregaDadosCsv(operadores, gerentes, diretores, &presidente);
     }catch(TentativaAbrirArquivo &problemaArquivo) {
         problemaArquivo.what();
     }
     
+    //É atualizado a quantidade de funcionarios dependendo do tipo, no array que guarda a quantidade de tipos de funcionários
     qtdFuncionarios[OPERADOR] = operadores.size();
     qtdFuncionarios[GERENTE] = gerentes.size();
     qtdFuncionarios[DIRETOR] = diretores.size();
-   
     
+    //Como no nosso programa só é possivel ter um presidente existe uma função especifica pra carregar o presidente
     if(presidente != nullptr) {
         qtdFuncionarios[PRESIDENTE] = 1;
     }
     
+    //Aqui depois de carregar o que já existe na base de dados ela é limpa, para que no proximo salvamento os dados dos funcionarios que já estavam
+    //nela sejam salvos com as alterações feitas na instancia que está sendo executada o programa
     dadosArquivos.criaArquivoBaseDadosZerado();
-  
 }
 
 Empresa::~Empresa() {
-
-
+    //Atualiza o arquivo Folha.csv que é o arquivo ao qual o usúario tem acesso
     dadosArquivos.criaArquivoCsv(operadores);
     dadosArquivos.criaArquivoCsv(gerentes);
     dadosArquivos.criaArquivoCsv(diretores);
     
     if(qtdFuncionarios[PRESIDENTE] != 0) {
         dadosArquivos.adicionaArquivoCsv(presidente);
+        //Novamente como só é possivel ter um presidente no nosso programa temos também uma função especifica para salva-lo no Folha.csv
         dadosArquivos.addPresidenteBaseDadosCsv(presidente);
     } 
 
+    //Atualiza o banco de dados, que é o csv ao qual o usúario não tem acesso, pois é o banco de dados internos do programa
     dadosArquivos.criaBaseDadosCsv(operadores);
     dadosArquivos.criaBaseDadosCsv(diretores);
     dadosArquivos.criaBaseDadosCsv(gerentes);
 
+    //Aqui é liberado a mémoria alocada para os objetos das classes operador, gerente, diretor e presidente
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
-        
         for(int i = 0; i < qtdFuncionarios[tipoFuncionario]; i++) {
-
             if(tipoFuncionario == OPERADOR) {
                 delete operadores[i];
             }
@@ -54,10 +56,7 @@ Empresa::~Empresa() {
                 delete presidente;
             }
         }
- 
     }
-    
-   
 }
 
 int Empresa::getQtdFuncionarios(int tipo) {
@@ -65,8 +64,11 @@ int Empresa::getQtdFuncionarios(int tipo) {
 }
 
 void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
+    //Primeiro é buscado o funcionario para saber se ele já existe, pois se ele existir é lançado uma exceção de funcionario ja cadastrado
     Funcionario *func = buscarFuncionario(funcionario->getCodigoFuncionario());
 
+    //Aqui se a função buscarFuncionario retorna nullptr significa que o funcionario que está tentando cadastrar não existe, logo o funcionario é adicionado ao seu respectivo vector
+    //e a quantidade do tipo é atualizado no array que guarda a quantidade de tipos
     if(func != nullptr) {
         throw FuncionarioJaCadastradoExcept("Funcionario já está cadastrado");
     } else if(tipoFuncionario == OPERADOR) {
@@ -87,18 +89,19 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
         }
     }
 
+    //Sempre que alguém é adicionado o historico de acontecimentos no banco de dados é atualizado
     historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario cadastrado");
     historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
     historico.setDataModificacao(funcionario->getDesignacaoInt());
     historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
     historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
-   
-    
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
+    //O funcionário a ser modificado é procurado
     Funcionario *funcionario = buscarFuncionario(codigo);
     
+    //Se buscarFuncionario retorna nullptr significa que o funcionário não está cadastrado e uma exceção de funcionário não está cadastrado é lançada
     if (funcionario != nullptr) {
         switch (opcao) {
         case 4:
@@ -118,23 +121,26 @@ void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 
+    //Sempre que alguém é modificado o historico do que aconteceu na base de dados é atualizado
     historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
     historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
     historico.setDataModificacao(funcionario->getDesignacaoInt());
     historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
-    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
-   
+    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt()); 
 }
 
 void Empresa::modificarFuncionario(int codigo, int *valor) {
+    //O funcionário a ser modificado é procurado
     Funcionario *funcionario = buscarFuncionario(codigo);
     
+    //Se buscarFuncionario retorna nullptr significa que o funcionário não está cadastrado e uma exceção de funcionário não está cadastrado é lançada
     if (funcionario != nullptr) {
         funcionario->setDataIngresso(valor);
     } else {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 
+    //Sempre que alguém é modificado o historico do que aconteceu na base de dados é atualizado
     historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
     historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
     historico.setDataModificacao(funcionario->getDesignacaoInt());
@@ -143,8 +149,10 @@ void Empresa::modificarFuncionario(int codigo, int *valor) {
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
+    //O funcionário a ser modificado é procurado
     Funcionario *funcionario = buscarFuncionario(codigo);
     
+    //Se buscarFuncionario retorna nullptr significa que o funcionário não está cadastrado e uma exceção de funcionário não está cadastrado é lançada
     if (funcionario != nullptr) {
         switch (opcao) {
         case 2:
@@ -158,6 +166,7 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     }
 
+    //Sempre que alguém é modificado o historico do que aconteceu na base de dados é atualizado
     historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
     historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
     historico.setDataModificacao(funcionario->getDesignacaoInt());
@@ -170,17 +179,17 @@ void Empresa::excluirFuncionario(int codigo) {
     int indice, tipoFuncionario;
     int *p = &indice;
     int *t = &tipoFuncionario;
+    //É usado a sobrecarga que possui paramêtros de ponteiros para conseguir saber o indice e o tipo do funcionario que vai ser excluido
     Funcionario *funcionario = buscarFuncionario(codigo, p, t);
    
     p = t = nullptr;
-   
     
+    //Se buscarFuncionario retorna nullptr o programa vai lançar uma exceção do tipo funcionário não está cadastrado, pois ele não achou o funcionário que foi solicitado para excluir
     if (funcionario == nullptr) {
         throw FuncionarioNaoEstaCadastradoExcept("Funcionário não está cadastrado");
     } 
-   
-   
-   
+    
+    //O funcionário é excluido do vector usando o indice e o tipo dele para saber em qual vector e a posição
     if(tipoFuncionario == 0) {
         this->operadores.erase(operadores.begin() + indice);
         qtdFuncionarios[tipoFuncionario] -= 1;
@@ -197,18 +206,22 @@ void Empresa::excluirFuncionario(int codigo) {
    
     std::cout << "Funcionario excluido dos registros." << std::endl;
 
+    //Sempre que alguém é excluido o historico do que aconteceu no banco de dados é atualizado
     historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi excluido");
     historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
     historico.setDataModificacao(funcionario->getDesignacaoInt());
     historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
     historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    //A mémoria reservada para o funcionário que foi excluido é liberada
     delete funcionario;
     
 }
 
 void Empresa::exibirFuncionario(int codigo) {
+    //É buscado o funcionário para ser exibido
     Funcionario *funcionario = buscarFuncionario(codigo);
 
+    //Se buscarFuncionario retorna nullptr o programa lança uma exceção do tipo funcionário não está cadastrado, pois não foi encontrado o funcionário solicitado
     if (funcionario != nullptr) {
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
         std::cout << "Registro do funcionario de codigo: " << funcionario->getCodigoFuncionario() << std::endl;
@@ -246,10 +259,13 @@ void Empresa::exibirFuncionario(int codigo) {
 void Empresa::exibirTodosFuncionarios() {
     std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
     
+    //Verifica se possui algum funcionário cadastrado, olhando as quantidades dos tipos no array que guarda as quantidades deles
     if((this->qtdFuncionarios[0] == 0) and (this->qtdFuncionarios[1] == 0) and (this->qtdFuncionarios[2] == 0) and (this->qtdFuncionarios[3] == 0)) {
         std::cout << "Nao existem funcionarios cadastrados" << std::endl;
     } else {
+        //O for mais externo é usado para percorres os vectors de acordo com os tipo
         for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+            //O array mais interno é usado para percorrer o vector da iteração do for mais externo
             for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
                 if(tipoFuncionario == OPERADOR) {
                     std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
@@ -305,9 +321,11 @@ void Empresa::exibirTodosFuncionarios() {
 void Empresa::exibirFuncionariosPorTipo(int tipoFuncionario) {
     std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
     
+    //Verifica se existe algum funcionário do tipo solicitado cadastrado, olhando a quantidade do tipo no array que guarda as quantidades dos tipos
     if(this->qtdFuncionarios[tipoFuncionario] == 0) {
         std::cout << "Nao existe nenhum funcionario desse tipo cadastrado." << std::endl;
     } else {
+        //Esse for percorre o vector do tipo solicitado
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
                 std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
@@ -361,22 +379,33 @@ void Empresa::exibirFuncionariosPorTipo(int tipoFuncionario) {
 }
 
 void Empresa::concederAumentoSalarial() {
+    //Esse for externo as folhas de todos os meses
     for(int meses = 1; meses < 13; meses++) {
+        //Esse for percorre os vectors de acordo com o tipo
         for(int tipoFuncionario = 0; tipoFuncionario < 4; tipoFuncionario++) {
+            //Esse for interno percorre o vector do for externo
             for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
                 if(tipoFuncionario == OPERADOR) {
+                    //O aumento só é dado para folhas salariais ainda não calculadas, para isso é verificado o salário liquido da folha no mes em que o for dos meses está na iteração
+                    //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                     if(this->operadores[i]->getFolhaSalarial(meses)->getSalarioLiquido() == 0) {
                         this->operadores[i]->getFolhaSalarial(meses)->aumentarSalarioBase();
                     }
                 } else if(tipoFuncionario == GERENTE) {
+                    //O aumento só é dado para folhas salariais ainda não calculadas, para isso é verificado o salário liquido da folha no mes em que o for dos meses está na iteração
+                    //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                     if(this->gerentes[i]->getFolhaSalarial(meses)->getSalarioLiquido() == 0) {
                         this->gerentes[i]->getFolhaSalarial(meses)->aumentarSalarioBase();
                     }
                 } else if(tipoFuncionario == DIRETOR) {
+                    //O aumento só é dado para folhas salariais ainda não calculadas, para isso é verificado o salário liquido da folha no mes em que o for dos meses está na iteração
+                    //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                     if(this->diretores[i]->getFolhaSalarial(meses)->getSalarioLiquido() == 0) {
                         this->diretores[i]->getFolhaSalarial(meses)->aumentarSalarioBase();
                     }
                 } else if(tipoFuncionario == PRESIDENTE) {
+                    //O aumento só é dado para folhas salariais ainda não calculadas, para isso é verificado o salário liquido da folha no mes em que o for dos meses está na iteração
+                    //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                     if(this->presidente->getFolhaSalarial(meses)->getSalarioLiquido() == 0) {
                         this->presidente->getFolhaSalarial(meses)->aumentarSalarioBase();
                     }
@@ -384,28 +413,39 @@ void Empresa::concederAumentoSalarial() {
             }
         }
     }
+
     std::cout << "Aumento concedido a todos os funcionarios." << std::endl;
 }
 
 void Empresa::calcularFolhaSalarial(int mes) {
+    //O for externo percorre os vectors de acordo com o tipo
     for(int tipoFuncionario = 0; tipoFuncionario < 4; tipoFuncionario++) {
+        //O for interno percorre o vector que o for externo está na iteração atual
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
+                //A folha salárial para o mês solicitado só é calculado para funcionários que ainda não foi calculada, para isso é verificado o salário liquido da folha no mes
+                //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                 if(this->operadores[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
                     this->operadores[i]->calcularSalarioMensal(mes);
                     
                 }
             } else if(tipoFuncionario == GERENTE) {
+                //A folha salárial para o mês solicitado só é calculado para funcionários que ainda não foi calculada, para isso é verificado o salário liquido da folha no mes
+                //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                 if(this->gerentes[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
                     this->gerentes[i]->calcularSalarioMensal(mes);
                     
                 }
             } else if(tipoFuncionario == DIRETOR) {
+                //A folha salárial para o mês solicitado só é calculado para funcionários que ainda não foi calculada, para isso é verificado o salário liquido da folha no mes
+                //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                 if(this->diretores[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
                     this->diretores[i]->calcularSalarioMensal(mes);
                 
                 }
             } else if(tipoFuncionario == PRESIDENTE) {
+                //A folha salárial para o mês solicitado só é calculado para funcionários que ainda não foi calculada, para isso é verificado o salário liquido da folha no mes
+                //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                 if(this->presidente->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
                     this->presidente->calcularSalarioMensal(mes);
                 }
@@ -413,16 +453,18 @@ void Empresa::calcularFolhaSalarial(int mes) {
             }
         }
     }
+
     std::cout << "A folha salarial para o mes solicitado foi calculada com sucesso." << std::endl;
 }
 
 
 void Empresa::imprimirFolhaSalarialFuncionario(int codigo) {
     bool algumMesCalculado = false;
+    //O funcionário é buscado para imprimir a folha salarial dele
     Funcionario *funcionario = buscarFuncionario(codigo);
 
+    //Se buscarFuncionário retornar nullptr o programa lança uma exceção funcionário não está cadastrado, pois ele não encontrou o funcionário para imprimir a folha salárial
     if (funcionario != nullptr) {
-
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
         std::cout << "Folha salarial do funcionario: " << funcionario->getNome() << " // Codigo: " << funcionario->getCodigoFuncionario() << std::endl;
 
@@ -439,6 +481,7 @@ void Empresa::imprimirFolhaSalarialFuncionario(int codigo) {
             }
         }   
         
+        //A variável algumMesCalculado serve como uma flag para se nenhum mês tiver sido calculado o programa informar isso para o usúario
         if(!algumMesCalculado) {
             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
             std::cout << "Nao foi calculada a folha salarial de nenhum mes para esse funcionario." << std::endl;
@@ -451,7 +494,9 @@ void Empresa::imprimirFolhaSalarialFuncionario(int codigo) {
 void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
     Funcionario *funcionario = nullptr;
     
+    //O for externo percorre os vectors de acordo com o tipo
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+        //O for interno percorre o vector que o for externo está na iteração
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
             if(tipoFuncionario == OPERADOR) {
                 if (this->operadores[i]->getNome().find(nome) != std::string::npos) {
@@ -477,6 +522,7 @@ void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
         }
     }
 
+    //Como o ponteiro funcionario foi inicializado apontando para nullptr se o funcionário não for encontrado na instrução anterior o programa vai lançar a exceção funcionário não está cadastrado
     if (funcionario != nullptr) {
         bool algumMesCalculado = false;
 
@@ -496,6 +542,7 @@ void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
             }
         }   
         
+        //A variável algumMesCalculado serve como uma flag para se nenhum mês tiver sido calculado o programa informar isso para o usúario
         if(!algumMesCalculado) {
             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
             std::cout << "Nao foi calculada a folha salarial de nenhum mes para esse funcionario." << std::endl;

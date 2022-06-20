@@ -75,7 +75,6 @@ void Arquivo::adicionaArquivoCsv(Funcionario *presidente) {
 }
 
 void Arquivo::criaArquivoBaseDadosZerado() {
-	
 	std::ofstream outputCsv((path + "Dados.csv").c_str(), std::ios::out);
 	if(!outputCsv) {
 		throw TentativaAbrirArquivo("Dados.csv");
@@ -115,8 +114,6 @@ void Arquivo::criaBaseDadosCsv(const std::vector < Funcionario *> &funcionarioVe
 		outputCsv << funcionarioVec[i]->getDesignacaoInt() << "," << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
 		<< funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "," << funcionarioVec[i]->getEndereco()->getCEP()<< "," <<
 		funcionarioVec[i]->getEndereco()->getNumero()<< "," << areaSupervisao << "," << areaFormacao << "," << formacaoMaxima << "," << funcionarioVec[i]->getFolhaSalarial(1)->getSalarioBase() << "\n";
-		
-
 	}
 
 	outputCsv.close();
@@ -179,22 +176,16 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 
 		while(getline(dados, buffer,',')) {
 			palavras.push_back(buffer);
-			std::cout << buffer << " ";
-			
 		}
 
 		// Vamos verificar seu tipo e percorrer os dados na seguinte ordem
 		//Codigo, cpf, nome, telefone, idade, data de entrada, cep, numero
 		//Area de supervisao, area de formacao, formacao maxima e salario base 
-		int indice = 0;
-
-		for(int i = 0; i < palavras[i].size(); i++) {
-			std::cout << palavras[i] << " ";
-		}
-		
+		int indice = 0;	
 		std::string cpfBuffer;
 		std::string cepBuffer;
 		int primeiraLetraNome = 0;
+
 		for(int i = 1; i < palavras.size(); i++) {
 
 			switch(i) {
@@ -261,7 +252,6 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 						else if (palavras[i][j] == '/'){
 							data[indice] = stoi(dataBuffer);
 							indice++;
-							std::cout << dataBuffer << std::endl;
 							dataBuffer.clear();
 						}
 					}
