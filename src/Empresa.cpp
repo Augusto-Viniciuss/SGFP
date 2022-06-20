@@ -506,18 +506,27 @@ void Empresa::imprimirFolhaSalarialFuncionario(std::string nome) {
     }
 }
 
+// Função responsável por imprimir a folha salaria da empresa, recebe o valor de opção
 void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
+    // Caso a opção seja 1, seta uma variável booleana para false 
     if (opcao == 1) {
         bool algumMesCalculado = false;
-
+        
+        // Printa a folha salaria
         std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
         std::cout << "A folha salarial da empresa para os meses do ano eh: " << std::endl;
-
+        
+        // Verifica todos os meses
         for(int meses = 1; meses < 13; meses++) {
-
+            
+            /* Seta os atributos que serão mostrados na folha salarial  */
             double salarioTotalLiquido, salarioTotalBase, descontoPrevidencia, descontoImpostoRenda;
             salarioTotalBase = salarioTotalLiquido = descontoImpostoRenda = descontoPrevidencia = 0;
 
+            /* Primeiro for responsável pela quantidade de tipos de funcinários */
+            /* Após isso, entra na quantidade de cada tipo e verifica por cada seja operador, gerente, diretor ou presidente    */
+            /* Caso o o salario liquido do funcionario para o mẽs, seja diferente de 0 é porque tem folha salarial  */
+            /* E então printa todos os dados    */
             for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
                 for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
                     if(tipoFuncionario == OPERADOR) {
@@ -559,7 +568,7 @@ void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
                     }
                 }
             }
-
+            /* Caso o salario total seja diferente de 0, printa todos os dados relevantes   */
             if(salarioTotalBase != 0) {
                 std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
                 std::cout << "Mes: " << (meses) << std::endl; 
@@ -569,12 +578,12 @@ void Empresa::imprimirFolhaSalarialEmpresa(int opcao) {
                 std::cout << "Descontos da previdencia social:" << descontoPrevidencia << std::endl;  
             }
         }
-
+        /* Caso não tenha para o mês, printa que não foi calculado  */
         if(!algumMesCalculado) {
             std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
             std::cout << "Nao foi calculada a folha salarial para nenhum mes." << std::endl;
         }
-
+        /* Caso seja a opção 2, realiza o mesmo que o anterior mas somente para um único mês    */
     } else if(opcao == 2) {
         int mes;
         bool mesCalculado = false;
