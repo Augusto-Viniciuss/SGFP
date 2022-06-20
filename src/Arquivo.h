@@ -12,6 +12,7 @@
 #include <vector>
 #include "TentativaAbrirArquivo.h"
 #include "InvalidoArgumentoArquivoException.h"
+#include "HistoricoArquivo.h"
 
 #define QUANTIA_ARQUIVOS 4
 
@@ -41,11 +42,15 @@ class Arquivo{
 		
 		// Carrega todos os dados e adiciona nos vector de operadores, gerentes, diretores e para um ponteiro do tipo funcionario
 		void carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario **presidente);
-			
+		
+		// Retorna o historico do arquivo para que possa ser atualizado no momento certo
+		HistoricoArquivo* getHistoricoArquivo();
+		
 	private:
 		//Path para o caminho da pasta
 		std::string path = "../.gitignore/Dados/"; // path de armazenamento
-		
+		// Histórico do arquivo
+		HistoricoArquivo historico;
 
 
 };

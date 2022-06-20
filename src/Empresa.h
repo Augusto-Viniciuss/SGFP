@@ -13,7 +13,7 @@
 #include "FuncionarioJaCadastradoExcept.h"
 #include "FuncionarioNaoEstaCadastradoExcept.h"
 #include "Arquivo.h"
-#include "HistoricoArquivo.h"
+
 
 #define OPERADOR 0
 #define GERENTE 1
@@ -65,9 +65,6 @@ class Empresa {
         Funcionario *presidente = nullptr;
         
         Arquivo dadosArquivos; // Banco de dados
-
-        // Histórico do arquivo
-		HistoricoArquivo historico;
 };
 
 #endif

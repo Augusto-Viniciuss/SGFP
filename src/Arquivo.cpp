@@ -91,9 +91,9 @@ void Arquivo::atualizaArquivoFolha(std::vector < Funcionario * > &funcionarioVec
 void Arquivo::atualizaArquivoFolha(Funcionario *presidente) {
 	
 	// Abertura do arquivo
-	std::fstream outputCsv((path + "Folha.csv").c_str(), std::ios::out);
+	std::fstream outputCsv((path + "Folha.csv").c_str(), std::ios::app);
 	if(!outputCsv) {
-		throw TentativaAbrirArquivo("Dados.csv");
+		throw TentativaAbrirArquivo("Folha.csv");
 	}
 	
 	// Inserção do arquivo
@@ -410,5 +410,8 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 	if(!existePresida) {
 		*presidente = nullptr;
 	}
+}
 
+HistoricoArquivo* Arquivo::getHistoricoArquivo(){
+	return &this->historico;
 }

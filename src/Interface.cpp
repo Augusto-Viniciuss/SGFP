@@ -715,8 +715,12 @@ int Interface::validaMes(std::string mes){
 }
 
 int Interface::validaInteiro(std::string texto){
+    if(texto.empty()) {
+        throw OpcaoInvalidaException("Caracter inválido digitado\nDigite apenas números");
+    }
+    
     for(int i = 0; i < texto.size(); i++){
-        if(texto[i] < '0' || texto[i] > '9'){
+        if(texto[i] < '0' || texto[i] > '9' || texto[i] == '\n'){
             throw OpcaoInvalidaException("Caracter inválido digitado\nDigite apenas números");
         }
     }

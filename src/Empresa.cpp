@@ -91,11 +91,11 @@ void Empresa::addFuncionario(Funcionario *funcionario, int tipoFuncionario) {
     }
 
     //Sempre que alguém é adicionado o historico de acontecimentos no banco de dados é atualizado
-    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario cadastrado");
-    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
-    historico.setDataModificacao(funcionario->getDesignacaoInt());
-    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
-    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setModificacao(funcionario->getDesignacaoInt(), "Usuario cadastrado");
+    dadosArquivos.getHistoricoArquivo()->setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    dadosArquivos.getHistoricoArquivo()->setDataModificacao(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    dadosArquivos.getHistoricoArquivo()->escreveArquivoModificacoes(funcionario->getDesignacaoInt());
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
@@ -123,11 +123,11 @@ void Empresa::modificarFuncionario(int codigo, int opcao, std::string valor) {
     }
 
     //Sempre que alguém é modificado o historico do que aconteceu na base de dados é atualizado
-    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
-    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
-    historico.setDataModificacao(funcionario->getDesignacaoInt());
-    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
-    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt()); 
+    dadosArquivos.getHistoricoArquivo()->setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    dadosArquivos.getHistoricoArquivo()->setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    dadosArquivos.getHistoricoArquivo()->setDataModificacao(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    dadosArquivos.getHistoricoArquivo()->escreveArquivoModificacoes(funcionario->getDesignacaoInt()); 
 }
 
 void Empresa::modificarFuncionario(int codigo, int *valor) {
@@ -142,11 +142,11 @@ void Empresa::modificarFuncionario(int codigo, int *valor) {
     }
 
     //Sempre que alguém é modificado o historico do que aconteceu na base de dados é atualizado
-    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
-    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
-    historico.setDataModificacao(funcionario->getDesignacaoInt());
-    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
-    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    dadosArquivos.getHistoricoArquivo()->setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    dadosArquivos.getHistoricoArquivo()->setDataModificacao(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    dadosArquivos.getHistoricoArquivo()->escreveArquivoModificacoes(funcionario->getDesignacaoInt());
 }
 
 void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
@@ -168,11 +168,11 @@ void Empresa::modificarFuncionario(int codigo, int opcao, int valor) {
     }
 
     //Sempre que alguém é modificado o historico do que aconteceu na base de dados é atualizado
-    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
-    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
-    historico.setDataModificacao(funcionario->getDesignacaoInt());
-    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
-    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setModificacao(funcionario->getDesignacaoInt(), "Usuario foi atualizado");
+    dadosArquivos.getHistoricoArquivo()->setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    dadosArquivos.getHistoricoArquivo()->setDataModificacao(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    dadosArquivos.getHistoricoArquivo()->escreveArquivoModificacoes(funcionario->getDesignacaoInt());
     
 }
 
@@ -208,11 +208,11 @@ void Empresa::excluirFuncionario(int codigo) {
     std::cout << "Funcionario excluido dos registros." << std::endl;
 
     //Sempre que alguém é excluido o historico do que aconteceu no banco de dados é atualizado
-    historico.setModificacao(funcionario->getDesignacaoInt(), "Usuario foi excluido");
-    historico.setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
-    historico.setDataModificacao(funcionario->getDesignacaoInt());
-    historico.setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
-    historico.escreveArquivoModificacoes(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setModificacao(funcionario->getDesignacaoInt(), "Usuario foi excluido");
+    dadosArquivos.getHistoricoArquivo()->setCodigo(funcionario->getDesignacaoInt(), funcionario->getCodigoFuncionario());
+    dadosArquivos.getHistoricoArquivo()->setDataModificacao(funcionario->getDesignacaoInt());
+    dadosArquivos.getHistoricoArquivo()->setNome(funcionario->getDesignacaoInt(), funcionario->getNome());
+    dadosArquivos.getHistoricoArquivo()->escreveArquivoModificacoes(funcionario->getDesignacaoInt());
     //A mémoria reservada para o funcionário que foi excluido é liberada
     delete funcionario;
     
