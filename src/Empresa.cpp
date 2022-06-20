@@ -258,10 +258,9 @@ void Empresa::exibirFuncionario(int codigo) {
 }
 
 void Empresa::exibirTodosFuncionarios() {
-    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
-    
     //Verifica se possui algum funcionário cadastrado, olhando as quantidades dos tipos no array que guarda as quantidades deles
     if((this->qtdFuncionarios[0] == 0) and (this->qtdFuncionarios[1] == 0) and (this->qtdFuncionarios[2] == 0) and (this->qtdFuncionarios[3] == 0)) {
+        std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
         std::cout << "Nao existem funcionarios cadastrados" << std::endl;
     } else {
         //O for mais externo é usado para percorres os vectors de acordo com os tipo
@@ -320,10 +319,9 @@ void Empresa::exibirTodosFuncionarios() {
 }
 
 void Empresa::exibirFuncionariosPorTipo(int tipoFuncionario) {
-    std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
-    
     //Verifica se existe algum funcionário do tipo solicitado cadastrado, olhando a quantidade do tipo no array que guarda as quantidades dos tipos
     if(this->qtdFuncionarios[tipoFuncionario] == 0) {
+            std::cout << std::endl << "*******************************************************************" << std::endl << std::endl;
         std::cout << "Nao existe nenhum funcionario desse tipo cadastrado." << std::endl;
     } else {
         //Esse for percorre o vector do tipo solicitado
@@ -763,8 +761,17 @@ Funcionario* Empresa::buscarFuncionario(int codigo, int *indice, int *designacao
 void Empresa::buscarFuncionariosIntervaloTempo(int *dataInicial, int *dataFinal) {
     bool funcionarioEncontrado = false;
 
+    //O for externo percorre os vectors de acordo com o tipo
     for(int tipoFuncionario = 0; tipoFuncionario < QTD_DE_TIPOS; tipoFuncionario++) {
+        //O for interno percoore o vector que o for externo está na iteração
         for (int i = 0; i < this->qtdFuncionarios[tipoFuncionario]; i++) {
+            /*
+                A logica usada para o intervalo de tempo é que primeiro é verificado o ano, se o ano da data de ingresso daquel funcionário for menor do que o ano do intervalo e máximo e maior do que o ano do intervalo minimo aquele funcionário pode ser mostrado ao usúario na busca
+                se o ano da data de ingresso do funcionário for igual ao ano do intervalo máximo ou igual ao ano do intervalo minimo, tem que ser verificado o mês
+                se o mês da data de ingresso do funcionário for menor que o mês do intervalo máximo e menor que o mês do intervalo minimo, o funcionário pode ser mostrado ao usúario na busca,
+                se o mês da data de ingresso do funcionário for igual ao mês do intervalo máximo ou igual ao mês do intervalo minimo, tem que ser verificado o dia
+                se o dia da data de ingresso for igual ou maior do que o dia do intervalo minimo ou for igual ou menor do que o dia do intervalo máximo, o funcionário pode ser mostrado para o usúario na busca
+            */
             if(tipoFuncionario == OPERADOR) {
                 if (this->operadores[i]->getDataIngresso().getAno() > dataInicial[2] and this->operadores[i]->getDataIngresso().getAno() < dataFinal[2]) {
                     funcionarioEncontrado = true;
