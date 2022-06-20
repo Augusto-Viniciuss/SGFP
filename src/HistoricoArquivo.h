@@ -19,28 +19,29 @@ class HistoricoArquivo{
 		void setModificacao(int tipoFuncionario, std::string);
 		// Printa modificação recebe o indice das modificações
 
+		/* Seta o codigo e pega codigo	*/
 		void setCodigo(int tipoFuncionario, int codigo);
 		int getCodigo(int);
 
 		/* SetNome e getNome	*/
 		void setNome(int tipoFuncionario, std::string nome);
 		std::string getNome(int);
-
-		void printaModificacao(int ,int);
 		
+		/* EScre a modificação	*/
 		void escreveArquivoModificacoes(int);
-		
+
 		virtual ~HistoricoArquivo();
 
 	private:
 		/* modificacoes, codigos, datas, nome, referem-se à um determinado arquivo	*/
 		/* Dependendo do indice, daquela modificação atual	*/
 		std::string modificacoes[QUANTIA_ARQUIVOS];
-		int codigos[QUANTIA_ARQUIVOS];
-		std::string  datasModificacoes[QUANTIA_ARQUIVOS];
-		std::string nome[QUANTIA_ARQUIVOS];
-		std::ofstream saidaHistorico;
-		std::ifstream entradaHistorico;
+		
+		int codigos[QUANTIA_ARQUIVOS]; // Armazena o codigo
+		std::string  datasModificacoes[QUANTIA_ARQUIVOS]; // armazena as datas de modificações
+		std::string nome[QUANTIA_ARQUIVOS]; // Arazema nome
+		std::ofstream saidaHistorico; // stream para saida de dados
+		std::ifstream entradaHistorico; // stream para entrada de dados
 		std::string path = "../.gitignore/Dados/"; // path de armazenamento
 
 

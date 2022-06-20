@@ -25,13 +25,13 @@ class Arquivo{
 		Arquivo();
 
 		// Cria o arquivo Csv
-		void criaArquivoCsv(std::vector < Funcionario *> &funcionariosVec);
+		void atualizaArquivoFolha(std::vector < Funcionario *> &funcionariosVec);
 		
 		// Adiciona um usuario no arquivo Csv
-		void adicionaArquivoCsv(Funcionario *); //armazena somente do presidente
+		void atualizaArquivoFolha(Funcionario *); //armazena somente do presidente
 
 		// Cria a base de dados csv com todos os dados do vector de funcionario
-		void criaBaseDadosCsv(const std::vector < Funcionario * >&funcionariosVec);
+		void AtualizaBaseDadosCsv(const std::vector < Funcionario * >&funcionariosVec);
 		
 		// Adiciona presidente na base de dados com um ponteiro para funcionario
 		void addPresidenteBaseDadosCsv(Funcionario *);
@@ -43,18 +43,7 @@ class Arquivo{
 		void carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario **presidente);
 			
 	private:
-		/* Arquivos para saida de dados	*/
-		std::ofstream arquivoFuncionariosSaida[QUANTIA_ARQUIVOS];
-	
-		/* Contém os nomes dos arquivos	*/
-		std::string nomeArquivos[QUANTIA_ARQUIVOS];
-		/* Arquivos para entrada de dados	*/
-		std::ifstream arquivosEntradas[QUANTIA_ARQUIVOS];
-	
-
-		
-		/*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
-
+		//Path para o caminho da pasta
 		std::string path = "../.gitignore/Dados/"; // path de armazenamento
 		
 
