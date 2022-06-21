@@ -16,14 +16,12 @@ Empresa::Empresa() {
     //Como no nosso programa só é possivel ter um presidente existe uma função especifica pra carregar o presidente
     if(presidente != nullptr) {
         qtdFuncionarios[PRESIDENTE] = 1;
-    }
-    
-    //Aqui depois de carregar o que já existe na base de dados ela é limpa, para que no proximo salvamento os dados dos funcionarios que já estavam
-    //nela sejam salvos com as alterações feitas na instancia que está sendo executada o programa
-    dadosArquivos.criaArquivoBaseDadosZerado();
+    }  
 }
 
 Empresa::~Empresa() {
+    //O banco de dados é zerado para que possa ser atualizado com as novas informações dos funcionários
+    dadosArquivos.criaArquivoBaseDadosZerado();
 
     //Atualiza o arquivo Folha.csv que é o arquivo ao qual o usúario tem acesso
     dadosArquivos.atualizaArquivoFolha(operadores);
