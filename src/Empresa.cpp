@@ -425,6 +425,10 @@ void Empresa::calcularFolhaSalarial(int mes) {
                 //A folha salárial para o mês solicitado só é calculado para funcionários que ainda não foi calculada, para isso é verificado o salário liquido da folha no mes
                 //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                 if(this->operadores[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
+                    if(this->operadores[i]->getDataIngresso().getAno() == 2022 && this->operadores[i]->getDataIngresso().getMes() > mes) {
+                        break;
+                    }
+                    
                     this->operadores[i]->calcularSalarioMensal(mes);
                     
                 }
@@ -432,6 +436,10 @@ void Empresa::calcularFolhaSalarial(int mes) {
                 //A folha salárial para o mês solicitado só é calculado para funcionários que ainda não foi calculada, para isso é verificado o salário liquido da folha no mes
                 //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                 if(this->gerentes[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
+                    if(this->gerentes[i]->getDataIngresso().getAno() == 2022 && this->gerentes[i]->getDataIngresso().getMes() > mes) {
+                        break;
+                    }
+
                     this->gerentes[i]->calcularSalarioMensal(mes);
                     
                 }
@@ -439,6 +447,10 @@ void Empresa::calcularFolhaSalarial(int mes) {
                 //A folha salárial para o mês solicitado só é calculado para funcionários que ainda não foi calculada, para isso é verificado o salário liquido da folha no mes
                 //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                 if(this->diretores[i]->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
+                    if(this->diretores[i]->getDataIngresso().getAno() == 2022 && this->diretores[i]->getDataIngresso().getMes() > mes) {
+                        break;
+                    }
+
                     this->diretores[i]->calcularSalarioMensal(mes);
                 
                 }
@@ -446,6 +458,10 @@ void Empresa::calcularFolhaSalarial(int mes) {
                 //A folha salárial para o mês solicitado só é calculado para funcionários que ainda não foi calculada, para isso é verificado o salário liquido da folha no mes
                 //se o salário liquido daquele mês estiver zerado é porque ainda não foi calculado a folha salárial daquele mês
                 if(this->presidente->getFolhaSalarial(mes)->getSalarioLiquido() == 0) {
+                    if(this->presidente->getDataIngresso().getAno() == 2022 && this->presidente->getDataIngresso().getMes() > mes) {
+                        break;
+                    }
+
                     this->presidente->calcularSalarioMensal(mes);
                 }
                 

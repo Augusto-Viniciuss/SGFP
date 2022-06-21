@@ -32,7 +32,6 @@ int main() {
             
             /* Armazena a opção inserida pelo usuário   */
             opcaoMenu = interface.menu();
-
             /* Entra em algum dos if dependendo do tipo de escolha do usuário*/
             /*  [1] para cadastrar um novo funcionario na empresa.
                 [2] para modificar o registro de um funcionario ja cadastrado.
