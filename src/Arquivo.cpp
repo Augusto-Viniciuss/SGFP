@@ -404,7 +404,7 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 		if(stoi(palavras[0]) == 0) {
 			funcionario = new Operador(codigo, nome, cpf, idade, cep, numero, telefone, data, 0);
 			operadores.push_back(funcionario);
-
+			
 			for(int mes = 1; mes < 13; mes++) {
 				funcionario->setHorasTrabalhadas(mes, horasTrabalhadas[mes - 1]);
 			}
