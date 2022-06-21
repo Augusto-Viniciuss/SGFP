@@ -22,35 +22,91 @@ class Arquivo{
 	
 	public:
 		
-		// O construtor irá inicializar o arquivo de Dados inicialmente
+		/**
+		* Construtor()
+		* 
+		*	Responsável por carregar o arquivo de folha.csv
+		*/
 		Arquivo();
 
-		// Cria o arquivo Csv
+		/**
+		* atualizaArquivoFolha
+		* 
+		* \param lista lista de funcionários
+		* 
+		* Responsável por atualizar o arquivo de folha.csv
+		* \return Nada
+		*/
 		void atualizaArquivoFolha(std::vector < Funcionario *> &funcionariosVec);
 		
-		// Adiciona um usuario no arquivo Csv
-		void atualizaArquivoFolha(Funcionario *); //armazena somente do presidente
+		/**
+		* atualizaArquivoFolha
+		* 
+		* \param ponteiro para um tipo de funcionário
+		* 
+		* Responsável por atualizar o arquivo de folha.csv com apenas um funcionário
+		* \return Nada
+		*/
+		void atualizaArquivoFolha(Funcionario *); 
 
-		// Cria a base de dados csv com todos os dados do vector de funcionario
+
+		/**
+		* atualizaBaseDadosCsv
+		* 
+		* \param lista lista de funcionários para salvar na base de dados
+		* 
+		* Responsável por atualizar a base de dados
+		* \return Nada
+		*/
 		void AtualizaBaseDadosCsv(const std::vector < Funcionario * >&funcionariosVec);
 		
-		// Adiciona presidente na base de dados com um ponteiro para funcionario
+		/**
+		* addPresidenteBaseDadosCsv
+		* 
+		* \param ponteiro para um tipo de funcionário
+		* 
+		* Responsável por atualizar o arquivo de base de dados com apenas um funcionario
+		* \return Nada
+		*/
 		void addPresidenteBaseDadosCsv(Funcionario *);
 		
-		// Cria a base de dados zerada
+
+		/**
+		* criaArquivoBaseDadosZerado
+		*  
+		* Responsável por criar o arquivo zerado
+		*
+		* \return Nada
+		*/
 		void criaArquivoBaseDadosZerado();
 		
-		// Carrega todos os dados e adiciona nos vector de operadores, gerentes, diretores e para um ponteiro do tipo funcionario
+
+		/**
+		* CarregaDadosCsv
+		* 
+		* \param lista de operadores
+		* \param lista de gerentes
+		* \param lista de diretores
+		* \param ponteiro para um tipo de funcionário
+		* 
+		* Responsável por carregar os dados e inicializar nas listas
+		* \return Nada
+		*/
 		void carregaDadosCsv(std::vector < Funcionario * > &operadores, std::vector < Funcionario * > &gerentes, std::vector < Funcionario * > &diretores, Funcionario **presidente);
 		
-		// Retorna o historico do arquivo para que possa ser atualizado no momento certo
+		/**
+		* getHistoricoArquivo
+		*  
+		* Responsável por retornar o endereço de um objeto do tipo Historico
+		*
+		* \return endereço de um objeto historicoArquivo
+		*/
 		HistoricoArquivo* getHistoricoArquivo();
 		
 	private:
-		//Path para o caminho da pasta
-		std::string path = "../.gitignore/Dados/"; // path de armazenamento
-		// Histórico do arquivo
-		HistoricoArquivo historico;
+		
+		std::string path = "../.gitignore/Dados/"; /*!< Path para o armazenamento de dados */
+		HistoricoArquivo historico; /*!< Objeto de composição com o classe Historico Arquivo */
 
 
 };
