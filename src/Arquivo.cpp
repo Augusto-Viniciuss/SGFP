@@ -236,6 +236,8 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 		throw TentativaAbrirArquivo("Dados.csv");
 	}
 
+	std::cout << "Carregando dados do banco de dados......." << std::endl;
+
 	std::string linha, buffer;	// linha é responsável por ler a linha de dadosCsv e bufffer responsável por armazenar cada palavra entre vírgulas
 	std::vector < std::string > palavras; // Contém um vector de palavras que são as palavras entre cada vírgulas
 	std::string dataBuffer;				// Responsável por armazenar o buffer do tratamento de data
