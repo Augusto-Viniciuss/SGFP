@@ -8,6 +8,9 @@
 #include "Data.h"
 #include "CadastrarFuncionarioException.h"
 
+/**
+* Funcionario é uma classe filha de pessoa
+*/
 class Funcionario: public Pessoa {
     public:
         /**
