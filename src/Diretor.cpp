@@ -74,15 +74,18 @@ void Diretor::setAreaFormacao(std::string areaFormacao) {
 }
 
 void Diretor::calcularSalarioMensal(int mes){
-    /* As horas trabalhadas são geradas aleatóriamente até o máximo de 260 horas */
-    setHorasTrabalhadas(gerarAleatorio(260));
-
+    
+    if(getHorasTrabalhadas(mes) == 0) {
+        
+        /* As horas trabalhadas são geradas aleatóriamente até o máximo de 260 horas */
+        setHorasTrabalhadas(mes ,gerarAleatorio(260));
+    }
     double salarioLiquido;
 
     /* A partir de 168 horas trabalhadas no mês, é considerado hora extra */
-    if (getHorasTrabalhadas() > 168) {
+    if (getHorasTrabalhadas(mes) > 168) {
         /* Se trabalhar mais do que 168, o diretor recebe por suas horas extras */
-        salarioLiquido = getFolhaSalarial(mes)->getSalarioBase() + ((getHorasTrabalhadas() - 168) * HORA_EXTRA);
+        salarioLiquido = getFolhaSalarial(mes)->getSalarioBase() + ((getHorasTrabalhadas(mes) - 168) * HORA_EXTRA);
     } else {
         /* Se trabalhar menos do que 168 recebe apenas seu salário base */
         salarioLiquido = getFolhaSalarial(mes)->getSalarioBase();

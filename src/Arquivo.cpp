@@ -172,6 +172,10 @@ void Arquivo::AtualizaBaseDadosCsv(const std::vector < Funcionario *> &funcionar
 		outputCsv << funcionarioVec[i]->getDesignacaoInt() << "," << funcionarioVec[i]->getCodigoFuncionario() << "," << funcionarioVec[i]->getCPF() << ", " << funcionarioVec[i]->getNome() << "," 
 		<< funcionarioVec[i]->getTelefone() << "," << funcionarioVec[i]->getIdade() << ", " << funcionarioVec[i]->getDataIngresso().retornaStringData() << "," << funcionarioVec[i]->getEndereco()->getCEP()<< "," <<
 		funcionarioVec[i]->getEndereco()->getNumero()<< "," << areaSupervisao << "," << areaFormacao << "," << formacaoMaxima << "," << funcionarioVec[i]->getFolhaSalarial(1)->getSalarioBase() << "\n";
+
+		for(int meses = 1; meses < 13; meses++) {
+			outputCsv << funcionarioVec[i]->getHorasTrabalhadas(meses) << std::endl;
+		}
 	}
 
 	outputCsv.close();
@@ -202,7 +206,10 @@ void Arquivo::addPresidenteBaseDadosCsv(Funcionario *presidente) {
 	outputCsv << presidente->getDesignacaoInt() << "," << presidente->getCodigoFuncionario() << "," << presidente->getCPF() << ", " << presidente->getNome() << "," 
 	<< presidente->getTelefone() << "," << presidente->getIdade() << ", " << presidente->getDataIngresso().retornaStringData() << "," << presidente->getEndereco()->getCEP()<< "," <<
 	presidente->getEndereco()->getNumero()<< "," << "Nenhuma" << "," <<((Presidente *)presidente)->getAreaFormacao() << "," << ((Presidente*)presidente)->getFormacaoMax() << "," << presidente->getFolhaSalarial(1)->getSalarioBase() << "\n";
-		
+	
+	for(int meses = 1; meses < 13; meses++) {
+		outputCsv << presidente->getHorasTrabalhadas(meses) << std::endl;
+	}
 	// Fechamento do arquivo
 	outputCsv.close();
 }
@@ -245,11 +252,19 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 	int codigo, idade, numero;
 	bool existePresida = false; // Variavel que indica se o presidente existe ou não
 	
+	int horasTrabalhadas[12];
+	std::string horas;
 	// Loop responsável pela leitura do arquivo
 	while(1) {
 		
 		// Pega-se a linha
 		getline(inputCsv, linha);
+
+		for(int i = 0; i < 12; i++) {
+			getline(inputCsv, horas);
+			horasTrabalhadas[i] = stoi(horas);
+		}
+		
 		// Verifica se já chegou no fim do arquivo
 		if(inputCsv.eof()) {
 			break;
@@ -383,25 +398,42 @@ void Arquivo::carregaDadosCsv(std::vector < Funcionario * > &operadores, std::ve
 					break;
 			}
 		}
+
 		
 		/* Inicialização dependendo do tipo e armazena no vetor	*/
 		if(stoi(palavras[0]) == 0) {
 			funcionario = new Operador(codigo, nome, cpf, idade, cep, numero, telefone, data, 0);
 			operadores.push_back(funcionario);
+
+			for(int mes = 1; mes < 13; mes++) {
+				funcionario->setHorasTrabalhadas(mes, horasTrabalhadas[mes - 1]);
+			}
 		}
 
 		else if(stoi(palavras[0]) == 1) {
 			funcionario = new Gerente(codigo, nome, cpf, idade, cep, numero, telefone, data, 1, areaSupervisao);
 			gerentes.push_back(funcionario);
+
+			for(int mes = 1; mes < 13; mes++) {
+				funcionario->setHorasTrabalhadas(mes, horasTrabalhadas[mes - 1]);
+			}
 		}
 
 		else if(stoi(palavras[0]) == 2) {
 			funcionario = new Diretor(codigo , nome, cpf, idade, cep, numero, telefone, data, 2, areaSupervisao, areaFormacao);
 			diretores.push_back(funcionario);
+
+			for(int mes = 1; mes < 13; mes++) {
+				funcionario->setHorasTrabalhadas(mes, horasTrabalhadas[mes - 1]);
+			}
 		}
 		else if(stoi(palavras[0]) == 3){
 			*presidente = new Presidente(codigo, nome, cpf, idade, cep, numero, telefone, data, 3, areaFormacao, formacaMaxima);
 			existePresida = true;
+
+			for(int mes = 1; mes < 13; mes++) {
+				(*presidente)->setHorasTrabalhadas(mes, horasTrabalhadas[mes - 1]);
+			}
 		}
 		palavras.clear();
 

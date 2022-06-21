@@ -4,7 +4,11 @@
 
 /* Para o melhor funcionamento do programa, código inicializa com 0 */
 Funcionario::Funcionario() {
+
     setCodigoFuncionario(0);
+    for(int i = 1; i < 13; i++) {
+        setHorasTrabalhadas(i, 0); // Seta todas as horas iniciais trabalhadas como 0
+    }
 }
 
 Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idade, std::string CEP, int numeroResidencia, std::string telefone, int *data, int designacao) : Pessoa(nome, telefone, CPF, idade, CEP, numeroResidencia) { 
@@ -16,12 +20,16 @@ Funcionario::Funcionario(int codigo, std::string nome, std::string CPF, int idad
     for(int i = 0; i < 12; i++) {
         this->folhaSalarial[i] = FolhaSalarial(designacao);
     }
+    
+    for(int i = 1; i < 13; i++) {
+        setHorasTrabalhadas(i, 0); // Seta todas as horas iniciais trabalhadas como 0
+    }
 }
 
 Funcionario::~Funcionario() {}
 
-int Funcionario::getHorasTrabalhadas(){
-    return this->horasTrabalhadas;
+int Funcionario::getHorasTrabalhadas(int mes){
+    return this->horasTrabalhadas[mes - 1];
 }
 
 int Funcionario::getCodigoFuncionario(){
@@ -61,8 +69,8 @@ FolhaSalarial* Funcionario::getFolhaSalarial(int mes) {
     return &this->folhaSalarial[mes - 1];
 }
 
-void Funcionario::setHorasTrabalhadas(int horas){
-    horasTrabalhadas = horas;
+void Funcionario::setHorasTrabalhadas(int mes, int valor){
+    this->horasTrabalhadas[mes - 1] =  valor;
 }
 
 void Funcionario::setDesignacao(int designacao){

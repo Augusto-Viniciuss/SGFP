@@ -24,7 +24,7 @@ class Funcionario: public Pessoa {
         int validaCodigoFuncionario(std::string codigoStr);
         
         /* Get */
-        int getHorasTrabalhadas();
+        int getHorasTrabalhadas(int mes);
         int getCodigoFuncionario();
         std::string getDesignacaoStr();
         int getDesignacaoInt();
@@ -32,7 +32,7 @@ class Funcionario: public Pessoa {
         Data getDataIngresso();
 
         /* Set */
-        void setHorasTrabalhadas(int horas);
+        void setHorasTrabalhadas(int mes, int valor);
         void setDesignacao(int designacao);
         void setDataIngresso(int *data);
         void setCodigoFuncionario(int codigo);
@@ -42,7 +42,8 @@ class Funcionario: public Pessoa {
         int gerarAleatorio(int intervaloMax);
 
     private:
-        int horasTrabalhadas;
+
+        int horasTrabalhadas[12];
         int codigoFuncionario;
         int designacao; /*3 = Presidente; 2 = Diretor; 1 = Gerente; 0 = Operador*/
         FolhaSalarial folhaSalarial[12];

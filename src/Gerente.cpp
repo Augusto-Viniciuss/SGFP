@@ -47,14 +47,17 @@ void Gerente::setAreaSupervisao(std::string areaSupervisao) {
 
 
 void Gerente::calcularSalarioMensal(int mes){
-    /* As horas trabalhadas são geradas aleatóriamente até o máximo de 260 horas */
-    setHorasTrabalhadas(gerarAleatorio(260));
-
+    
+    if(getHorasTrabalhadas(mes) == 0) {
+        
+        /* As horas trabalhadas são geradas aleatóriamente até o máximo de 260 horas */
+        setHorasTrabalhadas(mes ,gerarAleatorio(260));
+    }
     double salarioLiquido;
 
     /* A partir de 172 horas trabalhadas no mês, é considerado hora extra */
-    if (getHorasTrabalhadas() > 172) {
-        salarioLiquido = getFolhaSalarial(mes)->getSalarioBase() + ((getHorasTrabalhadas() - 172) * HORA_EXTRA);
+    if (getHorasTrabalhadas(mes) > 172) {
+        salarioLiquido = getFolhaSalarial(mes)->getSalarioBase() + ((getHorasTrabalhadas(mes) - 172) * HORA_EXTRA);
     } else {
         /* Se trabalhar menos do que 172 recebe apenas seu salário base */
         salarioLiquido = getFolhaSalarial(mes)->getSalarioBase();
