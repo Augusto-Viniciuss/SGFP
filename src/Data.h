@@ -41,7 +41,7 @@ class Data {
 		void setAno(int ano);
 		
 		/**
-		* getQuantidadeDiaMes
+		* getQuantidadeDiaMes()
 		* 
 		* Retorna a quantidade de dia do mes
 		* \param mes recebe mes do ano
